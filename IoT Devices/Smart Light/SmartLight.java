@@ -42,7 +42,9 @@ public class SmartLight{
         }
       }
 
-      Thread.sleep(10);
+      try{
+        Thread.sleep(10);
+      }
     }
   }
 }
