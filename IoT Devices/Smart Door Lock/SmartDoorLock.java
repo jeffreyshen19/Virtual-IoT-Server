@@ -69,7 +69,7 @@ public class SmartDoorLock {
     int passLength;
     int value;
     int pass;
-    int continue;
+    int shouldContinue = 1;
 
     BufferedReader length = new BufferedReader(new InputStreamReader(System.in));
     System.out.println("How long is the password?");
@@ -78,9 +78,9 @@ public class SmartDoorLock {
     for (int i = 0; i < passLength; i++) {
       BufferedReader cont = new BufferedReader(new InputStreamReader(System.in));
       System.out.println("Type 1 to continue recording the password: ");
-      continue = Integer.parseInt(cont.readLine());
+      shouldContinue = Integer.parseInt(cont.readLine());
 
-      if (continue == 1) {
+      if (shouldContinue == 1) {
         value = doorButton.read();
         generatedPassword[i] = value;
       }
