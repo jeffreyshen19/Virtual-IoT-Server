@@ -100,7 +100,7 @@ public class SmartDoorLock {
     }
 
       for(int i = 0; i < passLength; i++){
-      pass = pass + (10^(passLength-i-1) * generatedPassword.get(i));
+      pass = pass + (Math.pow(10,(passLength-i-1)) * generatedPassword.get(i));
       System.out.println(pass);
       }
 
