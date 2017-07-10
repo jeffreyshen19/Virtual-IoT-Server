@@ -66,25 +66,26 @@ public class SmartDoorLock {
   }
 
   public static int changePassword(Gpio doorButton) {
-    int[] generatedPassword;
-    int passLength;
-    int value;
-    int pass;
+    int[] generatedPassword = {};
+    int passLength = 4;
+    int value = 1;
+    int pass = 1111;
     int shouldContinue = 1;
 
     BufferedReader length = new BufferedReader(new InputStreamReader(System.in));
     System.out.println("How long is the password?");
+
     try {
       passLength = Integer.parseInt(length.readLine());
-    } catch (Exception e) {
-
-    }
-
+    } catch (Exception e)  {}
 
     for (int i = 0; i < passLength; i++) {
       BufferedReader cont = new BufferedReader(new InputStreamReader(System.in));
       System.out.println("Type 1 to continue recording the password: ");
+
+      try {
       shouldContinue = Integer.parseInt(cont.readLine());
+      } catch (Exception e) {}
 
       if (shouldContinue == 1) {
         value = doorButton.read();
@@ -98,7 +99,7 @@ public class SmartDoorLock {
     for(int i = 0; i < passLength; i++){
       pass = pass + (10^(passLength-i-1) * generatedPassword[i]);
     }
-    System.out.println("The password is " ); 
+    System.out.println("The password is " );
     return pass;
   }
 
