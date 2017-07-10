@@ -80,7 +80,7 @@ public class SmartDoorLock {
 
     }
 
-/*
+
     for (int i = 0; i < passLength; i++) {
       BufferedReader cont = new BufferedReader(new InputStreamReader(System.in));
       System.out.println("Type 1 to continue recording the password: ");
@@ -98,7 +98,7 @@ public class SmartDoorLock {
     for(int i = 0; i < passLength; i++){
       pass = pass + (10^(passLength-i-1) * generatedPassword[i]);
     }
-    System.out.println("The password is " ); */
+    System.out.println("The password is " ); 
     return pass;
   }
 
