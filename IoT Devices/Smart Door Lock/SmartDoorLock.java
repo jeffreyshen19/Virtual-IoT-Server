@@ -65,7 +65,7 @@ public class SmartDoorLock {
     door.enable(false);
   }
 
-  public static int[] changePassword(Gpio doorButton) {
+  public static int changePassword(Gpio doorButton) {
     int[] generatedPassword;
     int passLength;
     int value;
