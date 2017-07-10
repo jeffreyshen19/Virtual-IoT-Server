@@ -25,8 +25,8 @@ public class SmartDoorLock {
     Pwm servo = new Pwm(6);
 
     //setting default password
-    int[] password = {1,1,1,1};
-    int[] enteredPassword;
+    int password = 1111;
+    int enteredPassword;
 
     //test to see if it works
 
@@ -96,10 +96,10 @@ public class SmartDoorLock {
 
     }
     for(int i = 0; i < passLength; i++){
-      pass = pass + (10^(passLength-i) * generatedPassword[i]);
+      pass = pass + (10^(passLength-i-1) * generatedPassword[i]);
     }
     System.out.println("The password is " ); */
-    return generatedPassword;
+    return pass;
   }
 
 }
