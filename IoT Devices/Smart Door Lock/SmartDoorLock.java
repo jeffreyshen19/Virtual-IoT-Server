@@ -68,12 +68,13 @@ public class SmartDoorLock {
     int passLength;
     int value;
     String continue = "y";
+    int pass;
 
     BufferedReader length = new BufferedReader(new InputStreamReader(System.in));
     System.out.println("How long is the password?");
     passLength = Integer.parseInt(length.readLine());
 
-    for (int i = 0; i < passLength, i++) {
+    for (int i = 0; i < passLength; i++) {
       BufferedReader cont = new BufferedReader(new InputStreamReader(System.in));
       System.out.println("Type y to continue recording the password: ");
       continue = cont.readLine();
@@ -87,7 +88,10 @@ public class SmartDoorLock {
       }
 
     }
-    System.out.println("The password is " + Arrays.toString(generatedPassword));
+    for(int i = 0; i < passLength; i++){
+      pass = pass + (10^(passLength-i) * generatedPassword[i]);
+    }
+    System.out.println("The password is " );
     return generatedPassword;
   }
 
