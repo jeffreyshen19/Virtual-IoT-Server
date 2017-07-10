@@ -55,6 +55,15 @@ public class SmartLight{
       lightValue = lightSensor.read();
       System.out.println(lightValue);
 
+      if(lightValue < 200){
+        on = true;
+        led.write(1);
+      }
+      else{
+        on = false;
+        led.write(0);
+      }
+
       wait1Msec(10);
     }
   }
