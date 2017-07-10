@@ -49,6 +49,8 @@ public class SmartLight{
     }
     catch(Exception e){}
 
+    System.out.println("\033[1m\033[32mSuccessfully connected to  server\033[0m");
+
     try{
       in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
     }
