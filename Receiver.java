@@ -23,7 +23,7 @@ public class Receiver{
       pw.flush();
       br.readLine();
 
-      while(message.length() <= 0){
+      while(true){
         message = br.readLine().trim();
         pw.println("Client received the command");
         Thread.sleep(1000);
