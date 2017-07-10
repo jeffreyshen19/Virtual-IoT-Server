@@ -22,13 +22,13 @@ public class SmartDoorLock {
     //servo.write(0f);
     servo.enable(true);
     servo.period_ms(20);
-    servo.pulsewidth_ms(.5);
+    servo.pulsewidth_us(500);
     try {
       TimeUnit.SECONDS.sleep(3);
     }catch (InterruptedException e) {
     }
     //servo.write(1f);
-    servo.pulsewidth_ms(2.5);
+    servo.pulsewidth_us(2500);
     try {
       TimeUnit.SECONDS.sleep(3);
     }catch (InterruptedException e) {
