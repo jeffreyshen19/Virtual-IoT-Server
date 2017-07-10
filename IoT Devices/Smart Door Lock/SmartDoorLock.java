@@ -101,13 +101,14 @@ public class SmartDoorLock {
       }
 
     }
-    for(int i = 0; i < passLength; i++){
-      pass = pass + (10^(passLength-i-1) * try{
-        generatedPassword[i] = value;
-      } catch (Exception e) {
-
-      });
+    try{
+      for(int i = 0; i < passLength; i++){
+      pass = pass + (10^(passLength-i-1) * generatedPassword[i]);
     }
+    } catch (Exception e) {
+
+    }
+
     System.out.println("The password is " + pass);
     return pass;
   }
