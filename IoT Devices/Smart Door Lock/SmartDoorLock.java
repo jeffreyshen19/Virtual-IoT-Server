@@ -67,7 +67,7 @@ public class SmartDoorLock {
     int[] generatedPassword;
     int passLength;
     int value;
-    String continue = "y";
+    String continue;
     int pass;
 
     BufferedReader length = new BufferedReader(new InputStreamReader(System.in));
