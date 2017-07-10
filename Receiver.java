@@ -7,7 +7,7 @@ public class Receiver{
   public String connect (String server, String port){
     String message = "";
     SSLSocket sslSocket = null;
-    SSLClientSocket mSSLClientSocket = new SSLClientSocket(server, port);
+    SSLClientSocket mSSLClientSocket = new SSLClientSocket(server, Integer.parseInt(port));
     if(mSSLClientSocket.checkAndAddCertificates()) {
       sslSocket = mSSLClientSocket.getSSLSocket();
     }
