@@ -47,9 +47,9 @@ public class SmartLight{
       lightValue = lightSensor.read();
       command = in.readLine().trim().toLowerCase();
 
-      if(command.equals("off")) on == 1;
-      else if(command.equals("on")) on == -1;
-      else if(command.equals("reset")) on == 0;
+      if(command.equals("off")) on = 1;
+      else if(command.equals("on")) on = -1;
+      else if(command.equals("reset")) on = 0;
 
       if(lightValue < 200 && on != -1){
         led.write(1);
