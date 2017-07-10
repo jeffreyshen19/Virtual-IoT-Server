@@ -36,16 +36,22 @@ public class SmartLight{
     button.dir(Dir.DIR_IN);
 
     boolean on = false;
+    boolean forceOn = false;
+    boolean forceOff = false;
     long lightValue = 0;
 
     while(true){
       if(button.read() == 1){
         if(on){
           on = false;
+          forceOn = false;
+          forceOff = true;
           led.write(0);
         }
         else{
           on = true;
+          forceOn = true;
+          forceOff = false;
           led.write(1);
         }
 
@@ -53,13 +59,12 @@ public class SmartLight{
       }
 
       lightValue = lightSensor.read();
-      System.out.println(lightValue);
 
-      if(lightValue < 200){
+      if(lightValue < 200 && !forceOff){
         on = true;
         led.write(1);
       }
-      else{
+      else if(!forceOn){
         on = false;
         led.write(0);
       }
