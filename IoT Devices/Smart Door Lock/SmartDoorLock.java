@@ -67,10 +67,10 @@ public class SmartDoorLock {
 
   public static int changePassword(Gpio doorButton) {
     int[] generatedPassword = {};
-    int passLength = 4;
-    int value = 1;
-    int pass = 1111;
-    int shouldContinue = 1;
+    int passLength = 0;
+    int value = 0;
+    int pass = 0;
+    int shouldContinue = 0;
 
     BufferedReader length = new BufferedReader(new InputStreamReader(System.in));
     System.out.println("How long is the password?");
