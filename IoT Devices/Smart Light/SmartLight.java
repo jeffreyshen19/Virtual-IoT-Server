@@ -46,7 +46,10 @@ public class SmartLight{
 
     try{
       clientSocket = new Socket(args[0], Integer.parseInt(args[1]));
+    }
+    catch(Exception e){}
 
+    try{
       in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
     }
     catch(Exception e){}
@@ -57,7 +60,7 @@ public class SmartLight{
         command = in.readLine().trim().toLowerCase();
       }
       catch(Exception e){}
-        
+
       if(command.equals("off")) on = 1;
       else if(command.equals("on")) on = -1;
       else if(command.equals("reset")) on = 0;
