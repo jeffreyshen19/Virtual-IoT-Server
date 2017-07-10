@@ -20,6 +20,7 @@ public class SmartDoorLock {
     Aio light = new Aio(3);
     Pwm servo = new Pwm(6);
     servo.period(1);
-
+    servo.enable(1);
+    servo.period(1);
   }
 }
