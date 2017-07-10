@@ -66,7 +66,7 @@ public class SmartDoorLock {
     door.enable(false);
   }
 
-  public static ArrayList<Integer> generatePassword(Gpio doorButton) {
+  public static int generatePassword(Gpio doorButton) {
 
     ArrayList<Integer> generatedPassword = new ArrayList<Integer>();
     int passLength = 0;
