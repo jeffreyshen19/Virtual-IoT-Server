@@ -32,7 +32,7 @@ public class SmartDoorLock {
     //test to see if it works
 
     lock(servo);
-    enteredPassword = generatePassword(button);
+    enteredPassword = changePassword(button);
 
     if(password == enteredPassword) {
       System.out.println("Correct password.");
@@ -66,7 +66,7 @@ public class SmartDoorLock {
     door.enable(false);
   }
 
-  public static double generatePassword(Gpio doorButton) {
+  public static double changePassword(Gpio doorButton) {
 
     ArrayList<Integer> generatedPassword = new ArrayList<Integer>();
     int passLength = 0;
@@ -101,12 +101,11 @@ public class SmartDoorLock {
 
       for(int i = 0; i < passLength; i++){
       pass = pass + (Math.pow(10,(passLength-i-1)) * generatedPassword.get(i));
-      System.out.println(pass);
       }
 
-      for(int d:generatedPassword) {
+      /*for(int d:generatedPassword) {
               System.out.println(d);
-          }
+          }*/
 
     return pass;
   }
