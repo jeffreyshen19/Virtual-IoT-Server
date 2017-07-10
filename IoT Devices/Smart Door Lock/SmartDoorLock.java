@@ -93,6 +93,6 @@ public class SmartDoorLock {
     }
     System.out.println("The password is " );
     return generatedPassword;
-  }
+  } */
 
-} */
+}
