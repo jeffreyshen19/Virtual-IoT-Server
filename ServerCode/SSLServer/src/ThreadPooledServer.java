@@ -40,9 +40,8 @@ public class ThreadPooledServer implements Runnable{
     }
     openServerSocket();
     while(! isStopped()){
+      System.out.println("1");
       Socket clientSocket = null;
-
-
       try {
         clientSocket = this.serverSocket.accept();
       } catch (IOException e) {
@@ -53,14 +52,15 @@ public class ThreadPooledServer implements Runnable{
         throw new RuntimeException(
         "Error accepting client connection", e);
       }
+      System.out.println("2");
       //start that new thread boyo
       this.threadPool.execute(
       new WorkerRunnable(clientSocket,
       "Thread Pooled Server"));
-      
+
     }
     this.threadPool.shutdown();
-    System.out.println("Server Stopped.") ;
+    System.out.println("Server Stopped.");
   }
 
 

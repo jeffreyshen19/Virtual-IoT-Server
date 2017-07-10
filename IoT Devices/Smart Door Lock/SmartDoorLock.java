@@ -19,14 +19,30 @@ public class SmartDoorLock {
     Gpio button = new Gpio(3);
     Aio light = new Aio(3);
     Pwm servo = new Pwm(6);
-    servo.write(.01f);
-    servo.enable(true);
-    servo.period_ms(20);
+    unlock(servo);
+    lock(servo);
+
+  }
+
+  public static void unlock(Pwm door) {
+    door.enable(true);
+    door.period_ms(20);
+    door.pulsewidth_us(500);
     try {
-      TimeUnit.SECONDS.sleep(3);
+      TimeUnit.SECONDS.sleep(1);
     }catch (InterruptedException e) {
     }
-    servo.enable(false);
+    door.enable(false);
+  }
 
+  public static void lock(Pwm door) {
+    door.enable(true);
+    door.period_ms(20);
+    door.pulsewidth_us(2500);
+    try {
+      TimeUnit.SECONDS.sleep(1);
+    }catch (InterruptedException e) {
+    }
+    door.enable(false);
   }
 }
