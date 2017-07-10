@@ -31,15 +31,15 @@ public class SmartDoorLock {
     //test to see if it works
 
     lock(servo);
-    /*enteredPassword = changePassword(button);
+    enteredPassword = changePassword(button);
 
-    if(Arrays.equal(password,enteredPassword)) {
+    if(password == enteredPassword) {
       System.out.println("Correct password.");
       unlock(servo);
     }
     else {
       System.out.println("Incorrect password.")
-    } */
+    }
 
   }
 
@@ -99,7 +99,7 @@ public class SmartDoorLock {
     for(int i = 0; i < passLength; i++){
       pass = pass + (10^(passLength-i-1) * generatedPassword[i]);
     }
-    System.out.println("The password is " );
+    System.out.println("The password is " + pass);
     return pass;
   }
 
