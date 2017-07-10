@@ -45,6 +45,9 @@ public class SmartLight{
       try{
         Thread.sleep(10);
       }
+      catch(Exception e){
+        System.out.println("Oops!");
+      }
     }
   }
 }
