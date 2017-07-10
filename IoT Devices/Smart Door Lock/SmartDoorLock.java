@@ -69,7 +69,7 @@ public class SmartDoorLock {
     int passLength;
     int value;
     int pass;
-    int continue = 1;
+    int continue;
 
     BufferedReader length = new BufferedReader(new InputStreamReader(System.in));
     System.out.println("How long is the password?");
