@@ -25,7 +25,11 @@ public class Receiver{
 
       while(true){
         message = br.readLine().trim();
-        pw.println("Client received the command");
+        if(message.length() > 0){
+          System.out.println(message); 
+          pw.println("Client received the command");
+          break; 
+        }
         Thread.sleep(1000);
       }
     } catch (Exception e) {
