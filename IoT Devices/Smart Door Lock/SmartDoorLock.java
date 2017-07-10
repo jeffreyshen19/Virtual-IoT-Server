@@ -4,6 +4,7 @@ import mraa.Pwm;
 import java.util.concurrent.TimeUnit;
 import java.util.Arrays;
 import java.io.BufferedReader;
+import java.io.InputStreamReader;
 
 public class SmartDoorLock {
 
