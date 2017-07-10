@@ -38,7 +38,7 @@ public class SmartDoorLock {
       unlock(servo);
     }
     else {
-      System.out.println("Incorrect password.")
+      System.out.println("Incorrect password.");
     }
 
   }
