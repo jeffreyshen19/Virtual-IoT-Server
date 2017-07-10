@@ -11,12 +11,13 @@ public class Logger{
   private BufferedWriter bw = null;
 	private FileWriter fw = null;
 
-  public Logger(String f){
+  public Logger(String f){ //Constructor
     fw = new FileWriter(f);
     bw = new BufferedWriter(fw);
   }
 
   public void println(String line){ //Prints line to file
+    System.out.println(line);
     bw.write(line + "\n");
   }
 
