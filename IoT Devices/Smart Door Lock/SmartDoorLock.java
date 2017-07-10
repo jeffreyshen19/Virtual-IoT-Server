@@ -5,6 +5,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.Arrays;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 public class SmartDoorLock {
 
@@ -66,7 +67,8 @@ public class SmartDoorLock {
   }
 
   public static int changePassword(Gpio doorButton) {
-    int[] generatedPassword = {};
+
+    ArrayList<Integer> generatedPassword = new ArrayList<Integer>();
     int passLength = 0;
     int value = 0;
     int pass = 0;
@@ -89,28 +91,17 @@ public class SmartDoorLock {
 
       if (shouldContinue == 1) {
         value = doorButton.read();
-        System.out.println(value);
-        
-        try{
-          generatedPassword[i] = value;
-
-        } catch (Exception e) {
-
-        }
-
+        generatedPassword.add(value);
       }
       else {
         break;
       }
 
     }
-    try{
-      for(int i = 0; i < passLength; i++){
-      pass = pass + (10^(passLength-i-1) * generatedPassword[i]);
-    }
-    } catch (Exception e) {
 
-    }
+      for(int i = 0; i < passLength; i++){
+      pass = pass + (10^(passLength-i-1) * generatedPassword.get(i));
+      }
 
     System.out.println("The password is " + pass);
     return pass;
