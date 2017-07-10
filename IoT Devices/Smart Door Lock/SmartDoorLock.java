@@ -26,8 +26,8 @@ public class SmartDoorLock {
     Pwm servo = new Pwm(6);
 
     //setting default password
-    int password = 1111;
-    int enteredPassword;
+    double password = 1111;
+    double enteredPassword;
 
     //test to see if it works
 
@@ -66,12 +66,12 @@ public class SmartDoorLock {
     door.enable(false);
   }
 
-  public static int generatePassword(Gpio doorButton) {
+  public static double generatePassword(Gpio doorButton) {
 
     ArrayList<Integer> generatedPassword = new ArrayList<Integer>();
     int passLength = 0;
     int value = 0;
-    int pass = 0;
+    double pass = 0;
     int shouldContinue = 0;
 
     BufferedReader length = new BufferedReader(new InputStreamReader(System.in));
@@ -100,7 +100,7 @@ public class SmartDoorLock {
     }
 
       for(int i = 0; i < passLength; i++){
-      pass = pass + ((Math.pow(10,(passLength-i-1))).intValue() * generatedPassword.get(i));
+      pass = pass + (Math.pow(10,(passLength-i-1)) * generatedPassword.get(i));
       System.out.println(pass);
       }
 
