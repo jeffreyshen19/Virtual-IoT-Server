@@ -76,7 +76,7 @@ public class SmartDoorLock {
     System.out.println("How long is the password?");
     try {
       passLength = Integer.parseInt(length.readLine());
-    } catch (IOException e) {
+    } catch (Exception e) {
 
     }
 
