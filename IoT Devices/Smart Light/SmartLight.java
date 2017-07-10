@@ -18,6 +18,15 @@ public class SmartLight{
     }
   }
 
+  public static void wait1Msec(int msecs){
+    try{
+      Thread.sleep(msecs);
+    }
+    catch(Exception e){
+      System.out.println("Oops!");
+    }
+  }
+
   public static void main(String[] args) {
     Gpio button  = new Gpio(3);
     Gpio led = new Gpio(4);
@@ -40,14 +49,11 @@ public class SmartLight{
           on = true;
           led.write(1);
         }
+
+        while(button.read() == 1) wait1Msec(10);
       }
 
-      try{
-        Thread.sleep(10);
-      }
-      catch(Exception e){
-        System.out.println("Oops!");
-      }
+      wait1Msec(10);
     }
   }
 }
