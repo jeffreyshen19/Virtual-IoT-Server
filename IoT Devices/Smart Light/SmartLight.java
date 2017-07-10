@@ -49,7 +49,7 @@ public class SmartLight{
     }
     catch(Exception e){}
 
-    System.out.println("\033[1m\033[32mSuccessfully connected to  server\033[0m");
+    System.out.println("\033[1m\033[32mSuccessfully connected to server\033[0m");
 
     try{
       in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
@@ -62,6 +62,8 @@ public class SmartLight{
         command = in.readLine().trim().toLowerCase();
       }
       catch(Exception e){}
+
+      System.out.println(command);
 
       if(command.equals("off")) on = 1;
       else if(command.equals("on")) on = -1;
