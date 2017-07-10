@@ -16,7 +16,7 @@ public class Plugin{
 
   /*
   reads the selected text file.
-  fileLocation is the directory, like "/Users/Desktop/test.txt"
+  fileLocation is the directory, like "/Users/PeizeHe/Desktop/test.txt"
   */
   public static ArrayList<String> readtxt(String fileLocation){
     ArrayList<String> protocol = new ArrayList<String>();
