@@ -35,9 +35,8 @@ public class SmartLight{
     led.dir(Dir.DIR_OUT);
     button.dir(Dir.DIR_IN);
 
-    //lightSensor.read();
-
     boolean on = false;
+    int lightValue = 0;
 
     while(true){
       if(button.read() == 1){
@@ -52,6 +51,9 @@ public class SmartLight{
 
         while(button.read() == 1) wait1Msec(10);
       }
+
+      lightValue = lightSensor.read();
+      System.out.println(lightValue);
 
       wait1Msec(10);
     }
