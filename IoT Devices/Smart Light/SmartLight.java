@@ -36,7 +36,7 @@ public class SmartLight{
     button.dir(Dir.DIR_IN);
 
     boolean on = false;
-    int lightValue = 0;
+    long lightValue = 0;
 
     while(true){
       if(button.read() == 1){
