@@ -23,7 +23,7 @@ public class Receiver{
       pw.flush();
       br.readLine();
 
-      while(true){
+      while(message.length() <= 0){
         message = br.readLine().trim();
         Thread.sleep(1000);
       }
