@@ -31,7 +31,7 @@ public class SmartDoorLock {
     lock(servo);
     enteredPassword = changePassword(button);
 
-    if(equals(password,enteredPassword)) {
+    if(Arrays.equal(password,enteredPassword)) {
       System.out.println("Correct password.");
       unlock(servo);
     }
@@ -63,7 +63,7 @@ public class SmartDoorLock {
     door.enable(false);
   }
 
-  public static int changePassword(Gpio doorButton) {
+  public static int[] changePassword(Gpio doorButton) {
     int[] generatedPassword;
     int passLength;
     int value;
