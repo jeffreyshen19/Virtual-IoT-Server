@@ -66,6 +66,7 @@ public class SmartDoorLock {
   }
 
   public static int changePassword(Gpio doorButton) {
+    int[] generatedPassword = {};
     int passLength = 0;
     int value = 0;
     int pass = 0;
@@ -77,8 +78,6 @@ public class SmartDoorLock {
     try {
       passLength = Integer.parseInt(length.readLine());
     } catch (Exception e)  {}
-
-    int[passLength] generatedPassword = {};
 
     for (int i = 0; i < passLength; i++) {
       BufferedReader cont = new BufferedReader(new InputStreamReader(System.in));
