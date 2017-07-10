@@ -28,32 +28,25 @@ public class SmartLight{
   }
 
   public static void main(String[] args) {
-    Gpio button  = new Gpio(3);
     Gpio led = new Gpio(4);
     Aio lightSensor = new Aio(0);
 
     led.dir(Dir.DIR_OUT);
-    button.dir(Dir.DIR_IN);
 
     boolean on = false;
     long lightValue = 0;
 
     while(true){
-      if(button.read() == 1){
-        if(on){
-          on = false;
-          led.write(0);
-        }
-        else{
-          on = true;
-          led.write(1);
-        }
-
-        while(button.read() == 1) wait1Msec(10);
-      }
-
       lightValue = lightSensor.read();
-      System.out.println(lightValue);
+
+      if(lightValue < 200){
+        on = true;
+        led.write(1);
+      }
+      else{
+        on = false;
+        led.write(0);
+      }
 
       wait1Msec(10);
     }
