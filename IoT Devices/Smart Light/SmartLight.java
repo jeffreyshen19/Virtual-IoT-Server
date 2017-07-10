@@ -64,7 +64,7 @@ public class SmartLight{
         }
         else if(command.equals("reset")) on = 0;
 
-        if(lightValue < 200 && on != -1){
+        if(lightValue < 300 && on != -1){
           led.write(1);
         }
         else if(on != 1){
