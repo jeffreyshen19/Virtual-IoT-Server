@@ -25,7 +25,7 @@ public class WorkerRunnable implements Runnable{
 
   public void run() {
     System.out.println("10");
-    boolean receiving = true, running = true, running1 = true;
+    boolean receiving = false, running = true, running1 = true;
     ArrayList<String> messages = new ArrayList<>();
     int sleepTime = 1000;
     try {
@@ -33,15 +33,19 @@ public class WorkerRunnable implements Runnable{
           if (running) { //two br's , two socket's
             BufferedReader br = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             PrintWriter pw = new PrintWriter(clientSocket.getOutputStream());
+            System.out.println("1message!");
             if (receiving) {
               String data = br.readLine();
               messages.add(data);
               System.out.println(data + " is echoed");
             }
+            System.out.println("2message!");
+            //receiving = true;
 
             BufferedReader msgTaker = new BufferedReader(new InputStreamReader(System.in));
             long end=System.currentTimeMillis()+1500;
             String message = "";
+            System.out.println("Here");
             while((System.currentTimeMillis()<end)) {
               if (msgTaker.ready())
               message += msgTaker.readLine();
@@ -58,13 +62,13 @@ public class WorkerRunnable implements Runnable{
             }
             else {
               if (message.equals("STOP")) {
-                receiving = false;
+                //receiving = false;
               }
               else if (message.equals("OFF")) {
-                running = false;
+                //running = false;
               }
               else if (message.equals("START")) {
-                receiving = true;
+                //receiving = true;
               }
               else if (message.contains("PERIOD=")) {
                 sleepTime = Integer.parseInt(message.substring(message.indexOf("=") + 1))*1000;
