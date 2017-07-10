@@ -1,4 +1,6 @@
 import mraa.*;
+import java.net.Socket;
+import java.io.BufferedReader;
 
 /*
   SmartLight.java
@@ -33,18 +35,26 @@ public class SmartLight{
 
     led.dir(Dir.DIR_OUT);
 
-    boolean on = false;
+    int on = 0;
     long lightValue = 0;
+    String command = "";
+
+    Socket clientSocket = new Socket(args[0], Integer.parseInt(args[1]));
+
+    BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
     while(true){
       lightValue = lightSensor.read();
+      command = in.readLine().trim().toLowerCase();
 
-      if(lightValue < 200){
-        on = true;
+      if(command.equals("off")) on == 1;
+      else if(command.equals("on")) on == -1;
+      else if(command.equals("reset")) on == 0;
+
+      if(lightValue < 200 && on != -1){
         led.write(1);
       }
-      else{
-        on = false;
+      else if(on != 1){
         led.write(0);
       }
 
