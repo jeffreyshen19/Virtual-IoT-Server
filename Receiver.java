@@ -4,10 +4,10 @@ import java.net.UnknownHostException;
 
 public class Receiver{
 
-  public String connect (String[] args){
+  public String connect (String server, int port){
     String message = "";
     SSLSocket sslSocket = null;
-    SSLClientSocket mSSLClientSocket = new SSLClientSocket(args[0], Integer.parseInt(args[1]));
+    SSLClientSocket mSSLClientSocket = new SSLClientSocket(server, port);
     if(mSSLClientSocket.checkAndAddCertificates()) {
       sslSocket = mSSLClientSocket.getSSLSocket();
     }
