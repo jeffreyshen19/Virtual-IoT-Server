@@ -89,7 +89,12 @@ public class SmartDoorLock {
 
       if (shouldContinue == 1) {
         value = doorButton.read();
-        generatedPassword[i] = value;
+        try{
+          generatedPassword[i] = value;
+        } catch (Exception e) {
+          
+        }
+
       }
       else {
         break;
