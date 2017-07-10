@@ -2,7 +2,7 @@ import mraa.Aio;
 import mraa.Gpio;
 import mraa.Pwm;
 import java.util.concurrent.TimeUnit;
-import java.util.Array;
+import java.util.Arrays;
 import java.io.BufferedReader;
 
 public class SmartDoorLock {
