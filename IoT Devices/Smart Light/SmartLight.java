@@ -51,11 +51,11 @@ public class SmartLight{
         lightValue = lightSensor.read();
 
         command = in.readLine().trim().toLowerCase();
-        
-        System.out.println(command);
 
-        if(command.equals("off")) on = 1;
-        else if(command.equals("on")) on = -1;
+        if(command.length() > 0) System.out.println(command);
+
+        if(command.equals("off")) on = -1;
+        else if(command.equals("on")) on = 1;
         else if(command.equals("reset")) on = 0;
 
         if(lightValue < 200 && on != -1){
