@@ -65,7 +65,7 @@ public class SmartDoorLock {
     door.enable(false);
   }
 
-  public static int[] changePassword(Gpio doorButton) throws IOException{
+  public static int[] changePassword(Gpio doorButton) {
     int[] generatedPassword;
     int passLength;
     int value;
@@ -74,7 +74,12 @@ public class SmartDoorLock {
 
     BufferedReader length = new BufferedReader(new InputStreamReader(System.in));
     System.out.println("How long is the password?");
-    passLength = Integer.parseInt(length.readLine());
+    try {
+      passLength = Integer.parseInt(length.readLine());
+    } catch (IOException e) {
+
+    }
+
 /*
     for (int i = 0; i < passLength; i++) {
       BufferedReader cont = new BufferedReader(new InputStreamReader(System.in));
