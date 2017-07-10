@@ -41,14 +41,23 @@ public class SmartLight{
     long lightValue = 0;
     String command = "";
 
-    Socket clientSocket = new Socket(args[0], Integer.parseInt(args[1]));
+    Socket clientSocket;
+    BufferedReader in;
 
-    BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+    try{
+      clientSocket = new Socket(args[0], Integer.parseInt(args[1]));
+
+      in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+    }
+    catch(Exception e){}
 
     while(true){
       lightValue = lightSensor.read();
-      command = in.readLine().trim().toLowerCase();
-
+      try{
+        command = in.readLine().trim().toLowerCase();
+      }
+      catch(Exception e){}
+        
       if(command.equals("off")) on = 1;
       else if(command.equals("on")) on = -1;
       else if(command.equals("reset")) on = 0;
