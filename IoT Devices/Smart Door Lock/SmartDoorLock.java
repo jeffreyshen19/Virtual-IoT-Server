@@ -1,5 +1,6 @@
 import mraa.Aio;
 import mraa.Gpio;
+import mraa.Pwm;
 import java.util.concurrent.TimeUnit;
 
 public class SmartDoorLock {
