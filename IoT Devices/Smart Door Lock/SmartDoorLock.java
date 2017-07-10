@@ -6,6 +6,9 @@ import java.util.Arrays;
 import java.io.BufferedReader;
 
 public class SmartDoorLock {
+
+  String continue = "y";
+  
   static {
     try {
       System.loadLibrary("mraajava");
@@ -67,7 +70,6 @@ public class SmartDoorLock {
     int[] generatedPassword;
     int passLength;
     int value;
-    String continue;
     int pass;
 
     BufferedReader length = new BufferedReader(new InputStreamReader(System.in));
