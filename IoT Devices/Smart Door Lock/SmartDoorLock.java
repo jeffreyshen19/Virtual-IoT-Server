@@ -31,10 +31,10 @@ public class SmartDoorLock {
     else {
       return;
     }
-    
-    BufferedReader br = new BufferedReader(new InputStreamReader(sslSocket.getInputStream()));
+
     try {
       String userInput = "" , serverResponse = "";
+      BufferedReader br = new BufferedReader(new InputStreamReader(sslSocket.getInputStream()));
       PrintWriter pw = new PrintWriter(sslSocket.getOutputStream());
       pw.println("Initiating connection from the client");
       System.out.println("\033[1m\033[32mSuccessfully connected to secure server\033[0m");
