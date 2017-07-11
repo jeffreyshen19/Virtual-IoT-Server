@@ -10,7 +10,10 @@ import javax.net.ssl.SSLSocket;
 import java.io.PrintWriter;
 
 public class SmartDoorLock {
-
+  try {
+  BufferedReader br = new BufferedReader(new InputStreamReader(sslSocket.getInputStream()));
+  } catch (Exception e) {}
+    
   static {
     try {
       System.loadLibrary("mraajava");
@@ -31,9 +34,7 @@ public class SmartDoorLock {
     else {
       return;
     }
-    try {
-    BufferedReader br = new BufferedReader(new InputStreamReader(sslSocket.getInputStream()));
-  } catch (Exception e) {}
+
     try {
       String userInput = "" , serverResponse = "";
       PrintWriter pw = new PrintWriter(sslSocket.getOutputStream());
