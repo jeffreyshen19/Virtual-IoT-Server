@@ -1,3 +1,7 @@
+/*
+  Sender.java
+  Establishes connection between virtual service and IoT devices
+*/
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.io.*;
@@ -22,7 +26,7 @@ public class Sender{
     System.out.println("\033[1m\033[32mSender socket successfully set up\033[0m");
   }
 
-  public void sendMessage(String message){
+  public void sendMessage(String message){ //sends a message to the client
     try{
       out.println(message);
       System.out.println(message);
@@ -32,7 +36,7 @@ public class Sender{
     }
   }
 
-  public String getMessage(){
+  public String getMessage(){ //takes input from client
     String message = "";
     try{
       while(true){

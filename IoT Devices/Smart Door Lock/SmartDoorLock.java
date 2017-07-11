@@ -6,6 +6,8 @@ import java.util.Arrays;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import javax.net.ssl.SSLSocket;
+import java.io.PrintWriter;
 
 public class SmartDoorLock {
 
@@ -30,7 +32,7 @@ public class SmartDoorLock {
       return;
     }
     try {
-      serverResponse = "";
+      String serverResponse = "";
       BufferedReader br = new BufferedReader(new InputStreamReader(sslSocket.getInputStream()));
       PrintWriter pw = new PrintWriter(sslSocket.getOutputStream());
       pw.println("Initiating connection from the client");
@@ -58,11 +60,11 @@ public class SmartDoorLock {
         }
         if(serverResponse.equals("UNLOCK")) {
           unlock(servo);
-          pw.prinln("Succesfully unlocked.");
+          pw.println("Succesfully unlocked.");
           pw.flush();
         }
         if(serverResponse.equals("CHANGE PASSWORD")) {
-          password = changePassword(br,pw);
+          password = changePassword(br,pw,password);
           pw.println("Succesful password change.");
           pw.flush();
         }
@@ -140,10 +142,11 @@ public class SmartDoorLock {
     return pass;
   }
 
-  public static int changePassword(BufferedReader br, PrintWriter pw) {
+  public static double changePassword(BufferedReader br, PrintWriter pw, double currentPass) {
     pw.println("What is the new password?");
+    double password = currentPass;
     try {
-       int password = Integer.parseInt(br.readLine());
+       password = Integer.parseInt(br.readLine());
     } catch (Exception e)  {}
     pw.flush();
     return password;
