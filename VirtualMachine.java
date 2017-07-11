@@ -11,14 +11,16 @@ public class VirtualMachine extends Thread {
   private String filename, server;
   private int serverPort;
   private Socket socket;
+  private IoTDevice device;
 
-  public VirtualMachine(String s, int sP, Socket ss, String f){
+  public VirtualMachine(Socket ss, String f, IoTDevice d){
     super();
 
     filename = f;
-    server = s;
-    serverPort = sP;
+    server = d.getServerIP();
+    serverPort = d.getServerPort();
     socket = ss;
+    device = d;
   }
 
   public void run(){
@@ -37,6 +39,8 @@ public class VirtualMachine extends Thread {
 
       message = receiver.getMessage();
       logger.println("Got message \"" + message + "\"");
+
+      message = device.filterMessage(message);
 
       sender.sendMessage(message);
       logger.println("Sent message \"" + message + "\" to IoT device");

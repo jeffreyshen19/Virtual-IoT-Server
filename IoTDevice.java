@@ -3,19 +3,22 @@
   Object storing all the information for an IoT Device
 */
 
-public class IoTDevice{
-  private String pluginFile, String serverIP;
+public abstract class IoTDevice{
+  private String pluginFile, serverIP;
+  private int serverPort;
 
-  public IoTDevice(String pF, String ip){
-    pluginFile = pF;
+  public IoTDevice(int sP, String ip){
     serverIP = ip;
+    serverPort = sP;
   }
 
-  public String getPluginFile(){
-    return pluginFile;
+  public int getServerPort(){
+    return serverPort;
   }
 
   public String getServerIP(){
     return serverIP;
   }
+
+  public abstract String filterMessage(String message);
 }

@@ -7,6 +7,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.InetAddress;
 import java.io.*;
+import Plugins.*;
 
 public class Acceptor extends Thread {
 
@@ -51,8 +52,9 @@ public class Acceptor extends Thread {
       if(line.indexOf(":") != -1){
         String serverIP = line.split(":")[0];
         int serverPort = Integer.parseInt(line.split(":")[1]);
+        IoTDevice device = new LightSensorPlugin(serverPort, serverIP);
 
-        VirtualMachine virtualMachine = new VirtualMachine(serverIP, serverPort, clientSocket, "test.txt");
+        VirtualMachine virtualMachine = new VirtualMachine(clientSocket, "test.txt", device);
         virtualMachine.start();
       }
 
