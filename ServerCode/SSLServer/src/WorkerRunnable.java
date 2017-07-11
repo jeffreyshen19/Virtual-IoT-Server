@@ -30,16 +30,16 @@ public class WorkerRunnable implements Runnable{
     int sleepTime = 1000;
     try {
       while (running) {
-          if (running) { //two br's , two socket's
+          if (running) {
             BufferedReader br = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             PrintWriter pw = new PrintWriter(clientSocket.getOutputStream());
-            System.out.println("1message!");
+            //System.out.println("1message!");
             if (receiving) {
               String data = br.readLine();
               messages.add(data);
               System.out.println(data + " is echoed");
             }
-            System.out.println("2message!");
+            //System.out.println("2message!");
             //receiving = true;
 
             BufferedReader msgTaker = new BufferedReader(new InputStreamReader(System.in));
@@ -51,7 +51,7 @@ public class WorkerRunnable implements Runnable{
               message += msgTaker.readLine();
             }
             if (message.equals("")) {
-              System.out.println("No input");
+              //System.out.println("No input");
             }
             else {
               messages.add(message);
