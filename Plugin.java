@@ -1,6 +1,6 @@
 /*
   Plugin.java
-  Reads plug-in's in the form of text files and perform manipulation to information obtained. 
+  Reads plug-in's in the form of .txt files and perform manipulation to information obtained. 
   Has capability of updating plug-in's. 
 */
 
@@ -21,7 +21,7 @@ public class Plugin{
   reads the selected text file.
   fileLocation is the directory, like "/Users/PeizeHe/Desktop/test.txt"
   */
-  public void readtxt(String fileLocation){
+  public void readtxt(String fileLocation){ 
     ArrayList<String> protocol = new ArrayList<String>();
     br = null;
     fr = null;
@@ -34,7 +34,7 @@ public class Plugin{
       br = new BufferedReader(fr);
       String sCurrentLine;
       br = new BufferedReader(new FileReader(fileLocation));
-      while ((sCurrentLine = br.readLine()) != null) {
+      while ((sCurrentLine = br.readLine()) != null) { //read lines until no line exists
         protocol.add(sCurrentLine);
       }
     } catch (IOException e) {
@@ -50,16 +50,16 @@ public class Plugin{
       }
     }
 
-    for(int i = 0; i < protocol.size(); i++){
+    for(int i = 0; i < protocol.size(); i++){ //remove all spaces
       for(int j = 0; j < protocol.get(i).length(); j++){
         if(protocol.get(i).substring(j, j + 1).equals(" ")){
           element = "" + protocol.get(i).substring(0, j) + protocol.get(i).substring(j + 1);
-          protocol.set(i, element);
+          protocol.set(i, element.toLowerCase());
         }
       }
     }
 
-    for(int i = 0; i < protocol.size(); i++){
+    for(int i = 0; i < protocol.size(); i++){ //remove all empty lines
       inter = protocol.get(i);
       if(protocol.get(i).equals("")){
         protocol.remove(i);
