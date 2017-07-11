@@ -31,8 +31,9 @@ public class SmartDoorLock {
     else {
       return;
     }
-    
+    try {
     BufferedReader br = new BufferedReader(new InputStreamReader(sslSocket.getInputStream()));
+  } catch (Exception e) {}
     try {
       String userInput = "" , serverResponse = "";
       PrintWriter pw = new PrintWriter(sslSocket.getOutputStream());
