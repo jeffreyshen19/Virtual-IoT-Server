@@ -142,7 +142,7 @@ public class SmartDoorLock {
     return pass;
   }
 
-  public static int changePassword(BufferedReader br, PrintWriter pw, double currentPass) {
+  public static double changePassword(BufferedReader br, PrintWriter pw, double currentPass) {
     pw.println("What is the new password?");
     double password = currentPass;
     try {
