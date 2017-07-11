@@ -3,6 +3,7 @@ import java.net.Socket;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
+import java.io.PrintWriter;
 
 /*
   SmartLight.java
@@ -44,6 +45,9 @@ public class SmartLight{
 
       Socket clientSocket = new Socket(args[0], Integer.parseInt(args[1]));
       BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+      PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+
+      out.println(args[2] + ":" + args[3]);
 
       System.out.println("\033[1m\033[32mSuccessfully connected to server\033[0m");
 
