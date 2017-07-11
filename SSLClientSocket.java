@@ -1,3 +1,7 @@
+/*
+ Supplemental file for creating a client-side socket
+*/
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
