@@ -3,17 +3,22 @@
   Contains the individual thread running for each IoT device
 */
 
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.io.*;
+
 public class VirtualMachine extends Thread {
   private String filename, server;
-  private int port, serverPort;
+  private int serverPort;
+  private ServerSocket serverSocket;
 
-  public VirtualMachine(String s, int sP, int p, String f){
+  public VirtualMachine(String s, int sP, ServerSocket ss, String f){
     super();
-    
+
     filename = f;
     server = s;
-    port = p;
     serverPort = sP;
+    serverSocket = ss;
   }
 
   public void run(){
@@ -21,8 +26,7 @@ public class VirtualMachine extends Thread {
     Receiver receiver = new Receiver(server, serverPort);
     logger.println("Connected to " + server + " on port " + serverPort);
 
-    Sender sender = new Sender(port);
-    logger.println("Sender set up on port " + port);
+    Sender sender = new Sender(serverSocket);
 
     String message = "";
 

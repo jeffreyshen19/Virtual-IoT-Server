@@ -48,6 +48,8 @@ public class SmartLight{
       PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
 
       out.println(args[2] + ":" + args[3]);
+      System.out.println(args[2] + ":" + args[3]);
+
 
       System.out.println("\033[1m\033[32mSuccessfully connected to server\033[0m");
 

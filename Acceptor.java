@@ -11,24 +11,19 @@ import java.io.*;
 public class Acceptor extends Thread {
 
   public void run(){
-    ServerSocket serverSocket = null;
-    Socket clientSocket = null;
+
     PrintWriter out = null;
     BufferedReader in = null;
 
-    int port = 2001;
+    int port = 2000;
 
     String line = "";
 
-    try{
-      serverSocket = new ServerSocket(2000);
-    }
-    catch(Exception e){
-      e.printStackTrace();
-    }
-
     while(true){
+      ServerSocket serverSocket = null;
+      Socket clientSocket = null;
       try{
+        serverSocket = new ServerSocket(port);
         clientSocket = serverSocket.accept();
         out = new PrintWriter(clientSocket.getOutputStream(), true);
         in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
@@ -48,21 +43,8 @@ public class Acceptor extends Thread {
         String serverIP = line.split(":")[0];
         int serverPort = Integer.parseInt(line.split(":")[1]);
 
-        VirtualMachine virtualMachine = new VirtualMachine(serverIP, serverPort, port, "test.txt");
+        VirtualMachine virtualMachine = new VirtualMachine(serverIP, serverPort, serverSocket, "test.txt");
         virtualMachine.start();
-        try{
-          out.println("Adding you to virtual service. Connect to " + InetAddress.getLocalHost().getHostAddress() + ":" + port);
-        }
-        catch(Exception e){
-          e.printStackTrace();
-        }
-      }
-
-      try{
-        clientSocket.close();
-      }
-      catch(Exception e){
-        e.printStackTrace();
       }
 
       port++;
