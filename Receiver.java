@@ -1,7 +1,7 @@
 /*
-Receiver.java
-Establishes connection between virtual service and server
-Accepts messages from the server and is capable of sending messages back
+  Receiver.java
+  Establishes connection between virtual service and server
+  Accepts messages from the server and is capable of sending messages back
 */
 
 import java.io.*;
