@@ -54,7 +54,7 @@ public class Plugin{
       for(int j = 0; j < protocol.get(i).length(); j++){
         if(protocol.get(i).substring(j, j + 1).equals(" ")){
           element = "" + protocol.get(i).substring(0, j) + protocol.get(i).substring(j + 1);
-          protocol.set(i, element);
+          protocol.set(i, element.toLowerCase());
         }
       }
     }
