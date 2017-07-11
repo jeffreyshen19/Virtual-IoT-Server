@@ -9,11 +9,7 @@ import java.util.*;
 import java.lang.reflect.*;
 
 public class Compiler {
-  
-  public Compiler(){
-    
-  }
-  
+
   /*
   Testing purposes. This main method should never be called.
   Takes in 2 necessary arguments.
@@ -25,33 +21,44 @@ public class Compiler {
     compile(args[0]);
     runMain(args[0]);
     runProgram(args[0], args[1]);
+    renameFile ("/Users/PeizeHe/Desktop/Plugin.txt", "/Users/PeizeHe/Desktop/Plugin.java");
   }
-  
+
+  /*
+  changes the format of file, such as from .txt to a .java file
+  Can be used to rename a file as well.
+  Can be used to set up plugins.
+  */
+  public static void renameFile(String location, String newName){
+    File file = new File(location);
+    file.renameTo(new File(newName));
+  }
+
   /*
   runs a selected (non-main) method in a class.
   program breaks and returns error if the method does not exist in the class.
   */
   public static void runProgram(String class1, String method1) throws Exception{
-    
+
     Class params[] = {};
     Object paramsObj[] = {};
-    
+
     Class thisClass = Class.forName(class1);
-    
+
     Object iClass = thisClass.newInstance();
-    
+
     Method thisMethod = thisClass.getDeclaredMethod(method1, params);
-    
+
     System.out.println(thisMethod.invoke(iClass, paramsObj));
   }
-  
+
   /*
   compiles the selected class.
   program breaks and returns error if the class does not exist in the directory.
   equivalent to punching javac "class name".java in terminal.
   */
   public static void compile (String class2) throws Exception{
-    
+
     try
     {
       runProcess("javac "+ class2 +".java");
@@ -60,16 +67,16 @@ public class Compiler {
     {
       e.printStackTrace();
     }
-    
+
   }
-  
+
   /*
   runs a selected class' main method.
   program breaks and returns error if the class does not have a main method.
   equivalent to punching java "class name" in terminal.
   */
   public static void runMain(String class3) throws Exception{
-    
+
     try
     {
       runProcess("java " + class3);
@@ -78,7 +85,7 @@ public class Compiler {
     {
       e.printStackTrace();
     }
-    
+
   }
   /*
   reads the results of the operations given by the system.
@@ -86,26 +93,26 @@ public class Compiler {
   Used in compile and runMain.
   */
   private static void printLines(String name, InputStream ins) throws Exception {
-    
+
     String line = null;
     BufferedReader in = new BufferedReader(new InputStreamReader(ins));
-    
+
     while ((line = in.readLine()) != null) {
       System.out.println(name + " " + line);
     }
   }
-  
+
   /*
   prints out the results of operations completed.
   Used in compile and runMain.
   */
   private static void runProcess(String command) throws Exception {
-    
+
     Process pro = Runtime.getRuntime().exec(command);
-    
+
     printLines(command + " stdout:", pro.getInputStream());
     printLines(command + " stderr:", pro.getErrorStream());
-    
+
     pro.waitFor();
     System.out.println(command + " exitValue() " + pro.exitValue());
   }
