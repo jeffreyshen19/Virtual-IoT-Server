@@ -67,6 +67,8 @@ public class SmartDoorLock {
           pw.flush();
         }
       }
+    } catch(Exception e) {
+      e.printStackTrace();
     }
 
 
