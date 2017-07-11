@@ -5,7 +5,7 @@
 
 public class VirtualService{
   public static void main(String[] args) {
-    //Initialization
+    Receiver receiver = new Receiver(args[0], Integer.parseInt(args[1]));
     Logger logger = new Logger(args[0]);
   }
 }
