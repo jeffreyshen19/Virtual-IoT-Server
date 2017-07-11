@@ -32,7 +32,7 @@ public class SmartDoorLock {
       return;
     }
     try {
-      String serverResponse = "";
+      String userInput = "" , serverResponse = "";
       BufferedReader br = new BufferedReader(new InputStreamReader(sslSocket.getInputStream()));
       PrintWriter pw = new PrintWriter(sslSocket.getOutputStream());
       pw.println("Initiating connection from the client");
@@ -53,6 +53,11 @@ public class SmartDoorLock {
       while(true) {
         serverResponse = br.readLine().trim();
 
+        if (button.read() == 1) {
+          if (inputPassword(button) == password) {
+            unlock(servo);
+          }
+        }
         if(serverResponse.equals("LOCK")) {
           lock(servo);
           pw.println("Succesfully locked.");
