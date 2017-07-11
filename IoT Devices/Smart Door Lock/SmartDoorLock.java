@@ -6,6 +6,8 @@ import java.util.Arrays;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import javax.net.ssl.SSLSocket;
+import java.io.PrintWriter;
 
 public class SmartDoorLock {
 
@@ -62,7 +64,7 @@ public class SmartDoorLock {
           pw.flush();
         }
         if(serverResponse.equals("CHANGE PASSWORD")) {
-          password = changePassword(br,pw,currentPass);
+          password = changePassword(br,pw,password);
           pw.println("Succesful password change.");
           pw.flush();
         }
