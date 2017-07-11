@@ -1,15 +1,21 @@
+/*
+Receiver.java
+Establishes connection between virtual service and server
+Accepts messages from the server and is capable of sending messages back
+*/
+
 import java.io.*;
 import javax.net.ssl.SSLSocket;
 import java.net.UnknownHostException;
 
-public class Receiver{
+public class Receiver{ 
   private SSLSocket sslSocket = null;
   private SSLClientSocket mSSLClientSocket;
   private BufferedReader br;
   private PrintWriter pw;
 
-  public Receiver(String server, int port){
-    mSSLClientSocket = new SSLClientSocket(server, port);
+  public Receiver(String server, int port){ //Constructor. Opens up SSL socket
+    mSSLClientSocket = new SSLClientSocket(server, port); 
 
     if(mSSLClientSocket.checkAndAddCertificates()) {
       sslSocket = mSSLClientSocket.getSSLSocket();
@@ -18,8 +24,8 @@ public class Receiver{
       return;
     }
 
-    br = new BufferedReader(new InputStreamReader(sslSocket.getInputStream()));
-    pw = new PrintWriter(sslSocket.getOutputStream());
+    br = new BufferedReader(new InputStreamReader(sslSocket.getInputStream())); // initializations
+    pw = new PrintWriter(sslSocket.getOutputStream()); 
 
     System.out.println("\033[1m\033[32mSocket successfully set up\033[0m");
   }
