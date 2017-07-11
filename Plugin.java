@@ -2,19 +2,8 @@ import java.io.*;
 import java.util.*;
 
 public class Plugin{
-  public String name;
-
-  /*
-  testing method. This main method should never be called.
-  */
-  public static void main(String[] args) {
-    Plugin plugin1 = new Plugin ("door");
-    ArrayList<String> array = plugin1.readtxt(args[0]);
-
-    for(int i = 0; i < array.size(); i++){
-      System.out.println(array.get(i));
-    }
-  }
+  private String name;
+  private ArrayList<String> info;
 
   public Plugin(String inName){
     name = inName;
@@ -24,7 +13,7 @@ public class Plugin{
   reads the selected text file.
   fileLocation is the directory, like "/Users/PeizeHe/Desktop/test.txt"
   */
-  public ArrayList<String> readtxt(String fileLocation){
+  public void readtxt(String fileLocation){
     ArrayList<String> protocol = new ArrayList<String>();
     BufferedReader br = null;
     FileReader fr = null;
@@ -69,6 +58,6 @@ public class Plugin{
       }
     }
 
-    return protocol;
+    info = protocol;
   }
 }
