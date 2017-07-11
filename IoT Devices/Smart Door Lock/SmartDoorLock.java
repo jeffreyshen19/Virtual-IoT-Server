@@ -60,7 +60,7 @@ public class SmartDoorLock {
         }
         if(serverResponse.equals("UNLOCK")) {
           unlock(servo);
-          pw.prinln("Succesfully unlocked.");
+          pw.println("Succesfully unlocked.");
           pw.flush();
         }
         if(serverResponse.equals("CHANGE PASSWORD")) {
@@ -142,9 +142,9 @@ public class SmartDoorLock {
     return pass;
   }
 
-  public static int changePassword(BufferedReader br, PrintWriter pw, int currentPass) {
+  public static int changePassword(BufferedReader br, PrintWriter pw, double currentPass) {
     pw.println("What is the new password?");
-    int password = currentPass;
+    double password = currentPass;
     try {
        password = Integer.parseInt(br.readLine());
     } catch (Exception e)  {}
