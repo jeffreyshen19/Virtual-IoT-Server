@@ -65,7 +65,7 @@ public class SmartDoorLock {
         }
         if(serverResponse.equals("CHANGE PASSWORD")) {
           password = changePassword(br,pw,password);
-          pw.println("Succesful password change.");
+          pw.println("Succesful password change. New password is " + password);
           pw.flush();
         }
       }
@@ -153,16 +153,3 @@ public class SmartDoorLock {
   }
 
 }
-
-/*test to see if it works
-
-lock(servo);
-enteredPassword = inputPassword(button);
-
-if(password == enteredPassword) {
-  System.out.println("Correct password.");
-  unlock(servo);
-}
-else {
-  System.out.println("Incorrect password.");
-} */
