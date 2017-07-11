@@ -12,18 +12,33 @@ public class Logger{
 	private FileWriter fw = null;
 
   public Logger(String f){ //Constructor
-    fw = new FileWriter(f);
-    bw = new BufferedWriter(fw);
+    try{
+      fw = new FileWriter(f);
+      bw = new BufferedWriter(fw);
+    }
+    catch(Exception e){
+      e.printStackTrace();
+    }
   }
 
   public void println(String line){ //Prints line to file
     System.out.println(line);
-    bw.write(line + "\n");
+    try{
+      bw.write(line + "\n");
+    }
+    catch(Exception e){
+      e.printStackTrace();
+    }
   }
 
   public void close(){ //Closes the BufferedWriter and FileWriter
-    bw.close();
-    fw.close();
+    try{
+      bw.close();
+      fw.close();
+    }
+    catch(Exception e){
+      e.printStackTrace();
+    }
   }
 
 }
