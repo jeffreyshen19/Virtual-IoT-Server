@@ -12,10 +12,9 @@ public class Sender{
   private PrintWriter out;
   private BufferedReader in;
 
-  public Sender(ServerSocket ss){ //Port to create server on
+  public Sender(Socket ss){ //Port to create server on
     try{
-      serverSocket = ss;
-      clientSocket = serverSocket.accept();
+      clientSocket = ss;
       out = new PrintWriter(clientSocket.getOutputStream(), true);
       in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
     }

@@ -10,15 +10,15 @@ import java.io.*;
 public class VirtualMachine extends Thread {
   private String filename, server;
   private int serverPort;
-  private ServerSocket serverSocket;
+  private Socket socket;
 
-  public VirtualMachine(String s, int sP, ServerSocket ss, String f){
+  public VirtualMachine(String s, int sP, Socket ss, String f){
     super();
 
     filename = f;
     server = s;
     serverPort = sP;
-    serverSocket = ss;
+    socket = ss;
   }
 
   public void run(){
@@ -26,7 +26,9 @@ public class VirtualMachine extends Thread {
     Receiver receiver = new Receiver(server, serverPort);
     logger.println("Connected to " + server + " on port " + serverPort);
 
-    Sender sender = new Sender(serverSocket);
+    Sender sender = new Sender(socket);
+    System.out.println("got over here");
+
 
     String message = "";
 

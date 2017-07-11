@@ -19,11 +19,20 @@ public class Acceptor extends Thread {
 
     String line = "";
 
+    ServerSocket serverSocket = null;
+
+    try{
+
+    }
+    catch(Exception e){
+
+    }
+
     while(true){
-      ServerSocket serverSocket = null;
+
       Socket clientSocket = null;
       try{
-        serverSocket = new ServerSocket(port);
+        serverSocket = new ServerSocket(2000);
         clientSocket = serverSocket.accept();
         out = new PrintWriter(clientSocket.getOutputStream(), true);
         in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
@@ -43,7 +52,7 @@ public class Acceptor extends Thread {
         String serverIP = line.split(":")[0];
         int serverPort = Integer.parseInt(line.split(":")[1]);
 
-        VirtualMachine virtualMachine = new VirtualMachine(serverIP, serverPort, serverSocket, "test.txt");
+        VirtualMachine virtualMachine = new VirtualMachine(serverIP, serverPort, clientSocket, "test.txt");
         virtualMachine.start();
       }
 
