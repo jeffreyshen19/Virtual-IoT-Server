@@ -8,15 +8,15 @@ import java.io.*;
 import javax.net.ssl.SSLSocket;
 import java.net.UnknownHostException;
 
-public class Receiver{ 
+public class Receiver{
   private SSLSocket sslSocket = null;
   private SSLClientSocket mSSLClientSocket;
   private BufferedReader br;
   private PrintWriter pw;
 
   public Receiver(String server, int port){ //Constructor. Opens up SSL socket
-    mSSLClientSocket = new SSLClientSocket(server, port); 
-
+    mSSLClientSocket = new SSLClientSocket(server, port);
+    
     if(mSSLClientSocket.checkAndAddCertificates()) {
       sslSocket = mSSLClientSocket.getSSLSocket();
     }
@@ -24,8 +24,13 @@ public class Receiver{
       return;
     }
 
-    br = new BufferedReader(new InputStreamReader(sslSocket.getInputStream())); // initializations
-    pw = new PrintWriter(sslSocket.getOutputStream()); 
+    try{
+      br = new BufferedReader(new InputStreamReader(sslSocket.getInputStream())); // initializations
+      pw = new PrintWriter(sslSocket.getOutputStream());
+    }
+    catch(Exception e){
+      e.printStackTrace();
+    }
 
     System.out.println("\033[1m\033[32mSocket successfully set up\033[0m");
   }
@@ -45,7 +50,7 @@ public class Receiver{
     String message = "";
     try{
       while(true){
-        message = br.readLine().trim();
+        message = br.readLine();
         if(message.length() > 0){
           System.out.println(message);
           break;
@@ -56,7 +61,7 @@ public class Receiver{
     catch(Exception e){
       e.printStackTrace();
     }
-    return message;
+    return message.trim();
   }
 
 }

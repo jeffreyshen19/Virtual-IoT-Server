@@ -18,6 +18,8 @@ public class Sender{
     catch(Exception e){
       e.printStackTrace();
     }
+
+    System.out.println("\033[1m\033[32mSender socket successfully set up\033[0m");
   }
 
   public void sendMessage(String message){
