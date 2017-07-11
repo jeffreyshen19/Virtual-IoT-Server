@@ -28,6 +28,7 @@ public class Receiver{
         if(message.length() > 0){
           System.out.println(message); 
           pw.println("Client received the command");
+          pw.flush();
           break; 
         }
         Thread.sleep(1000);
