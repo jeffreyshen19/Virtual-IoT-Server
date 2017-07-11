@@ -53,6 +53,11 @@ public class SmartDoorLock {
       while(true) {
         serverResponse = br.readLine().trim();
 
+        if (button.read() == 1) {
+          if (inputPassword(button) == password) {
+            unlock(servo);
+          }
+        }
         if(serverResponse.equals("LOCK")) {
           lock(servo);
           pw.println("Succesfully locked.");
