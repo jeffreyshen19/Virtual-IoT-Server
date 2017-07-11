@@ -21,7 +21,6 @@ public class SmartDoorLock {
   }
   public static void main(String[] args){
     //SSL
-    serverResponse = "";
     SSLSocket sslSocket = null;
     SSLClientSocket mSSLClientSocket = new SSLClientSocket(args[0], Integer.parseInt(args[1]));
     if(mSSLClientSocket.checkAndAddCertificates()) {
@@ -31,6 +30,7 @@ public class SmartDoorLock {
       return;
     }
     try {
+      serverResponse = "";
       BufferedReader br = new BufferedReader(new InputStreamReader(sslSocket.getInputStream()));
       PrintWriter pw = new PrintWriter(sslSocket.getOutputStream());
       pw.println("Initiating connection from the client");
@@ -62,7 +62,7 @@ public class SmartDoorLock {
           pw.flush();
         }
         if(serverResponse.equals("CHANGE PASSWORD")) {
-          password = changePassword();
+          password = changePassword(br,pw);
           pw.println("Succesful password change.");
           pw.flush();
         }
@@ -140,11 +140,12 @@ public class SmartDoorLock {
     return pass;
   }
 
-  public static int changePassword() {
-    System.out.println("What is the new password?");
+  public static int changePassword(BufferedReader br, PrintWriter pw) {
+    pw.println("What is the new password?");
     try {
-      password = Integer.parseInt(br.readLine());
+       int password = Integer.parseInt(br.readLine());
     } catch (Exception e)  {}
+    pw.flush();
     return password;
   }
 
