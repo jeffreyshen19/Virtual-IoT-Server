@@ -3,11 +3,14 @@ import javax.net.ssl.SSLSocket;
 import java.net.UnknownHostException;
 
 public class Receiver{
+  private SSLSocket sslSocket = null;
+  private SSLClientSocket mSSLClientSocket;
+  private BufferedReader br;
+  private PrintWriter pw;
 
-  public String connect (String server, int port){
-    String message = "";
-    SSLSocket sslSocket = null;
-    SSLClientSocket mSSLClientSocket = new SSLClientSocket(server, port);
+  public Receiver(String server, int port){
+    mSSLClientSocket = new SSLClientSocket(server, port);
+
     if(mSSLClientSocket.checkAndAddCertificates()) {
       sslSocket = mSSLClientSocket.getSSLSocket();
     }
@@ -15,27 +18,39 @@ public class Receiver{
       return;
     }
 
-    try {
-      BufferedReader br = new BufferedReader(new InputStreamReader(sslSocket.getInputStream()));
-      PrintWriter pw = new PrintWriter(sslSocket.getOutputStream());
-      pw.println("Initiating connection from the client");
-      System.out.println("\033[1m\033[32mSuccessfully connected to secure server\033[0m");
-      pw.flush();
-      br.readLine();
+    br = new BufferedReader(new InputStreamReader(sslSocket.getInputStream()));
+    pw = new PrintWriter(sslSocket.getOutputStream());
 
+    System.out.println("\033[1m\033[32mSocket successfully set up\033[0m");
+  }
+
+  public void sendMessage(String message){ //sends message to server
+    try{
+      pw.println(message);
+      System.out.println(message);
+      pw.flush();
+    }
+    catch(Exception e){
+      e.printStackTrace();
+    }
+  }
+
+  public String getMessage(){ //receives message from server
+    String message = "";
+    try{
       while(true){
         message = br.readLine().trim();
         if(message.length() > 0){
-          System.out.println(message); 
-          pw.println("Client received the command");
-          break; 
+          System.out.println(message);
+          break;
         }
-        Thread.sleep(1000);
+        Thread.sleep(10);
       }
-    } catch (Exception e) {
+    }
+    catch(Exception e){
       e.printStackTrace();
     }
-
     return message;
   }
+
 }
