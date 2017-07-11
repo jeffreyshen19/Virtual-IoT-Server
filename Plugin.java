@@ -1,6 +1,6 @@
 /*
   Plugin.java
-  Reads plug-in's in the form of text files and perform manipulation to information obtained. 
+  Reads plug-in's in the form of .txt files and perform manipulation to information obtained. 
   Has capability of updating plug-in's. 
 */
 
