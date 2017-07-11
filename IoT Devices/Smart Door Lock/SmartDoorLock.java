@@ -69,6 +69,7 @@ public class SmartDoorLock {
           pw.flush();
         }
         if(serverResponse.equals("CHANGE PASSWORD")) {
+          System.out.println("got here !!!!! ");
           password = changePassword(br,pw,password);
           pw.println("Succesful password change. New password is " + password);
           pw.flush();
