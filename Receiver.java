@@ -16,7 +16,7 @@ public class Receiver{
 
   public Receiver(String server, int port){ //Constructor. Opens up SSL socket
     mSSLClientSocket = new SSLClientSocket(server, port);
-    
+
     if(mSSLClientSocket.checkAndAddCertificates()) {
       sslSocket = mSSLClientSocket.getSSLSocket();
     }
@@ -51,7 +51,7 @@ public class Receiver{
     try{
       while(true){
         message = br.readLine();
-        if(message.length() > 0){
+        if(message != null && message.length() > 0){
           System.out.println(message);
           break;
         }
