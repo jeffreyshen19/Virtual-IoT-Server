@@ -44,7 +44,7 @@ public class SmartLight{
 
       Socket clientSocket = new Socket(args[0], Integer.parseInt(args[1]));
       BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-      PrintWriter out = new PrintWriter(socket.getOutputStream());
+      PrintWriter out = new PrintWriter(clientSocket.getOutputStream());
 
       out.println(args[2] + ":" + args[3]);
 
