@@ -4,6 +4,8 @@ import java.util.*;
 public class Plugin{
   private String name;
   private ArrayList<String> info;
+  private BufferedReader br;
+  private FileReader fr;
 
   public Plugin(String inName){
     name = inName;
@@ -15,8 +17,8 @@ public class Plugin{
   */
   public void readtxt(String fileLocation){
     ArrayList<String> protocol = new ArrayList<String>();
-    BufferedReader br = null;
-    FileReader fr = null;
+    br = null;
+    fr = null;
 
     String inter = "";
     String element = "";
