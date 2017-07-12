@@ -59,7 +59,7 @@ public class Acceptor extends Thread {
         IoTDevice device = null;
 
         try{
-          clazz = Class.forName(name);
+          clazz = Class.forName(className);
 
           Class[] cArg = new Class[2];
           cArg[0] = int.class;
