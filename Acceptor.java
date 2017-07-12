@@ -8,6 +8,7 @@ import java.net.Socket;
 import java.net.InetAddress;
 import java.io.*;
 import Plugins.*;
+import java.lang.reflect.*;
 
 public class Acceptor extends Thread {
 
@@ -52,7 +53,23 @@ public class Acceptor extends Thread {
       if(line.indexOf(":") != -1){
         String serverIP = line.split(":")[0];
         int serverPort = Integer.parseInt(line.split(":")[1]);
-        IoTDevice device = new LightSensorPlugin(serverPort, serverIP);
+        String className = line.split("|")[1];
+
+        Class clazz;
+        IoTDevice device = null;
+
+        try{
+          clazz = Class.forName(name);
+
+          Class[] cArg = new Class[2];
+          cArg[0] = int.class;
+          cArg[1] = String.class;
+
+          device = (IoTDevice) clazz.getDeclaredConstructor(cArg).newInstance(serverPort, serverIP);
+        }
+        catch(Exception e){
+          e.printStackTrace();
+        }
 
         VirtualMachine virtualMachine = new VirtualMachine(clientSocket, "test.txt", device);
         virtualMachine.start();
