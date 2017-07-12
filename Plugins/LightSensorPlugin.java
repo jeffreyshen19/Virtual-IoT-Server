@@ -5,7 +5,7 @@
 
 public class LightSensorPlugin extends IoTDevice{
 
-  public LightSensorPlugin(int sP, String ip){ //Overrides constructor
+  public LightSensorPlugin(int sP, String ip){ //Overwrites constructor
     super(sP, ip);
   }
 
