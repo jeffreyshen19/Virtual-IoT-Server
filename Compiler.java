@@ -10,18 +10,8 @@ import java.lang.reflect.*;
 
 public class Compiler {
 
-  /*
-  Testing purposes. This main method should never be called.
-  Takes in 2 necessary arguments.
-  Arguments:
-  [0]: Class to Compile
-  [1]: method to run
-  */
-  public static void main(String[] args) throws Exception{
-    compile(args[0]);
-    runMain(args[0]);
-    runProgram(args[0], args[1]);
-    renameFile ("/Users/PeizeHe/Desktop/Plugin.txt", "/Users/PeizeHe/Desktop/Plugin.java");
+  public Compiler(){
+    //nothing needed in constructor yet
   }
 
   /*
@@ -29,7 +19,7 @@ public class Compiler {
   Can be used to rename a file as well.
   Can be used to set up plugins.
   */
-  public static void renameFile(String location, String newName){
+  public void renameFile(String location, String newName){
     File file = new File(location);
     file.renameTo(new File(newName));
   }
@@ -38,7 +28,7 @@ public class Compiler {
   runs a selected (non-main) method in a class.
   program breaks and returns error if the method does not exist in the class.
   */
-  public static void runProgram(String class1, String method1) throws Exception{
+  public void runProgram(String class1, String method1) throws Exception{
 
     Class params[] = {};
     Object paramsObj[] = {};
@@ -57,7 +47,7 @@ public class Compiler {
   program breaks and returns error if the class does not exist in the directory.
   equivalent to punching javac "class name".java in terminal.
   */
-  public static void compile (String class2) throws Exception{
+  public void compile (String class2) throws Exception{
 
     try
     {
@@ -75,7 +65,7 @@ public class Compiler {
   program breaks and returns error if the class does not have a main method.
   equivalent to punching java "class name" in terminal.
   */
-  public static void runMain(String class3) throws Exception{
+  public void runMain(String class3) throws Exception{
 
     try
     {
@@ -106,7 +96,7 @@ public class Compiler {
   prints out the results of operations completed.
   Used in compile and runMain.
   */
-  private static void runProcess(String command) throws Exception {
+  private void runProcess(String command) throws Exception {
 
     Process pro = Runtime.getRuntime().exec(command);
 
