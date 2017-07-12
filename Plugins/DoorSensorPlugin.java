@@ -5,7 +5,7 @@ public class DoorSensorPlugin extends IoTDevice{
   }
 
   public String filterMessage(String message){
-    if(message.equals("LOCK")) message = "UNLOCK";
+    if(message.equals("CHANGE PASSWORD")) message = "UNLOCK";
     return message;
   }
 }
