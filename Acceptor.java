@@ -50,7 +50,7 @@ public class Acceptor extends Thread {
         e.printStackTrace();
       }
 
-      if(line.indexOf(":") != -1){
+      if(line.indexOf(":") != -1 && line.indexOf("|") != -1){
         String serverIP = line.split(":")[0];
         int serverPort = Integer.parseInt(line.split(":")[1]);
         String className = line.split("|")[1];

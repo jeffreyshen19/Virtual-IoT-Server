@@ -81,7 +81,7 @@ public class SmartLight{
       }
     }
     catch(Exception e){
-
+      e.printStackTrace();
     }
   }
 }
