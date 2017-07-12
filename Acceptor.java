@@ -7,9 +7,9 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.InetAddress;
 import java.io.*;
-import Plugins.*;
 import java.util.Arrays;
 import java.lang.reflect.*;
+import Plugins.*;
 
 public class Acceptor extends Thread {
 
@@ -54,11 +54,8 @@ public class Acceptor extends Thread {
       if(line.indexOf(":") != -1 && line.indexOf("|") != -1){
         String serverIP = line.split(":")[0];
         int serverPort = Integer.parseInt(line.split(":")[1].split("|")[0]);
-        String className = line.split("\\|")[1];
-
-        System.out.println(Arrays.toString(line.split("\\|")));
-
-        //"172.20.10.2:5000|SmartLight"
+        //String className = line.split("\\|")[1].trim();
+        String className = "LightSensorPlugin";
 
         System.out.println(line);
         System.out.println(className);
