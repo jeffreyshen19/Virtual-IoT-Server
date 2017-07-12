@@ -1,71 +1,109 @@
-/*
+  /*
   Plugin.java
-  Reads plug-in's in the form of .txt files and perform manipulation to information obtained. 
-  Has capability of updating plug-in's. 
-*/
+  Reads and run plugins. Should be capable of removing, adding, and updating plugin. 
+  Currently compiles a class and runs any method in the class.
+  */
 
 import java.io.*;
 import java.util.*;
+import java.lang.reflect.*;
 
-public class Plugin{
-  private String name;
-  private ArrayList<String> info;
-  private BufferedReader br;
-  private FileReader fr;
+public class Plugin {
 
-  public Plugin(String inName){
-    name = inName;
+  public Plugin(){
+    //nothing needed in constructor yet
   }
 
   /*
-  reads the selected text file.
-  fileLocation is the directory, like "/Users/PeizeHe/Desktop/test.txt"
+  changes the format of file, such as from .txt to a .java file
+  Can be used to rename a file as well.
+  Can be used to set up plugins.
   */
-  public void readtxt(String fileLocation){ 
-    ArrayList<String> protocol = new ArrayList<String>();
-    br = null;
-    fr = null;
+  public void renameFile(String location, String newName){
+    File file = new File(location);
+    file.renameTo(new File(newName));
+  }
 
-    String inter = "";
-    String element = "";
+  /*
+  runs a selected (non-main) method in a class.
+  program breaks and returns error if the method does not exist in the class.
+  */
+  public void runProgram(String class1, String method1) throws Exception{
 
-    try {
-      fr = new FileReader(fileLocation);
-      br = new BufferedReader(fr);
-      String sCurrentLine;
-      br = new BufferedReader(new FileReader(fileLocation));
-      while ((sCurrentLine = br.readLine()) != null) { //read lines until no line exists
-        protocol.add(sCurrentLine);
-      }
-    } catch (IOException e) {
+    Class params[] = {};
+    Object paramsObj[] = {};
+
+    Class thisClass = Class.forName(class1);
+
+    Object iClass = thisClass.newInstance();
+
+    Method thisMethod = thisClass.getDeclaredMethod(method1, params);
+
+    System.out.println(thisMethod.invoke(iClass, paramsObj));
+  }
+
+  /*
+  compiles the selected class.
+  program breaks and returns error if the class does not exist in the directory.
+  equivalent to punching javac "class name".java in terminal.
+  */
+  public void compile (String class2) throws Exception{
+
+    try
+    {
+      runProcess("javac "+ class2 +".java");
+    }
+    catch (Exception e)
+    {
       e.printStackTrace();
-    } finally {
-      try {
-        if (br != null)
-        br.close();
-        if (fr != null)
-        fr.close();
-      } catch (IOException ex) {
-        ex.printStackTrace();
-      }
     }
 
-    for(int i = 0; i < protocol.size(); i++){ //remove all spaces
-      for(int j = 0; j < protocol.get(i).length(); j++){
-        if(protocol.get(i).substring(j, j + 1).equals(" ")){
-          element = "" + protocol.get(i).substring(0, j) + protocol.get(i).substring(j + 1);
-          protocol.set(i, element.toLowerCase());
-        }
-      }
+  }
+
+  /*
+  runs a selected class' main method.
+  program breaks and returns error if the class does not have a main method.
+  equivalent to punching java "class name" in terminal.
+  */
+  public void runMain(String class3) throws Exception{
+
+    try
+    {
+      runProcess("java " + class3);
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
     }
 
-    for(int i = 0; i < protocol.size(); i++){ //remove all empty lines
-      inter = protocol.get(i);
-      if(protocol.get(i).equals("")){
-        protocol.remove(i);
-      }
-    }
+  }
+  /*
+  reads the results of the operations given by the system.
+  Called in runProcess to print out those results.
+  Used in compile and runMain.
+  */
+  private static void printLines(String name, InputStream ins) throws Exception {
 
-    info = protocol;
+    String line = null;
+    BufferedReader in = new BufferedReader(new InputStreamReader(ins));
+
+    while ((line = in.readLine()) != null) {
+      System.out.println(name + " " + line);
+    }
+  }
+
+  /*
+  prints out the results of operations completed.
+  Used in compile and runMain.
+  */
+  private void runProcess(String command) throws Exception {
+
+    Process pro = Runtime.getRuntime().exec(command);
+
+    printLines(command + " stdout:", pro.getInputStream());
+    printLines(command + " stderr:", pro.getErrorStream());
+
+    pro.waitFor();
+    System.out.println(command + " exitValue() " + pro.exitValue());
   }
 }
