@@ -52,7 +52,7 @@ public class Acceptor extends Thread {
 
       if(line.indexOf(":") != -1){
         String serverIP = line.split(":")[0];
-        int serverPort = Integer.parseInt(line.split(":")[1]);
+        int serverPort = Integer.parseInt(line.split(":")[1].split("\\|")[0]);
         String className = line.split("|")[1];
 
         Class clazz;
