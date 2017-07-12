@@ -2,7 +2,6 @@
   Plugin.java
   Reads and run plugins. Should be capable of removing, adding, and updating plugin. 
   Currently compiiles a class and run any method in the class.
-  Supplemental to the Plugin class (and related classes).
   */
 
 import java.io.*;
