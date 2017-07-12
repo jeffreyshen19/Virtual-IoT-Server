@@ -1,3 +1,9 @@
+/*
+  SmartDoorLock.java
+  IoT Device for testing purpose
+  Includes basic functions including lock, unlock, and change password. 
+*/
+
 import mraa.Aio;
 import mraa.Gpio;
 import mraa.Pwm;
@@ -55,10 +61,12 @@ public class SmartDoorLock {
         serverResponse = br.readLine().trim();
 
         if (button.read() == 1) {
-          if (inputPassword(button) == password) {
+          if (inputPassword(button) == password) { //checks the password entered by button pattern
             unlock(servo);
           }
         }
+        
+        //analyzes server's message
         if(serverResponse.equals("LOCK")) {
           lock(servo);
           pw.println("Succesfully locked.");
@@ -83,7 +91,7 @@ public class SmartDoorLock {
 
   }
 
-  public static void unlock(Pwm door) {
+  public static void unlock(Pwm door) { //unlocks the door. Called when server issues "UNLOCK"
     door.enable(true);
     door.period_ms(20);
     door.pulsewidth_us(500);
@@ -94,7 +102,7 @@ public class SmartDoorLock {
     door.enable(false);
   }
 
-  public static void lock(Pwm door) {
+  public static void lock(Pwm door) { //locks the door. Called when server issues "LOCK"
     door.enable(true);
     door.period_ms(20);
     door.pulsewidth_us(2500);
@@ -105,7 +113,7 @@ public class SmartDoorLock {
     door.enable(false);
   }
 
-  public static double inputPassword(Gpio doorButton) {
+  public static double inputPassword(Gpio doorButton) { //allows server to enter a new password. 
 
     ArrayList<Integer> generatedPassword = new ArrayList<Integer>();
     int passLength = 0;
