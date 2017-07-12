@@ -1,19 +1,19 @@
 /*
-  Plugin.java
-  Reads plug-in's in the form of .txt files and perform manipulation to information obtained. 
+  txtReader.java
+  Reads .txt files and perform manipulation to information obtained. 
   Has capability of updating plug-in's. 
 */
 
 import java.io.*;
 import java.util.*;
 
-public class Plugin{
+public class txtReader{
   private String name;
   private ArrayList<String> info;
   private BufferedReader br;
   private FileReader fr;
 
-  public Plugin(String inName){
+  public txtReader(String inName){
     name = inName;
   }
 
