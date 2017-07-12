@@ -1,7 +1,7 @@
   /*
   Plugin.java
   Reads and run plugins. Should be capable of removing, adding, and updating plugin. 
-  Currently compiiles a class and run any method in the class.
+  Currently compiles a class and runs any method in the class.
   */
 
 import java.io.*;
