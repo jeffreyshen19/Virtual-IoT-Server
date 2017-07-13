@@ -51,7 +51,7 @@ public class SmartDoorLock {
       br.readLine();
 
       while(br.readLine() == null ) {
-        pw.println(args[2] + ":" args[3] + "|DoorSensorPlugin");
+        pw.println(""+ args[2] + ":" args[3] + "|DoorSensorPlugin");
         pw.flush();
         try {
           Thread.sleep(1000);
