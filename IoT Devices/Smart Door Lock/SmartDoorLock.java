@@ -108,7 +108,7 @@ public class SmartDoorLock {
 
   }
 
-  public static String unlock(Pwm door) { //unlocks the door. Called when server issues "UNLOCK"
+  public static void unlock(Pwm door) { //unlocks the door. Called when server issues "UNLOCK"
     door.enable(true);
     door.period_ms(20);
     door.pulsewidth_us(500);
@@ -120,7 +120,7 @@ public class SmartDoorLock {
     status = "UNLOCKED";
   }
 
-  public static String lock(Pwm door) { //locks the door. Called when server issues "LOCK"
+  public static void lock(Pwm door) { //locks the door. Called when server issues "LOCK"
     door.enable(true);
     door.period_ms(20);
     door.pulsewidth_us(2500);
