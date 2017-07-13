@@ -34,21 +34,22 @@ public class SmartDoorLock {
     System.out.println("fesyrgfysudhxgvudhgudhfg8u ");
 
     //SSL
+
     SSLSocket sslSocket = null;
     SSLClientSocket mSSLClientSocket = new SSLClientSocket(args[0], Integer.parseInt(args[1]));
-    //if(mSSLClientSocket.checkAndAddCertificates()) {
+    if(mSSLClientSocket.checkAndAddCertificates()) {
       sslSocket = mSSLClientSocket.getSSLSocket();
-    //}
-    //else {
-      //return;
-    //}
+    }
+    else {
+      return;
+    }
 
     try {
 
       String userInput = "" , serverResponse = "";
       BufferedReader br = new BufferedReader(new InputStreamReader(sslSocket.getInputStream()));
       PrintWriter pw = new PrintWriter(sslSocket.getOutputStream());
-      //pw.println("Initiating connection from the client");
+      // pw.println("Initiating connection from the client");
       //pw.flush();
 
       pw.println(args[2] + ":" + args[3] + "|DoorSensorPlugin");
