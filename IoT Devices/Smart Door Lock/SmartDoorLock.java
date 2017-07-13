@@ -50,7 +50,7 @@ public class SmartDoorLock {
       pw.flush();
 
       while(br.readLine() == null ) {
-        pw.println(args[2] + ":" args[3] + "|DoorSensorPlugin");
+        pw.println(args[2] + ":" + args[3] + "|DoorSensorPlugin");
         pw.flush();
         try {
           TimeUnit.SECONDS.sleep(1);
@@ -70,6 +70,7 @@ public class SmartDoorLock {
 
       while(true) {
         serverResponse = br.readLine().trim();
+
         Timer timer = new Timer();
         timer.schedule(pw.println(status), 0, 5000);
         pw.flush();
@@ -169,7 +170,7 @@ public class SmartDoorLock {
     return pass;
   }
 
-  public static double changePassword(BufferedReader br, PrintWriter pw, double currentPass) { //alllows server to enter a new password
+  public static double changePassword(BufferedReader br, PrintWriter pw, double currentPass) { //responds to server command
     pw.println("What is the new password?");
     double password = currentPass;
     try {
