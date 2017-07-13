@@ -14,9 +14,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import javax.net.ssl.SSLSocket;
 import java.io.PrintWriter;
-import java.util.TimerTask;
-import java.lang.Object;
-import java.util.Timer;
 
 public class SmartDoorLock extends TimerTask{
   private static String status;
@@ -73,9 +70,11 @@ public class SmartDoorLock extends TimerTask{
 
       while(true) {
         serverResponse = br.readLine().trim();
+        pw.println(status);
+        try {
+          TimeUnit.SECONDS.sleep(3);
+        } catch (Exception e) {}
 
-        Timer timer = new Timer();
-        timer.schedule(new SmartDoorLock(), 0, 5000);
         pw.flush();
 
         if (button.read() == 1) {
@@ -183,8 +182,4 @@ public class SmartDoorLock extends TimerTask{
     return password;
   }
 
-  public void run() {
-    PrintWriter ps = new PrintWriter(sslSocket.getOutputStream());
-    ps.println(status);
-  }
 }
