@@ -36,12 +36,12 @@ public class SmartDoorLock {
     //SSL
     SSLSocket sslSocket = null;
     SSLClientSocket mSSLClientSocket = new SSLClientSocket(args[0], Integer.parseInt(args[1]));
-    if(mSSLClientSocket.checkAndAddCertificates()) {
+    //if(mSSLClientSocket.checkAndAddCertificates()) {
       sslSocket = mSSLClientSocket.getSSLSocket();
-    }
-    else {
+    //}
+    //else {
       //return;
-    }
+    //}
 
     try {
 
