@@ -14,6 +14,10 @@ public class VirtualService{
       e.printStackTrace();
     }
     Acceptor acceptor = new Acceptor();
+    AcceptorSSL acceptorSSL = new AcceptorSSL();
     acceptor.start();
+    System.out.println("Started acceptor on port 2000");
+    acceptorSSL.start();
+    System.out.println("Started acceptor SSL on port 6000");
   }
 }

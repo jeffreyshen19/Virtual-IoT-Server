@@ -1,46 +1,40 @@
 /*
-  Acceptor.java
+  AcceptorSSL.java
   Contains the thread that monitors for new plaintext connections
 */
 
 import java.net.ServerSocket;
 import java.net.Socket;
-import javax.net.ssl.SSLSocket;
-import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.*;
 import java.net.InetAddress;
 import java.io.*;
 import java.util.Arrays;
 import java.lang.reflect.*;
 import Plugins.*;
 
-public class Acceptor extends Thread {
+public class AcceptorSSL extends Thread {
 
   public void run(){ //Overwrites run
 
     PrintWriter out = null;
     BufferedReader in = null;
 
-    int port = 2000;
+    int port = 6000;
 
     String line = "";
 
-    ServerSocket serverSocket = null;
-
-    try{
-
-    }
-    catch(Exception e){
-
-    }
+    SSLServerSocket serverSocket = null;
+    SSLServerSocketFactory factory=(SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
 
     while(true){ //Accepts client connection and establishes server connection
 
-      Socket clientSocket = null;
+      SSLSocket sslsocket = null;
+
       try{
-        serverSocket = new ServerSocket(port);
-        clientSocket = serverSocket.accept();
-        out = new PrintWriter(clientSocket.getOutputStream(), true);
-        in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+        serverSocket = (SSLServerSocket) factory.createServerSocket(port);
+        sslsocket = (SSLSocket) serverSocket.accept();
+        out = new PrintWriter(sslsocket.getOutputStream(), true);
+        in = new BufferedReader(new InputStreamReader(sslsocket.getInputStream()));
       }
       catch(Exception e){
         e.printStackTrace();
@@ -75,12 +69,14 @@ public class Acceptor extends Thread {
           e.printStackTrace();
         }
 
-        VirtualMachine virtualMachine = new VirtualMachine(clientSocket, "test.txt", device);
+        out.println("Successfuly connected");
+
+        VirtualMachine virtualMachine = new VirtualMachine(sslsocket, "test.txt", device);
         virtualMachine.start();
       }
 
       port++;
-      System.out.println("Now accepting new connections on port " + port);
+      System.out.println("Now accepting new SSL connections on port " + port);
 
       try{
         Thread.sleep(10);

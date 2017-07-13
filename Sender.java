@@ -5,6 +5,7 @@
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.io.*;
+import javax.net.ssl.SSLSocket;
 
 public class Sender{
   private ServerSocket serverSocket;
@@ -17,6 +18,18 @@ public class Sender{
       clientSocket = ss;
       out = new PrintWriter(clientSocket.getOutputStream(), true);
       in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+    }
+    catch(Exception e){
+      e.printStackTrace();
+    }
+
+    System.out.println("\033[1m\033[32mSender socket successfully set up\033[0m");
+  }
+
+  public Sender(SSLSocket ss){ //Port to create server on
+    try{
+      out = new PrintWriter(ss.getOutputStream(), true);
+      in = new BufferedReader(new InputStreamReader(ss.getInputStream()));
     }
     catch(Exception e){
       e.printStackTrace();
