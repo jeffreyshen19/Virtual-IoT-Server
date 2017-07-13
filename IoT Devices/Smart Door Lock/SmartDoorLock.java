@@ -14,8 +14,10 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import javax.net.ssl.SSLSocket;
 import java.io.PrintWriter;
+import java.util.Timer;
 
 public class SmartDoorLock {
+  String private status = "";
 
   static {
     try {
@@ -47,9 +49,11 @@ public class SmartDoorLock {
       pw.println("Initiating connection from the client");
       pw.flush();
       br.readLine();
-      
-      pw.println(args[2]+ ":" args[3]+ "|DoorSensorPlugin");
 
+      while(br.readLine() == null ) {
+        pw.println(args[2]+ ":" args[3]+ "|DoorSensorPlugin");
+      }
+      
       System.out.println("\033[1m\033[32mSuccessfully connected to secure server\033[0m");
 
       //instantiate the sensors/motor
@@ -63,6 +67,8 @@ public class SmartDoorLock {
 
       while(true) {
         serverResponse = br.readLine().trim();
+        Timer timer = new Timer();
+        timer.schedule(pw.println(status), 0, 5000);
 
         if (button.read() == 1) {
           if (inputPassword(button) == password) { //checks the password entered by button pattern
@@ -95,7 +101,7 @@ public class SmartDoorLock {
 
   }
 
-  public static void unlock(Pwm door) { //unlocks the door. Called when server issues "UNLOCK"
+  public static String unlock(Pwm door) { //unlocks the door. Called when server issues "UNLOCK"
     door.enable(true);
     door.period_ms(20);
     door.pulsewidth_us(500);
@@ -104,9 +110,10 @@ public class SmartDoorLock {
     }catch (InterruptedException e) {
     }
     door.enable(false);
+    status = "UNLOCKED";
   }
 
-  public static void lock(Pwm door) { //locks the door. Called when server issues "LOCK"
+  public static String lock(Pwm door) { //locks the door. Called when server issues "LOCK"
     door.enable(true);
     door.period_ms(20);
     door.pulsewidth_us(2500);
@@ -115,6 +122,7 @@ public class SmartDoorLock {
     }catch (InterruptedException e) {
     }
     door.enable(false);
+    status = "LOCKED";
   }
 
   public static double inputPassword(Gpio doorButton) { //allows user to enter a password.
