@@ -17,7 +17,7 @@ import java.io.PrintWriter;
 import java.util.Timer;
 
 public class SmartDoorLock {
-  private String status;
+  private static String status;
 
   static {
     try {
