@@ -50,12 +50,13 @@ public class SmartDoorLock {
       pw.flush();
       br.readLine();
 
-      //while(br.readLine() == null ) {
+      while(br.readLine() == null ) {
         pw.println(args[2] + ":" args[3] + "|DoorSensorPlugin");
-        /*try {
+        pw.flush();
+        try {
           Thread.sleep(1000);
         } catch (Exception e) {}
-      } */
+      }
 
       System.out.println("\033[1m\033[32mSuccessfully connected to secure server\033[0m");
 
@@ -72,6 +73,7 @@ public class SmartDoorLock {
         serverResponse = br.readLine().trim();
         Timer timer = new Timer();
         timer.schedule(pw.println(status), 0, 5000);
+        pw.flush();
 
         if (button.read() == 1) {
           if (inputPassword(button) == password) { //checks the password entered by button pattern
