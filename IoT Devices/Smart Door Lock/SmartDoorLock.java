@@ -17,7 +17,7 @@ import java.io.PrintWriter;
 import java.util.Timer;
 
 public class SmartDoorLock {
-  String private status = "";
+  private String status;
 
   static {
     try {
@@ -53,7 +53,7 @@ public class SmartDoorLock {
       while(br.readLine() == null ) {
         pw.println(args[2]+ ":" args[3]+ "|DoorSensorPlugin");
       }
-      
+
       System.out.println("\033[1m\033[32mSuccessfully connected to secure server\033[0m");
 
       //instantiate the sensors/motor
