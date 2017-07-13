@@ -15,7 +15,7 @@ import Plugins.*;
 
 public class Acceptor extends Thread {
 
-  public void run(){
+  public void run(){ //Overwrites run
 
     PrintWriter out = null;
     BufferedReader in = null;
@@ -33,7 +33,7 @@ public class Acceptor extends Thread {
 
     }
 
-    while(true){
+    while(true){ //Accepts client connection and establishes server connection
 
       Socket clientSocket = null;
       try{
@@ -54,15 +54,15 @@ public class Acceptor extends Thread {
         e.printStackTrace();
       }
 
-      if(line.indexOf(":") != -1 && line.indexOf("|") != -1){
-        String serverIP = line.split(":")[0];
-        int serverPort = Integer.parseInt(line.split(":")[1].split("\\|")[0]);
-        String className = line.split("\\|")[1];
+      if(line.indexOf(":") != -1 && line.indexOf("|") != -1){ //parses the input from the client
+        String serverIP = line.split(":")[0]; //IP of server
+        int serverPort = Integer.parseInt(line.split(":")[1].split("\\|")[0]); //Port of Server
+        String className = line.split("|")[1]; //name of the class
 
         Class clazz;
         IoTDevice device = null;
 
-        try{
+        try{ //Calls the constructor of the class
           clazz = Class.forName(className);
 
           Class[] cArg = new Class[2];
@@ -78,7 +78,7 @@ public class Acceptor extends Thread {
         VirtualMachine virtualMachine = new VirtualMachine(clientSocket, "test.txt", device);
         virtualMachine.start();
       }
-      
+
       port++;
       System.out.println("Now accepting new connections on port " + port);
 
