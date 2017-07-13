@@ -14,7 +14,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import javax.net.ssl.SSLSocket;
 import java.io.PrintWriter;
-import java.util.Timer;
+import java.util.TimerTask;
+import java.lang.Object;
 
 public class SmartDoorLock extends TimerTask{
   private static String status;
