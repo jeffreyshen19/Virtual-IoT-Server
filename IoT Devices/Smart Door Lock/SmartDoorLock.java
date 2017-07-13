@@ -54,7 +54,7 @@ public class SmartDoorLock {
       pw.println(args[2] + ":" + args[3] + "|DoorSensorPlugin");
       pw.flush();
 
-      while(br.readLine().length == 0) {
+      while(br.readLine().length() == 0) {
         //pw = new PrintWriter(sslSocket.getOutputStream());
         pw.println(args[2] + ":" + args[3] + "|DoorSensorPlugin");
         pw.flush();
