@@ -28,6 +28,7 @@ public class SmartDoorLock {
     }
   }
   public static void main(String[] args){
+
     //SSL
     SSLSocket sslSocket = null;
     SSLClientSocket mSSLClientSocket = new SSLClientSocket(args[0], Integer.parseInt(args[1]));
@@ -39,13 +40,17 @@ public class SmartDoorLock {
     }
 
     try {
+
       String userInput = "" , serverResponse = "";
       BufferedReader br = new BufferedReader(new InputStreamReader(sslSocket.getInputStream()));
       PrintWriter pw = new PrintWriter(sslSocket.getOutputStream());
       pw.println("Initiating connection from the client");
-      System.out.println("\033[1m\033[32mSuccessfully connected to secure server\033[0m");
       pw.flush();
       br.readLine();
+      
+      pw.println(args[2]+ ":" args[3]+ "|DoorSensorPlugin");
+
+      System.out.println("\033[1m\033[32mSuccessfully connected to secure server\033[0m");
 
       //instantiate the sensors/motor
       Gpio button = new Gpio(3);
@@ -55,7 +60,6 @@ public class SmartDoorLock {
       //setting default password
       double password = 1111;
       double enteredPassword;
-
 
       while(true) {
         serverResponse = br.readLine().trim();
