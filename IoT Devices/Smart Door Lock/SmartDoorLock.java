@@ -31,6 +31,8 @@ public class SmartDoorLock {
 
   public static void main(String[] args){
 
+    System.out.println("fesyrgfysudhxgvudhgudhfg8u ");
+
     //SSL
     SSLSocket sslSocket = null;
     SSLClientSocket mSSLClientSocket = new SSLClientSocket(args[0], Integer.parseInt(args[1]));
@@ -38,7 +40,7 @@ public class SmartDoorLock {
       sslSocket = mSSLClientSocket.getSSLSocket();
     }
     else {
-      return;
+      //return;
     }
 
     try {
