@@ -17,7 +17,7 @@ import java.io.PrintWriter;
 import java.util.Timer;
 
 public class SmartDoorLock {
-  private static String status;
+  private String status;
 
   static {
     try {
@@ -48,13 +48,12 @@ public class SmartDoorLock {
       PrintWriter pw = new PrintWriter(sslSocket.getOutputStream());
       pw.println("Initiating connection from the client");
       pw.flush();
-      br.readLine();
 
       while(br.readLine() == null ) {
-        pw.println(""+ args[2] + ":" args[3] + "|DoorSensorPlugin");
+        pw.println(args[2] + ":" args[3] + "|DoorSensorPlugin");
         pw.flush();
         try {
-          Thread.sleep(1000);
+          TimeUnit.SECONDS.sleep(1);
         } catch (Exception e) {}
       }
 
