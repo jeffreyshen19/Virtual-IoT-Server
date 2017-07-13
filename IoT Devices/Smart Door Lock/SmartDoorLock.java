@@ -52,6 +52,7 @@ public class SmartDoorLock {
       while(br.readLine() == null ) {
         pw.println(args[2] + ":" + args[3] + "|DoorSensorPlugin");
         pw.flush();
+        System.out.println("Sent");
         try {
           TimeUnit.SECONDS.sleep(1);
         } catch (Exception e) {}
