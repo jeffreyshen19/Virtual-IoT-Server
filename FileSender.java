@@ -1,3 +1,6 @@
+/*
+Code accepts a file and server ip and port. Sends file to server.
+*/
 import javax.net.ssl.SSLSocket;
 import java.io.*;
 
@@ -24,7 +27,7 @@ public class FileSender{
       while ((count = in.read(bytes)) > 0) {
           out.write(bytes, 0, count);
     }
-    
+
     } catch (Exception e) {
       e.printStackTrace();
     }
