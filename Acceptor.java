@@ -5,6 +5,8 @@
 
 import java.net.ServerSocket;
 import java.net.Socket;
+import javax.net.ssl.SSLSocket;
+import javax.net.ssl.SSLSocketFactory;
 import java.net.InetAddress;
 import java.io.*;
 import java.util.Arrays;
@@ -35,7 +37,7 @@ public class Acceptor extends Thread {
 
       Socket clientSocket = null;
       try{
-        serverSocket = new ServerSocket(2000);
+        serverSocket = new ServerSocket(port);
         clientSocket = serverSocket.accept();
         out = new PrintWriter(clientSocket.getOutputStream(), true);
         in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
@@ -46,6 +48,7 @@ public class Acceptor extends Thread {
 
       try{
         line = in.readLine();
+        System.out.println(line);
       }
       catch(Exception e){
         e.printStackTrace();
@@ -54,7 +57,7 @@ public class Acceptor extends Thread {
       if(line.indexOf(":") != -1 && line.indexOf("|") != -1){
         String serverIP = line.split(":")[0];
         int serverPort = Integer.parseInt(line.split(":")[1].split("\\|")[0]);
-        String className = line.split("|")[1];
+        String className = line.split("\\|")[1];
 
         Class clazz;
         IoTDevice device = null;
@@ -75,8 +78,9 @@ public class Acceptor extends Thread {
         VirtualMachine virtualMachine = new VirtualMachine(clientSocket, "test.txt", device);
         virtualMachine.start();
       }
-
+      
       port++;
+      System.out.println("Now accepting new connections on port " + port);
 
       try{
         Thread.sleep(10);

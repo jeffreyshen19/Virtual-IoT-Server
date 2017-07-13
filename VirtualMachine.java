@@ -29,7 +29,6 @@ public class VirtualMachine extends Thread {
     logger.println("Connected to " + server + " on port " + serverPort);
 
     Sender sender = new Sender(socket);
-    System.out.println("got over here");
 
 
     String message = "";
