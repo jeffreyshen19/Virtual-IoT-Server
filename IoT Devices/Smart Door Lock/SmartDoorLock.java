@@ -14,10 +14,9 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import javax.net.ssl.SSLSocket;
 import java.io.PrintWriter;
-import java.util.Timer;
 
 public class SmartDoorLock {
-  private String status;
+  private static String status;
 
   static {
     try {
@@ -29,9 +28,13 @@ public class SmartDoorLock {
       System.exit(1);
     }
   }
+
   public static void main(String[] args){
 
+    System.out.println("fesyrgfysudhxgvudhgudhfg8u ");
+
     //SSL
+
     SSLSocket sslSocket = null;
     SSLClientSocket mSSLClientSocket = new SSLClientSocket(args[0], Integer.parseInt(args[1]));
     if(mSSLClientSocket.checkAndAddCertificates()) {
@@ -46,12 +49,20 @@ public class SmartDoorLock {
       String userInput = "" , serverResponse = "";
       BufferedReader br = new BufferedReader(new InputStreamReader(sslSocket.getInputStream()));
       PrintWriter pw = new PrintWriter(sslSocket.getOutputStream());
-      pw.println("Initiating connection from the client");
-      pw.flush();
-      br.readLine();
+      // pw.println("Initiating connection from the client");
+      //pw.flush();
 
-      while(br.readLine() == null ) {
-        pw.println(args[2]+ ":" args[3]+ "|DoorSensorPlugin");
+      pw.println(args[2] + ":" + args[3] + "|DoorSensorPlugin");
+      pw.flush();
+      System.out.println("COol BEans!");
+      while(br.readLine().length() == 0) {
+        //pw = new PrintWriter(sslSocket.getOutputStream());
+        pw.println(args[2] + ":" + args[3] + "|DoorSensorPlugin");
+        pw.flush();
+        System.out.println("Sent");
+        try {
+          TimeUnit.SECONDS.sleep(1);
+        } catch (Exception e) {}
       }
 
       System.out.println("\033[1m\033[32mSuccessfully connected to secure server\033[0m");
@@ -67,8 +78,12 @@ public class SmartDoorLock {
 
       while(true) {
         serverResponse = br.readLine().trim();
-        Timer timer = new Timer();
-        timer.schedule(pw.println(status), 0, 5000);
+        pw.println(status);
+        try {
+          TimeUnit.SECONDS.sleep(3);
+        } catch (Exception e) {}
+
+        pw.flush();
 
         if (button.read() == 1) {
           if (inputPassword(button) == password) { //checks the password entered by button pattern
@@ -101,7 +116,7 @@ public class SmartDoorLock {
 
   }
 
-  public static String unlock(Pwm door) { //unlocks the door. Called when server issues "UNLOCK"
+  public static void unlock(Pwm door) { //unlocks the door. Called when server issues "UNLOCK"
     door.enable(true);
     door.period_ms(20);
     door.pulsewidth_us(500);
@@ -113,7 +128,7 @@ public class SmartDoorLock {
     status = "UNLOCKED";
   }
 
-  public static String lock(Pwm door) { //locks the door. Called when server issues "LOCK"
+  public static void lock(Pwm door) { //locks the door. Called when server issues "LOCK"
     door.enable(true);
     door.period_ms(20);
     door.pulsewidth_us(2500);
@@ -165,7 +180,7 @@ public class SmartDoorLock {
     return pass;
   }
 
-  public static double changePassword(BufferedReader br, PrintWriter pw, double currentPass) { //alllows server to enter a new password
+  public static double changePassword(BufferedReader br, PrintWriter pw, double currentPass) { //responds to server command
     pw.println("What is the new password?");
     double password = currentPass;
     try {
