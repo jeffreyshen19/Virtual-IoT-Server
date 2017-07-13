@@ -31,7 +31,7 @@ public class SmartDoorLock extends TimerTask{
   }
 
   public void run() {
-    pw.println(status)
+    pw.println(status);
   }
   public static void main(String[] args){
 
