@@ -49,7 +49,7 @@ public class SmartDoorLock {
       //pw.println("Initiating connection from the client");
       //pw.flush();
 
-      while(br.readLine() == null ) {
+      while(br.readLine().length == 0) {
         pw.println(args[2] + ":" + args[3] + "|DoorSensorPlugin");
         pw.flush();
         System.out.println("Sent");
