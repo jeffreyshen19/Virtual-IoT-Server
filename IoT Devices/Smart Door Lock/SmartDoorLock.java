@@ -46,8 +46,8 @@ public class SmartDoorLock {
       String userInput = "" , serverResponse = "";
       BufferedReader br = new BufferedReader(new InputStreamReader(sslSocket.getInputStream()));
       PrintWriter pw = new PrintWriter(sslSocket.getOutputStream());
-      pw.println("Initiating connection from the client");
-      pw.flush();
+      //pw.println("Initiating connection from the client");
+      //pw.flush();
 
       while(br.readLine() == null ) {
         pw.println(args[2] + ":" + args[3] + "|DoorSensorPlugin");
