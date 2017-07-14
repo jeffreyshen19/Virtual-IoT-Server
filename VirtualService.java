@@ -15,9 +15,12 @@ public class VirtualService{
     }
     Acceptor acceptor = new Acceptor();
     AcceptorSSL acceptorSSL = new AcceptorSSL();
+    PluginFileTransfer fileTransferer = new PluginFileTransfer();
     acceptor.start();
-    System.out.println("Started acceptor on port 2000");
+    System.out.println("Started TLS acceptor on port \033[1m2000\033[0m");
     acceptorSSL.start();
-    System.out.println("Started acceptor SSL on port 6000");
+    System.out.println("Started SSL acceptor on port \033[1m6000\033[0m");
+    fileTransferer.start();
+    System.out.println("Started Plugin Acceptor on port \033[1m9000\033[0m");
   }
 }
