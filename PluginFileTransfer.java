@@ -1,6 +1,6 @@
 /*
   PluginFileTransfer.java
-  This file defines the thread that accepts new plugins and installs them on the Virtual Service. 
+  This file defines the thread that accepts new plugins and installs them on the Virtual Service.
 */
 
 import java.io.*;
@@ -78,7 +78,6 @@ public class PluginFileTransfer extends Thread{
         e.printStackTrace();
       }
 
-      //Wrap it up
       try{
         out.close();
         in.close();

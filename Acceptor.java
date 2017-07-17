@@ -26,13 +26,6 @@ public class Acceptor extends Thread {
 
     ServerSocket serverSocket = null;
 
-    try{
-
-    }
-    catch(Exception e){
-
-    }
-
     while(true){ //Accepts client connection and establishes server connection with multithreading capability.
 
       Socket clientSocket = null;
