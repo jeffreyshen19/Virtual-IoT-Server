@@ -1,6 +1,6 @@
 /*
   Logger.java
-  This file records all IP traffic by printing it out and logging it in a file.
+  This file records all IP traffic
 */
 
 import java.io.BufferedWriter;
@@ -24,20 +24,20 @@ public class Logger{
   public void println(String line){ //Prints line to file
     System.out.println(line);
     try{
-      bw.write(line + "\n");
+      bw.write(line + "\n");//bw tries to write line
     }
-    catch(Exception e){
+    catch(Exception e){//exception e is thrown and the printStackTrace funtion is carried out
       e.printStackTrace();
     }
   }
 
   public void close(){ //Closes the BufferedWriter and FileWriter
     try{
-      bw.close();
-      fw.close();
+      bw.close();//close method for bw
+      fw.close();//close method for wf
     }
-    catch(Exception e){
-      e.printStackTrace();
+    catch(Exception e){//exception e thrown
+      e.printStackTrace();//printStackTrace error
     }
   }
 
