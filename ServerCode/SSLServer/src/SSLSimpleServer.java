@@ -10,6 +10,13 @@ import java.util.ArrayList;
 import javax.net.ServerSocketFactory;
 import javax.net.ssl.SSLServerSocketFactory;
 
+/**
+ *
+ * SSLSimpleServer class creates a non-blocking SSL server
+ * 7/17/17
+ * Ryan Goggins
+ */
+
 public class SSLSimpleServer extends Thread implements Runnable {
 
   protected Socket         sock;
@@ -52,11 +59,10 @@ public class SSLSimpleServer extends Thread implements Runnable {
     }
 
     while(! isStopped()){
-      this.threadPool.execute(new WorkerRunnable(sock));
+      this.threadPool.execute(new WorkerRunnable(sock, "Thread Pooled Server"));
       //do this such that WorkerRunnable's are connected via IP
     }
     this.threadPool.shutdown();
     System.out.println("Server Stopped.") ;
-    System.out.println("got here");
   }
 }

@@ -13,7 +13,8 @@ import javax.net.ServerSocketFactory;
 import javax.net.ssl.SSLServerSocketFactory;
 
 /*
- * WorkerRunnable.java 7/11/17
+ * WorkerRunnable.java
+ * 7/11/17
  * Handles messaging between client and server (Iot Device and Virtual Service)
  * Ryan Goggins
  */
