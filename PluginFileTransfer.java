@@ -36,6 +36,18 @@ public class PluginFileTransfer extends Thread{
         System.out.println("Can't get socket input stream. ");
       }
 
+      try{
+        filename = new BufferedReader(new InputStreamReader(sslsocket.getInputStream())).readLine();
+      }
+      catch(Exception e){
+        e.printStackTrace();
+      }
+
+      System.out.println("\033[1m\033[32mNow receiving " + filename + "\033[0m");
+
+      filename = filename.replace("class", "txt");
+
+
       try {
         new FileOutputStream("Plugins/" + filename, false).close(); //Create filename
         out = new FileOutputStream("Plugins/" + filename);
@@ -50,6 +62,12 @@ public class PluginFileTransfer extends Thread{
         while ((count = in.read(bytes)) > 0) {
           out.write(bytes, 0, count);
         }
+
+        //Rename
+        File file = new File("Plugins/" + filename);
+        File file2 = new File("Plugins/" + filename.replace("txt", "class"));
+
+        file.renameTo(file2);
       }
       catch(Exception e){
         e.printStackTrace();
