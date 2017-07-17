@@ -14,12 +14,12 @@ public class VirtualService{
       e.printStackTrace();
     }
 
-    Acceptor acceptor = new Acceptor();
-    acceptor.start();
+    Acceptor acceptor = new Acceptor();//Acceptor constructor
+    acceptor.start();//start method is called
     System.out.println("Started TLS acceptor on port \033[1m2000\033[0m");
 
-    AcceptorSSL acceptorSSL = new AcceptorSSL();
-    acceptorSSL.start();
+    AcceptorSSL acceptorSSL = new AcceptorSSL();//AcceptorSSL constructor
+    acceptorSSL.start();//start method called agaain
     System.out.println("Started SSL acceptor on port \033[1m6000\033[0m");
 
     PluginFileTransfer fileTransferer = new PluginFileTransfer();
