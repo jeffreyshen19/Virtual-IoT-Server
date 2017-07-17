@@ -35,8 +35,6 @@ public class VirtualMachine extends Thread {
     sslSocket = ss;
     device = d;
     isUsingSSl = true;
-
-    System.out.println("wassup");
   }
 
   public void run(){ //Overwrites run
