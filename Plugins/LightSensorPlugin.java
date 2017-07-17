@@ -17,8 +17,8 @@ public class LightSensorPlugin extends IoTDevice{
 
     //A test to see if it functions.
 
-    if (message.equals("Off")) message = "OFF";
-    if(message.equals("On")) message = "ON";
+    if (message.equals("LEDOFF")) message = "OFF";
+    if(message.equals("LEDON")) message = "ON";
     return message;
   }
 }

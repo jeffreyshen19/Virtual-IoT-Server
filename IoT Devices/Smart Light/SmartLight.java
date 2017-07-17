@@ -34,6 +34,9 @@ public class SmartLight{
 
   public static void main(String[] args) {
     try{
+
+      //Declare/instantiate LED and light sensor
+
       Gpio led = new Gpio(4);
       Aio lightSensor = new Aio(0);
 
@@ -42,6 +45,8 @@ public class SmartLight{
       int on = 0;
       long lightValue = 0;
       String command = "";
+
+      //Set up socket and reading capabilities
 
       Socket clientSocket = new Socket(args[0], Integer.parseInt(args[1]));
       BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
@@ -52,6 +57,8 @@ public class SmartLight{
 
 
       System.out.println("\033[1m\033[32mSuccessfully connected to server\033[0m");
+
+      //Get server input and issue commands based on that input
 
       while(true){
         lightValue = lightSensor.read();

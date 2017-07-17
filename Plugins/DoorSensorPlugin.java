@@ -19,9 +19,9 @@ public class DoorSensorPlugin extends IoTDevice{
 
     //A test to see if it functions.
 
-    if (message.equals("Change Password")) message = "CHANGE PASSWORD";
-    if (message.equals("Lock")) message = "LOCK";
-    if(message.equals("Unlock")) message = "UNLOCK";
+    if (message.equals("PASSWORD")) message = "CHANGE PASSWORD";
+    if (message.equals("LOCK DOOR")) message = "LOCK";
+    if(message.equals("UNLOCK DOOR")) message = "UNLOCK";
 
     return message;
   }
