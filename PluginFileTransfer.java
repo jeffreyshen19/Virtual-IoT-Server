@@ -7,8 +7,12 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import javax.net.ssl.*;
+import java.net.URLClassLoader;
+import java.net.URL;
+import java.lang.reflect.Method;
 
 public class PluginFileTransfer extends Thread{
+
   public void run(){ //Overrides run method.
     SSLServerSocket serverSocket = null;
     SSLServerSocketFactory factory= (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
@@ -69,9 +73,27 @@ public class PluginFileTransfer extends Thread{
 
         //Rename to the file's original name
         File file = new File("Plugins/" + filename);
-        File file2 = new File("Plugins/" + filename.replace("txt", "class"));
+        filename = filename.replace("txt", "class");
+        File file2 = new File("Plugins/" + filename);
 
         file.renameTo(file2);
+
+        URL[] urls = null;
+
+        File dir = new File("./Plugins/" + filename);
+        URL url = dir.toURI().toURL();
+        urls = new URL[] { url };
+
+        ClassLoader cl = new URLClassLoader(urls);
+        Class cls = cl.loadClass(filename.split("\\.")[0]);
+
+        Class[] cArg = new Class[2];
+        cArg[0] = int.class;
+        cArg[1] = String.class;
+
+        cls.getDeclaredConstructor(cArg).newInstance(0, "");
+
+        System.out.println("\033[1m\033[32mSuccessfuly loaded plugin\033[0m");
       }
       catch(Exception e){
         e.printStackTrace();
