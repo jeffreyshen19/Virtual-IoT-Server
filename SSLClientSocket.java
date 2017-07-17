@@ -1,4 +1,4 @@
-Certificates/ClientCertificate/*
+/*
  Supplemental file for creating a client-side socket
 */
 

@@ -35,12 +35,7 @@ public class AcceptorSSL extends Thread {
         sslsocket = (SSLSocket) serverSocket.accept();
         out = new PrintWriter(sslsocket.getOutputStream(), true);
         in = new BufferedReader(new InputStreamReader(sslsocket.getInputStream()));
-      }
-      catch(Exception e){
-        e.printStackTrace();
-      }
 
-      try{
         line = in.readLine();
         System.out.println(line);
       }
