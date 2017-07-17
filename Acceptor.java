@@ -12,8 +12,15 @@ import java.io.*;
 import java.util.Arrays;
 import java.lang.reflect.*;
 import Plugins.*;
+import java.util.ArrayList;
 
 public class Acceptor extends Thread {
+  private ArrayList<VirtualMachine> machines;
+
+  public Acceptor(ArrayList<VirtualMachine> m){
+    super();
+    machines = m;
+  }
 
   public void run(){ //Overwrites run
 
@@ -40,7 +47,7 @@ public class Acceptor extends Thread {
       catch(Exception e){
         e.printStackTrace();
       }
-      
+
       if(line.indexOf(":") != -1 && line.indexOf("|") != -1){ //parses the input from the client
         String serverIP = line.split(":")[0]; //IP of server
         int serverPort = Integer.parseInt(line.split(":")[1].split("\\|")[0]); //Port of Server
@@ -62,7 +69,8 @@ public class Acceptor extends Thread {
           e.printStackTrace();
         }
 
-        VirtualMachine virtualMachine = new VirtualMachine(clientSocket, "test.txt", device);
+        VirtualMachine virtualMachine = new VirtualMachine(clientSocket, "test.txt", device, className);
+        machines.add(virtualMachine);
         virtualMachine.start(); //sets up a new thread
       }
 

@@ -4,6 +4,7 @@
 */
 
 import java.net.InetAddress;
+import java.util.ArrayList;
 
 public class VirtualService{
   public static void main(String[] args) {
@@ -14,15 +15,17 @@ public class VirtualService{
       e.printStackTrace();
     }
 
-    Acceptor acceptor = new Acceptor();//Acceptor constructor
+    ArrayList<VirtualMachine> machines = new ArrayList<VirtualMachine>();
+
+    Acceptor acceptor = new Acceptor(machines);//Acceptor constructor
     acceptor.start();//start method is called
     System.out.println("Started TLS acceptor on port \033[1m2000\033[0m");
 
-    AcceptorSSL acceptorSSL = new AcceptorSSL();//AcceptorSSL constructor
+    AcceptorSSL acceptorSSL = new AcceptorSSL(machines);//AcceptorSSL constructor
     acceptorSSL.start();//start method called agaain
     System.out.println("Started SSL acceptor on port \033[1m6000\033[0m");
 
-    PluginFileTransfer fileTransferer = new PluginFileTransfer();
+    PluginFileTransfer fileTransferer = new PluginFileTransfer(machines);
     fileTransferer.start();
     System.out.println("Started Plugin Acceptor on port \033[1m9000\033[0m");
   }

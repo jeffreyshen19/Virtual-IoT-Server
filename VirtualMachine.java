@@ -13,10 +13,11 @@ public class VirtualMachine extends Thread {
   private int serverPort;
   private Socket socket;
   private SSLSocket sslSocket;
-  private IoTDevice device;
+  private volatile IoTDevice device;
   private boolean isUsingSSl = false;
+  private String className;
 
-  public VirtualMachine(Socket ss, String f, IoTDevice d){ //Initializes an simple unencrypted connection
+  public VirtualMachine(Socket ss, String f, IoTDevice d, String cn){ //Initializes an simple unencrypted connection
     super();
 
     filename = f;
@@ -24,9 +25,10 @@ public class VirtualMachine extends Thread {
     serverPort = d.getServerPort();
     socket = ss;
     device = d;
+    className = cn;
   }
 
-  public VirtualMachine(SSLSocket ss, String f, IoTDevice d){ //Initializes an SSL connection with a client that has SSL enabled
+  public VirtualMachine(SSLSocket ss, String f, IoTDevice d, String cn){ //Initializes an SSL connection with a client that has SSL enabled
     super();
 
     filename = f;
@@ -35,6 +37,19 @@ public class VirtualMachine extends Thread {
     sslSocket = ss;
     device = d;
     isUsingSSl = true;
+    className = cn;
+  }
+
+  public void setDevice(IoTDevice d){
+    device = d;
+  }
+
+  public String getClassName(){
+    return className;
+  }
+
+  public IoTDevice getDevice(){
+    return device;
   }
 
   public void run(){ //Overwrites run

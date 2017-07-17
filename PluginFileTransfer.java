@@ -10,8 +10,16 @@ import javax.net.ssl.*;
 import java.net.URLClassLoader;
 import java.net.URL;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class PluginFileTransfer extends Thread{
+  private ArrayList<VirtualMachine> machines;
+
+  public PluginFileTransfer(ArrayList<VirtualMachine> m){
+    super();
+    machines = m;
+  }
 
   public void run(){ //Overrides run method.
     SSLServerSocket serverSocket = null;
@@ -80,7 +88,7 @@ public class PluginFileTransfer extends Thread{
 
         URL[] urls = null;
 
-        File dir = new File("./Plugins/" + filename);
+        File dir = new File("./Plugins/");
         URL url = dir.toURI().toURL();
         urls = new URL[] { url };
 
@@ -91,7 +99,17 @@ public class PluginFileTransfer extends Thread{
         cArg[0] = int.class;
         cArg[1] = String.class;
 
-        cls.getDeclaredConstructor(cArg).newInstance(0, "");
+
+        for(int i = 0; i < machines.size(); i++){
+          VirtualMachine machine = machines.get(i);
+          if(machine.getClassName().equals(filename.split("\\.")[0])){
+            IoTDevice currentDevice = machine.getDevice();
+            IoTDevice newDevice = (IoTDevice) cls.getDeclaredConstructor(cArg).newInstance(currentDevice.getServerPort(), currentDevice.getServerIP());
+
+            System.out.println(newDevice.filterMessage("yeeeeee"));
+            machine.setDevice(newDevice);
+          }
+        }
 
         System.out.println("\033[1m\033[32mSuccessfuly loaded plugin\033[0m");
       }

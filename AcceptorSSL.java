@@ -11,8 +11,15 @@ import java.io.*;
 import java.util.Arrays;
 import java.lang.reflect.*;
 import Plugins.*;
+import java.util.ArrayList;
 
 public class AcceptorSSL extends Thread {
+  private ArrayList<VirtualMachine> machines;
+
+  public AcceptorSSL(ArrayList<VirtualMachine> m){
+    super();
+    machines = m;
+  }
 
   public void run(){ //Overwrites run
 
@@ -66,7 +73,8 @@ public class AcceptorSSL extends Thread {
 
         out.println("Successfuly connected");
 
-        VirtualMachine virtualMachine = new VirtualMachine(sslsocket, "test.txt", device);
+        VirtualMachine virtualMachine = new VirtualMachine(sslsocket, "test.txt", device, className);
+        machines.add(virtualMachine);
         virtualMachine.start();
       }
 
