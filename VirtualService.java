@@ -8,7 +8,7 @@ import java.net.InetAddress;
 public class VirtualService{
   public static void main(String[] args) {
     try{
-      System.out.println("ip address: " + InetAddress.getLocalHost().getHostAddress());
+      System.out.println("\033[1mIP Address: " + InetAddress.getLocalHost().getHostAddress() + "\033[0m");
     }
     catch(Exception e){
       e.printStackTrace();

@@ -1,4 +1,4 @@
-/*
+Certificates/ClientCertificate/*
  Supplemental file for creating a client-side socket
 */
 
@@ -76,7 +76,7 @@ public class SSLClientSocket {
     keyStore.setCertificateEntry(alias, cert);
     if(DEBUG_ALL) System.out.println(alias + " is added");
          }
-   OutputStream out = new FileOutputStream("jssecacerts");
+   OutputStream out = new FileOutputStream("Certificates/ClientCertificate");
    keyStore.store(out, mCacertsPassword);
          out.flush();
          out.close();
@@ -127,11 +127,11 @@ public class SSLClientSocket {
  }
 
  private KeyStore getKeyStore() {
-        File file = new File("jssecacerts");
+        File file = new File("Certificates/ClientCertificate");
         if (file.isFile() == false) {
             char SEP = File.separatorChar;
             File dir = new File(System.getProperty("java.home") + SEP + "lib" + SEP + "security");
-            file = new File(dir, "jssecacerts");
+            file = new File(dir, "Certificates/ClientCertificate");
             if (file.isFile() == false) {
                 file = new File(dir, "cacerts");
             }
