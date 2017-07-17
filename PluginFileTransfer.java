@@ -26,7 +26,6 @@ public class PluginFileTransfer extends Thread{
       e.printStackTrace();
     }
 
-
     while(true){
       try{
         sslsocket = (SSLSocket) serverSocket.accept(); //listens for connection from client.
@@ -52,11 +51,11 @@ public class PluginFileTransfer extends Thread{
 
       filename = filename.replace("class", "txt");
 
-
       try {
         new FileOutputStream("Plugins/" + filename, false).close(); //Create filename
         out = new FileOutputStream("Plugins/" + filename);
-      } catch (Exception e) {
+      }
+      catch (Exception e) {
         e.printStackTrace();
       }
 

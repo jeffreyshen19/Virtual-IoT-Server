@@ -17,12 +17,8 @@ public class Receiver{
   public Receiver(String server, int port){ //Constructor. Opens up SSL socket
     mSSLClientSocket = new SSLClientSocket(server, port);
 
-    if(mSSLClientSocket.checkAndAddCertificates()) {
-      sslSocket = mSSLClientSocket.getSSLSocket();
-    }
-    else {
-      return;
-    }
+    if(mSSLClientSocket.checkAndAddCertificates()) sslSocket = mSSLClientSocket.getSSLSocket();
+    else return;
 
     try{
       br = new BufferedReader(new InputStreamReader(sslSocket.getInputStream())); // initializations
@@ -48,6 +44,7 @@ public class Receiver{
 
   public String getMessage(){ //receives message from server
     String message = "";
+    
     try{
       while(true){
         message = br.readLine();
@@ -61,6 +58,7 @@ public class Receiver{
     catch(Exception e){
       e.printStackTrace();
     }
+
     return message.trim();
   }
 

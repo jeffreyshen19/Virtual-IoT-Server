@@ -13,13 +13,16 @@ public class VirtualService{
     catch(Exception e){
       e.printStackTrace();
     }
+
     Acceptor acceptor = new Acceptor();
-    AcceptorSSL acceptorSSL = new AcceptorSSL();
-    PluginFileTransfer fileTransferer = new PluginFileTransfer();
     acceptor.start();
     System.out.println("Started TLS acceptor on port \033[1m2000\033[0m");
+
+    AcceptorSSL acceptorSSL = new AcceptorSSL();
     acceptorSSL.start();
     System.out.println("Started SSL acceptor on port \033[1m6000\033[0m");
+
+    PluginFileTransfer fileTransferer = new PluginFileTransfer();
     fileTransferer.start();
     System.out.println("Started Plugin Acceptor on port \033[1m9000\033[0m");
   }

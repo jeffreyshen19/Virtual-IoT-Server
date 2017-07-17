@@ -34,19 +34,13 @@ public class Acceptor extends Thread {
         clientSocket = serverSocket.accept();
         out = new PrintWriter(clientSocket.getOutputStream(), true);
         in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-      }
-      catch(Exception e){
-        e.printStackTrace();
-      }
-
-      try{
         line = in.readLine();
         System.out.println(line);
       }
       catch(Exception e){
         e.printStackTrace();
       }
-
+      
       if(line.indexOf(":") != -1 && line.indexOf("|") != -1){ //parses the input from the client
         String serverIP = line.split(":")[0]; //IP of server
         int serverPort = Integer.parseInt(line.split(":")[1].split("\\|")[0]); //Port of Server
