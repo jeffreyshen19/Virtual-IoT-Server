@@ -4,6 +4,12 @@
   Includes basic functions including lock, unlock, and change password.
 */
 
+/*
+  Usage Notes
+  - Must hold button to trigger password input
+  - Follow prompts when inputting password
+*/
+
 import mraa.Aio;
 import mraa.Gpio;
 import mraa.Pwm;
@@ -43,6 +49,7 @@ public class SmartDoorLock {
     }
 
     try {
+
       //Setting up input
 
       String userInput = "" , serverResponse = "";
@@ -54,10 +61,8 @@ public class SmartDoorLock {
       pw.println(args[2] + ":" + args[3] + "|DoorSensorPlugin");
       pw.flush();
       while(br.readLine().length() == 0) {
-        //pw = new PrintWriter(sslSocket.getOutputStream());
         pw.println(args[2] + ":" + args[3] + "|DoorSensorPlugin");
         pw.flush();
-        System.out.println("Sent");
         try {
           TimeUnit.SECONDS.sleep(1);
         } catch (Exception e) {}
@@ -66,11 +71,13 @@ public class SmartDoorLock {
       System.out.println("\033[1m\033[32mSuccessfully connected to secure server\033[0m");
 
       //Declare/instantiate the sensors/motor
+
       Gpio button = new Gpio(3);
       Aio light = new Aio(3);
       Pwm servo = new Pwm(6);
 
       //Setting default password
+
       double password = 1111;
       double enteredPassword;
 
@@ -78,6 +85,7 @@ public class SmartDoorLock {
         serverResponse = br.readLine().trim();
 
         //Send packets of locked/unlocked to server
+
         pw.println(status);
         try {
           TimeUnit.SECONDS.sleep(1);
@@ -90,6 +98,11 @@ public class SmartDoorLock {
         if (button.read() == 1) {
           if (inputPassword(button) == password) {
             unlock(servo);
+            System.out.println("Succesfully unlocked.");
+          }
+          else {
+            lock(servo);
+            System.out.println("Unsuccesful unlock. Please try again.");
           }
         }
 
