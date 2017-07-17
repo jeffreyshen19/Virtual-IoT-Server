@@ -5,12 +5,20 @@
 
 public class LightSensorPlugin extends IoTDevice{
 
-  public LightSensorPlugin(int sP, String ip){ //Overwrites constructor
+  //Overwrites constructor
+
+  public LightSensorPlugin(int sP, String ip){
     super(sP, ip);
   }
 
-  public String filterMessage(String message){ //Defines filter. Called when server inputs the given message
-    if(message.equals("OFF")) message = "ON";
+  //Defines filter. Called when server inputs the given message
+
+  public String filterMessage(String message){
+
+    //A test to see if it functions.
+
+    if (message.equals("Off")) message = "OFF";
+    if(message.equals("On")) message = "ON";
     return message;
   }
 }
