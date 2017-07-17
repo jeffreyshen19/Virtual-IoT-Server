@@ -1,6 +1,8 @@
 /*
-Code accepts a file and server ip and port. Sends file to server.
+  FileSender.java
+  Test code to send a file to the Virtual Service
 */
+
 import javax.net.ssl.SSLSocket;
 import java.io.*;
 

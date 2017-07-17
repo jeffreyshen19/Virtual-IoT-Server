@@ -1,3 +1,8 @@
+/*
+  PluginFileTransfer.java
+  This file defines the thread that accepts new plugins and installs them on the Virtual Service. 
+*/
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;

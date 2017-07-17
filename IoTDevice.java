@@ -1,6 +1,6 @@
 /*
   IoTDevice.java
-  Object storing all the information for an IoT Device
+  Object storing all the information for an IoT Device. Superclass for all the plugins
 */
 
 public abstract class IoTDevice{

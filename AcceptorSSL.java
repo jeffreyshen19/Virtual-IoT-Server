@@ -1,6 +1,6 @@
 /*
   AcceptorSSL.java
-  Contains the thread that monitors for new plaintext connections
+  Contains the thread that monitors for new encrypted connections
 */
 
 import java.net.ServerSocket;

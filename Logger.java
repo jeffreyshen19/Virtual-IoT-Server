@@ -1,6 +1,6 @@
 /*
   Logger.java
-  This file records all IP traffic
+  This file records all IP traffic by printing it out and logging it in a file.
 */
 
 import java.io.BufferedWriter;
