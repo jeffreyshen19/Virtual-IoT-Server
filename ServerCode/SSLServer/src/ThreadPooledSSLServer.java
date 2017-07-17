@@ -47,6 +47,7 @@ public class ThreadPooledSSLServer implements Runnable{
 
       try {
         clientSocket = this.serverSocket.accept();
+        System.out.println("Socket created");
       } catch (IOException e) {
         if(isStopped()) {
           System.out.println("Server Stopped.") ;
@@ -55,10 +56,10 @@ public class ThreadPooledSSLServer implements Runnable{
         throw new RuntimeException(
         "Error accepting client connection", e);
       }
+
       //start that new thread boyo
       this.threadPool.execute(
-      new WorkerRunnable(clientSocket,
-      "Thread Pooled Server"));
+      new WorkerRunnable(clientSocket));
 
     }
     this.threadPool.shutdown();

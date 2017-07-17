@@ -22,12 +22,14 @@ import javax.net.ssl.SSLServerSocketFactory;
 public class WorkerRunnable implements Runnable{
 
   protected Socket clientSocket;
+  protected String address;
 
   /*
    * Constructor takes in a socket and a message (unused)
    */
-  public WorkerRunnable(Socket clientSocket) {
+  public WorkerRunnable(Socket clientSocket, String address) {
     this.clientSocket = clientSocket;
+    this.address = address;
   }
 
   public void run() {
@@ -38,12 +40,10 @@ public class WorkerRunnable implements Runnable{
       while (running) {
         if (running) {
 
-          System.out.println("WE ARE IN WorkerRunnable NOW");
-
           //Create a writer and a reader to pass messages from client to server
           BufferedReader br = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
           PrintWriter pw = new PrintWriter(clientSocket.getOutputStream());
-          System.out.println("yo");
+
           //for reading message from user
           String data = "";
           if (br.ready()) {
