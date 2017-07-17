@@ -23,10 +23,9 @@ public class SSLSimpleServer extends Thread implements Runnable {
 
     System.out.println("Ready...");
     Socket ssSocket = ss.accept();
-
     SSLSimpleServer server = new SSLSimpleServer(ssSocket);
+    System.out.println("Accepted connection : " + ssSocket.toString());
 
-    System.out.println("process of connecting");
     new Thread(server).start();
     try {
       Thread.sleep(200 * 1000);
@@ -54,6 +53,7 @@ public class SSLSimpleServer extends Thread implements Runnable {
 
     while(! isStopped()){
       this.threadPool.execute(new WorkerRunnable(sock));
+      //do this such that WorkerRunnable's are connected via IP
     }
     this.threadPool.shutdown();
     System.out.println("Server Stopped.") ;
