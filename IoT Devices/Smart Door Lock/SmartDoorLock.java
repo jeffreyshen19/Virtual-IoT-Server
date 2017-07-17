@@ -31,8 +31,6 @@ public class SmartDoorLock {
 
   public static void main(String[] args){
 
-    System.out.println("fesyrgfysudhxgvudhgudhfg8u ");
-
     //SSL
 
     SSLSocket sslSocket = null;
@@ -45,16 +43,16 @@ public class SmartDoorLock {
     }
 
     try {
+      //Setting up input
 
       String userInput = "" , serverResponse = "";
       BufferedReader br = new BufferedReader(new InputStreamReader(sslSocket.getInputStream()));
       PrintWriter pw = new PrintWriter(sslSocket.getOutputStream());
-      // pw.println("Initiating connection from the client");
-      //pw.flush();
+
+      //Sending Virtual Service messages
 
       pw.println(args[2] + ":" + args[3] + "|DoorSensorPlugin");
       pw.flush();
-      System.out.println("COol BEans!");
       while(br.readLine().length() == 0) {
         //pw = new PrintWriter(sslSocket.getOutputStream());
         pw.println(args[2] + ":" + args[3] + "|DoorSensorPlugin");
@@ -67,31 +65,36 @@ public class SmartDoorLock {
 
       System.out.println("\033[1m\033[32mSuccessfully connected to secure server\033[0m");
 
-      //instantiate the sensors/motor
+      //Declare/instantiate the sensors/motor
       Gpio button = new Gpio(3);
       Aio light = new Aio(3);
       Pwm servo = new Pwm(6);
 
-      //setting default password
+      //Setting default password
       double password = 1111;
       double enteredPassword;
 
       while(true) {
         serverResponse = br.readLine().trim();
+
+        //Send packets of locked/unlocked to server
         pw.println(status);
         try {
-          TimeUnit.SECONDS.sleep(3);
+          TimeUnit.SECONDS.sleep(1);
         } catch (Exception e) {}
 
         pw.flush();
 
+        //Checks the password entered by button pattern
+
         if (button.read() == 1) {
-          if (inputPassword(button) == password) { //checks the password entered by button pattern
+          if (inputPassword(button) == password) {
             unlock(servo);
           }
         }
 
-        //analyzes server's message
+        //Analyzes server's message
+
         if(serverResponse.equals("LOCK")) {
           lock(servo);
           pw.println("Succesfully locked.");
@@ -116,7 +119,9 @@ public class SmartDoorLock {
 
   }
 
-  public static void unlock(Pwm door) { //unlocks the door. Called when server issues "UNLOCK"
+  //Unlocks the door. Called when server issues "UNLOCK".
+
+  public static void unlock(Pwm door) {
     door.enable(true);
     door.period_ms(20);
     door.pulsewidth_us(500);
@@ -128,7 +133,8 @@ public class SmartDoorLock {
     status = "UNLOCKED";
   }
 
-  public static void lock(Pwm door) { //locks the door. Called when server issues "LOCK"
+  //Locks the door. Called when server issues "LOCK".
+  public static void lock(Pwm door) {
     door.enable(true);
     door.period_ms(20);
     door.pulsewidth_us(2500);
@@ -140,7 +146,9 @@ public class SmartDoorLock {
     status = "LOCKED";
   }
 
-  public static double inputPassword(Gpio doorButton) { //allows user to enter a password.
+  //Allows user to enter a password through the button.
+
+  public static double inputPassword(Gpio doorButton) {
 
     ArrayList<Integer> generatedPassword = new ArrayList<Integer>();
     int passLength = 0;
@@ -180,7 +188,9 @@ public class SmartDoorLock {
     return pass;
   }
 
-  public static double changePassword(BufferedReader br, PrintWriter pw, double currentPass) { //responds to server command
+  //Changes the password. Called when server issues "CHANGE PASSWORD".
+
+  public static double changePassword(BufferedReader br, PrintWriter pw, double currentPass) {
     pw.println("What is the new password?");
     double password = currentPass;
     try {
