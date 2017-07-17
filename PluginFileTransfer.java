@@ -1,10 +1,15 @@
+/*
+  PluginFileTransfer.java
+  Sets up a server with a distinct port on virtual service for receiving plugin files.
+*/
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import javax.net.ssl.*;
 
 public class PluginFileTransfer extends Thread{
-  public void run(){
+  public void run(){ //Overrides run method.
     SSLServerSocket serverSocket = null;
     SSLServerSocketFactory factory= (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
     SSLSocket sslsocket = null;
@@ -15,7 +20,7 @@ public class PluginFileTransfer extends Thread{
     String filename = "";
 
     try{
-      serverSocket = (SSLServerSocket) factory.createServerSocket(9000);
+      serverSocket = (SSLServerSocket) factory.createServerSocket(9000); //sets up a distinct socket. 
     }
     catch(Exception e){
       e.printStackTrace();
@@ -24,7 +29,7 @@ public class PluginFileTransfer extends Thread{
 
     while(true){
       try{
-        sslsocket = (SSLSocket) serverSocket.accept();
+        sslsocket = (SSLSocket) serverSocket.accept(); //listens for connection from client. 
       }
       catch(Exception e){
         e.printStackTrace();
@@ -36,7 +41,7 @@ public class PluginFileTransfer extends Thread{
         System.out.println("Can't get socket input stream. ");
       }
 
-      try{
+      try{ //reads the name of the file, which is the first line of input. 
         filename = new BufferedReader(new InputStreamReader(sslsocket.getInputStream())).readLine();
       }
       catch(Exception e){
@@ -48,7 +53,7 @@ public class PluginFileTransfer extends Thread{
       filename = filename.replace("class", "txt");
 
 
-      try {
+      try { 
         new FileOutputStream("Plugins/" + filename, false).close(); //Create filename
         out = new FileOutputStream("Plugins/" + filename);
       } catch (Exception e) {
@@ -63,7 +68,7 @@ public class PluginFileTransfer extends Thread{
           out.write(bytes, 0, count);
         }
 
-        //Rename
+        //Rename to the file's original name
         File file = new File("Plugins/" + filename);
         File file2 = new File("Plugins/" + filename.replace("txt", "class"));
 
