@@ -33,7 +33,7 @@ public class Acceptor extends Thread {
 
     }
 
-    while(true){ //Accepts client connection and establishes server connection
+    while(true){ //Accepts client connection and establishes server connection with multithreading capability.
 
       Socket clientSocket = null;
       try{
@@ -76,7 +76,7 @@ public class Acceptor extends Thread {
         }
 
         VirtualMachine virtualMachine = new VirtualMachine(clientSocket, "test.txt", device);
-        virtualMachine.start();
+        virtualMachine.start(); //sets up a new thread
       }
 
       port++;
