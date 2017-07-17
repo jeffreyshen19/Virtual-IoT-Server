@@ -22,6 +22,13 @@ public class FileSender{
       InputStream in = new FileInputStream(file);
       OutputStream out = sslSocket.getOutputStream();
 
+      String fName = file.getName();
+      fName += "\n";
+      byte[] fileName = fName.getBytes();
+      out.write(fileName);
+
+      System.out.println("File name sent, now sending contents of file");
+
       long length = file.length();
       byte[] bytes = new byte[16 * 1024];
 
