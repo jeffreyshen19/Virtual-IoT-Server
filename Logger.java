@@ -33,6 +33,8 @@ public class Logger{
 
   public void close(){ //Closes the BufferedWriter and FileWriter
     try{
+      bw.flush();
+      fw.flush();
       bw.close();//close method for bw
       fw.close();//close method for wf
     }
