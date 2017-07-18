@@ -16,17 +16,18 @@ public class VirtualService{
     }
 
     ArrayList<VirtualMachine> machines = new ArrayList<VirtualMachine>();
+    Logger logger = new Logger("logs/" + args[0]);
 
-    Acceptor acceptorTLS = new Acceptor(machines, 2000, false);//Acceptor constructor
+    Acceptor acceptorTLS = new Acceptor(machines, 2000, false, logger);//Acceptor constructor
     acceptorTLS.start();//start method is called
-    System.out.println("Started TLS acceptor on port \033[1m2000\033[0m");
+    logger.println("Started TLS acceptor on port 2000");
 
-    Acceptor acceptorSSL = new Acceptor(machines, 6000, true);//AcceptorSSL constructor
+    Acceptor acceptorSSL = new Acceptor(machines, 6000, true, logger);//AcceptorSSL constructor
     acceptorSSL.start();//start method called agaain
-    System.out.println("Started SSL acceptor on port \033[1m6000\033[0m");
+    logger.println("Started SSL acceptor on port 6000");
 
     PluginFileTransfer fileTransferer = new PluginFileTransfer(machines);
     fileTransferer.start();
-    System.out.println("Started Plugin Acceptor on port \033[1m9000\033[0m");
+    logger.println("Started Plugin Acceptor on port 9000");
   }
 }
