@@ -1,6 +1,6 @@
 /*
-  Acceptor.java
-  Superclass for acceptors
+Acceptor.java
+Superclass for acceptors
 */
 
 import java.io.*;
@@ -100,7 +100,20 @@ public class Acceptor extends Thread {
         virtualMachine.start(); //sets up a new thread
       }
 
-      port++;
+      boolean portAvailable = false;
+
+      while(!portAvailable){ //Make sure port actually works
+        port++;
+        portAvailable = true;
+
+        try{
+          new ServerSocket(port).close();
+        }
+        catch(IOException e){
+          portAvailable = false;
+        }
+      }
+
       logger.println("Now accepting new connections on port " + port);
 
       try{

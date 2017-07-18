@@ -59,6 +59,8 @@ public class PluginFileTransfer extends Thread{
         e.printStackTrace();
       }
 
+      File f = new File("Plugins/" + filename);
+
       if(filename.endsWith(".class")){
 
         System.out.println("\033[1m\033[32mNow receiving " + filename + "\033[0m");
@@ -131,8 +133,9 @@ public class PluginFileTransfer extends Thread{
           e.printStackTrace();
         }
 
-      }else{
-        System.out.println("The file received is not a class file and thus cannot be run."); 
+      }
+      else{
+        System.out.println("The file received is not a class file and thus cannot be run.");
       }
     }
   }

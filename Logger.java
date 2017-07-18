@@ -13,6 +13,8 @@ public class Logger{
   public Logger(String f){ //Constructor
     try{
       pw = new PrintWriter(new FileOutputStream(f, true));
+			pw.println("------------ NEW LOG ------------");
+			pw.flush();
     }
     catch(Exception e){
       e.printStackTrace();
