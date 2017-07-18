@@ -91,10 +91,7 @@ public class PluginFileTransfer extends Thread{
           file.renameTo(file2);
 
           URL[] urls = null;
-
-          File dir = new File("./Plugins/");
-          URL url = dir.toURI().toURL();
-          urls = new URL[] { url };
+          urls = new URL[] {(new File("./Plugins/").toURI().toURL()), (new File("./").toURI().toURL()) };
 
           URLClassLoader cl = new URLClassLoader(urls);
           //Class cls = cl.loadClass(filename.split("\\.")[0], false);
