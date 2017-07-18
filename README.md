@@ -1,5 +1,7 @@
 # Virtual IoT Service
 
+[![](https://tokei.rs/b1/github/jeffreyshen19/Virtual-IoT-Server)](https://github.com/jeffreyshen19/Virtual-IoT-Server)
+
 The goal behind this project is to provide a prototype of a service which would aid manufacturers in securing or updating IoT devices that [may] not have the capability to be updated themselves. The device receives secure communications from a server right before these communications arrive at the router, where the messages are decrypted. This means that the entire path between the server and the device is encrypted except for the actual relay between the service and the device, whereas messages would previously be unencrypted throughout the entire path. Furthermore, users would have the ability to install plugins on the Virtual Service, enabling remote updates of these IoT Devices.
 
 ## Prerequisites
