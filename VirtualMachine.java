@@ -75,12 +75,13 @@ public class VirtualMachine extends Thread {
 
       sender.sendMessage(message);
       logger.println("Sent message \"" + message + "\" to IoT device");
-
+      logger.close();
+      
       try{
         Thread.sleep(10);
       }
       catch(Exception e){
-        logger.close();
+        
         e.printStackTrace();
       }
     }
