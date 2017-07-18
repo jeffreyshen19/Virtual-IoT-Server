@@ -61,7 +61,7 @@ public class Acceptor extends Thread {
         String serverIP = line.split(":")[0]; //IP of server
         int serverPort;
         String className = "";
-        if(line.indexOf("\\|") != -1){
+        if(line.indexOf("|") != -1){
           serverPort = Integer.parseInt(line.split(":")[1].split("\\|")[0]); //Port of Server
         }
         else{
