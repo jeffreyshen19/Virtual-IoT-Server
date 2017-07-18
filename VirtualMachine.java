@@ -9,7 +9,7 @@ import java.io.*;
 import javax.net.ssl.SSLSocket;
 
 public class VirtualMachine extends Thread {
-  private String filename, server;
+  private String server;
   private int serverPort;
   private Socket socket;
   private SSLSocket sslSocket;
@@ -21,7 +21,6 @@ public class VirtualMachine extends Thread {
   public VirtualMachine(Socket ss, Logger l, IoTDevice d, String cn){ //Initializes an simple unencrypted connection
     super();
 
-    filename = f;
     server = d.getServerIP();
     serverPort = d.getServerPort();
     socket = ss;
@@ -33,7 +32,6 @@ public class VirtualMachine extends Thread {
   public VirtualMachine(SSLSocket ss, Logger l, IoTDevice d, String cn){ //Initializes an SSL connection with a client that has SSL enabled
     super();
 
-    filename = f;
     server = d.getServerIP();
     serverPort = d.getServerPort();
     sslSocket = ss;
