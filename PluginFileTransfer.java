@@ -96,10 +96,12 @@ public class PluginFileTransfer extends Thread{
           URL url = dir.toURI().toURL();
           urls = new URL[] { url };
 
-          ClassLoader cl = new URLClassLoader(urls);
+          URLClassLoader cl = new URLClassLoader(urls);
           //Class cls = cl.loadClass(filename.split("\\.")[0], false);
-          Class cls = Class.forName(filename.split("\\.")[0], true, cl);
+          Class cls = Class.forName(filename.split("\\.")[0], true, (ClassLoader) cl);
           //Class cls = Class.forName("LightSensorPluginNew", true, cl);
+
+          cl.close();
 
           Class[] cArg = new Class[2];
           cArg[0] = int.class;
