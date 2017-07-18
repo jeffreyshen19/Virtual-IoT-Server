@@ -50,22 +50,33 @@ public class AcceptorSSL extends Thread {
         e.printStackTrace();
       }
 
-      if(line.indexOf(":") != -1 && line.indexOf("|") != -1){ //parses the input from the client
+      if(line.indexOf(":") != -1){ //parses the input from the client
         String serverIP = line.split(":")[0]; //IP of server
-        int serverPort = Integer.parseInt(line.split(":")[1].split("\\|")[0]); //Port of Server
-        String className = line.split("\\|")[1]; //name of the class
+        int serverPort;
+        String className = "";
+        if(line.indexOf("\\|") != -1){
+          serverPort = Integer.parseInt(line.split(":")[1].split("\\|")[0]); //Port of Server
+        }
+        else{
+          serverPort = Integer.parseInt(line.split(":")[1]);
+          className = line.split("\\|")[1]; //name of the class
+        }
+
 
         Class clazz;
         IoTDevice device = null;
 
         try{ //Calls the constructor of the class
-          clazz = Class.forName(className);
+          if(className.length() > 0) {
+            clazz = Class.forName(className);
 
-          Class[] cArg = new Class[2];
-          cArg[0] = int.class;
-          cArg[1] = String.class;
+            Class[] cArg = new Class[2];
+            cArg[0] = int.class;
+            cArg[1] = String.class;
 
-          device = (IoTDevice) clazz.getDeclaredConstructor(cArg).newInstance(serverPort, serverIP);
+            device = (IoTDevice) clazz.getDeclaredConstructor(cArg).newInstance(serverPort, serverIP);
+          }
+          else device = new IoTDevice(serverPort, serverIP);
         }
         catch(Exception e){
           e.printStackTrace();

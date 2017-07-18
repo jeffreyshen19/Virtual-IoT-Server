@@ -3,7 +3,7 @@
   Object storing all the information for an IoT Device. Superclass for all the plugins
 */
 
-public abstract class IoTDevice{
+public class IoTDevice{
   private String pluginFile, serverIP;
   private int serverPort;
 
@@ -20,5 +20,7 @@ public abstract class IoTDevice{
     return serverIP;
   }
 
-  public abstract String filterMessage(String message);
+  public String filterMessage(String message){
+    return message;
+  }
 }

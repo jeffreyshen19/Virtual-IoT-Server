@@ -93,16 +93,18 @@ public class PluginFileTransfer extends Thread{
         urls = new URL[] { url };
 
         ClassLoader cl = new URLClassLoader(urls);
-        Class cls = cl.loadClass(filename.split("\\.")[0]);
+        //Class cls = cl.loadClass(filename.split("\\.")[0], false);
+        Class cls = Class.forName(filename.split("\\.")[0], true, cl);
+        //Class cls = Class.forName("LightSensorPluginNew", true, cl);
 
         Class[] cArg = new Class[2];
         cArg[0] = int.class;
         cArg[1] = String.class;
 
-
         for(int i = 0; i < machines.size(); i++){
           VirtualMachine machine = machines.get(i);
-          if(machine.getClassName().equals(filename.split("\\.")[0])){
+          //if(machine.getClassName().equals(filename.split("\\.")[0])){
+          if(true){
             IoTDevice currentDevice = machine.getDevice();
             IoTDevice newDevice = (IoTDevice) cls.getDeclaredConstructor(cArg).newInstance(currentDevice.getServerPort(), currentDevice.getServerIP());
 
