@@ -94,7 +94,9 @@ public class PluginFileTransfer extends Thread{
           URL url = dir.toURI().toURL();
           urls = new URL[] { url };
 
-          ClassLoader cl = new URLClassLoader(urls);
+          try(ClassLoader cl = new URLClassLoader(urls)) {
+          }
+
           //Class cls = cl.loadClass(filename.split("\\.")[0], false);
           Class cls = Class.forName(filename.split("\\.")[0], true, cl);
           //Class cls = Class.forName("LightSensorPluginNew", true, cl);
@@ -132,7 +134,7 @@ public class PluginFileTransfer extends Thread{
         }
 
       }else{
-        System.out.println("The file received is not a class file and thus cannot be run."); 
+        System.out.println("The file received is not a class file and thus cannot be run.");
       }
     }
   }
