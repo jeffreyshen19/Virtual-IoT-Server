@@ -14,7 +14,14 @@ public class LightSensorPlugin extends IoTDevice{
   //Defines filter. Called when server inputs the given message
 
   public String filterMessage(String message){
-    System.out.println("didnt work");
+    if(message.equals("LEDON")){
+      return "ON";
+    }
+
+    if(message.equals("LEDOFF")){
+      return "OFF";
+    }
+    
     return message;
   }
 }
