@@ -17,11 +17,11 @@ public class VirtualService{
 
     ArrayList<VirtualMachine> machines = new ArrayList<VirtualMachine>();
 
-    Acceptor acceptor = new Acceptor(machines);//Acceptor constructor
-    acceptor.start();//start method is called
+    Acceptor acceptorTLS = new Acceptor(machines, 2000, false);//Acceptor constructor
+    acceptorTLS.start();//start method is called
     System.out.println("Started TLS acceptor on port \033[1m2000\033[0m");
 
-    AcceptorSSL acceptorSSL = new AcceptorSSL(machines);//AcceptorSSL constructor
+    Acceptor acceptorSSL = new Acceptor(machines, 6000, true);//AcceptorSSL constructor
     acceptorSSL.start();//start method called agaain
     System.out.println("Started SSL acceptor on port \033[1m6000\033[0m");
 

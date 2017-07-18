@@ -1,46 +1,55 @@
 /*
   Acceptor.java
-  Contains the thread that monitors for new plaintext connections
+  Superclass for acceptors
 */
 
-import java.net.ServerSocket;
-import java.net.Socket;
-import javax.net.ssl.SSLSocket;
-import javax.net.ssl.SSLSocketFactory;
-import java.net.InetAddress;
 import java.io.*;
-import java.util.Arrays;
+import java.net.*;
+import javax.net.ssl.*;
 import java.lang.reflect.*;
-import Plugins.*;
+import java.util.Arrays;
 import java.util.ArrayList;
+import Plugins.*;
 
 public class Acceptor extends Thread {
   private ArrayList<VirtualMachine> machines;
+  private int port;
+  private boolean usesSSL;
 
-  public Acceptor(ArrayList<VirtualMachine> m){
+  public Acceptor(ArrayList<VirtualMachine> m, int p, boolean uS){
     super();
     machines = m;
+    port = p;
+    usesSSL = uS;
   }
 
   public void run(){ //Overwrites run
-
     PrintWriter out = null;
     BufferedReader in = null;
-
-    int port = 2000;
-
     String line = "";
-
     ServerSocket serverSocket = null;
+    SSLServerSocket sslServerSocket = null;
+    SSLServerSocketFactory factory = (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
 
     while(true){ //Accepts client connection and establishes server connection with multithreading capability.
 
       Socket clientSocket = null;
+      Socket sslSocket = null;
+
       try{
-        serverSocket = new ServerSocket(port);
-        clientSocket = serverSocket.accept();
-        out = new PrintWriter(clientSocket.getOutputStream(), true);
-        in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+        if(usesSSL){
+          serverSocket = (SSLServerSocket) factory.createServerSocket(port);
+          sslSocket = (SSLSocket) serverSocket.accept();
+          out = new PrintWriter(sslSocket.getOutputStream(), true);
+          in = new BufferedReader(new InputStreamReader(sslSocket.getInputStream()));
+        }
+        else {
+          serverSocket = new ServerSocket(port);
+          clientSocket = serverSocket.accept();
+          out = new PrintWriter(clientSocket.getOutputStream(), true);
+          in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+        }
+
         line = in.readLine();
         System.out.println(line);
       }
@@ -59,7 +68,6 @@ public class Acceptor extends Thread {
           serverPort = Integer.parseInt(line.split(":")[1]);
           className = line.split("\\|")[1]; //name of the class
         }
-
 
         Class clazz;
         IoTDevice device = null;
@@ -80,7 +88,10 @@ public class Acceptor extends Thread {
           e.printStackTrace();
         }
 
-        VirtualMachine virtualMachine = new VirtualMachine(clientSocket, "test.txt", device, className);
+        VirtualMachine virtualMachine;
+        if(usesSSL) virtualMachine = new VirtualMachine(sslSocket, "test.txt", device, className);
+        else virtualMachine = new VirtualMachine(clientSocket, "test.txt", device, className);
+
         machines.add(virtualMachine);
         virtualMachine.start(); //sets up a new thread
       }
