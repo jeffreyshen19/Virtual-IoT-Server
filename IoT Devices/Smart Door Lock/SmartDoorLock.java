@@ -119,11 +119,11 @@ public class SmartDoorLock {
           pw.flush();
         }
         if(serverResponse.equals("CHANGE PASSWORD")) {
-          int time =  System.currentTimeMillis();
+          long time =  System.currentTimeMillis();
           while ((System.currentTimeMillis() - time) <  10000) {
             serverResponse = br.readLine().trim();
             if(!serverResponse.equals("CHANGE PASSWORD")) {
-              password = serverResponse;
+              password = Integer.parseInt(serverResponse);
               System.out.println("Succesful password change. New password is " + password);
               pw.flush();
             }
