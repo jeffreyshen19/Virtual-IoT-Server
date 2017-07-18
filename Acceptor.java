@@ -60,6 +60,11 @@ public class Acceptor extends Thread {
           className = line.split("\\|")[1]; //name of the class
         }
 
+        File file = new File(className + ".class");
+        if (file.exists() && !file.isDirectory()) {
+          System.out.println("FILE ALREADY EXISTS");
+        }
+
 
         Class clazz;
         IoTDevice device = null;
