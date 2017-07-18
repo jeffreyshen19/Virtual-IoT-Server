@@ -59,74 +59,80 @@ public class PluginFileTransfer extends Thread{
         e.printStackTrace();
       }
 
-      System.out.println("\033[1m\033[32mNow receiving " + filename + "\033[0m");
+      if(filename.endsWith(".class")){
 
-      filename = filename.replace("class", "txt");
+        System.out.println("\033[1m\033[32mNow receiving " + filename + "\033[0m");
 
-      try {
-        new FileOutputStream("Plugins/" + filename, false).close(); //Create filename
-        out = new FileOutputStream("Plugins/" + filename);
-      }
-      catch (Exception e) {
-        e.printStackTrace();
-      }
+        filename = filename.replace("class", "txt");
 
-      byte[] bytes = new byte[16*1024];
-
-      try{
-        int count;
-        while ((count = in.read(bytes)) > 0) {
-          out.write(bytes, 0, count);
+        try {
+          new FileOutputStream("Plugins/" + filename, false).close(); //Create filename
+          out = new FileOutputStream("Plugins/" + filename);
+        }
+        catch (Exception e) {
+          e.printStackTrace();
         }
 
-        //Rename to the file's original name
-        File file = new File("Plugins/" + filename);
-        filename = filename.replace("txt", "class");
-        File file2 = new File("Plugins/" + filename);
+        byte[] bytes = new byte[16*1024];
 
-        file.renameTo(file2);
-
-        URL[] urls = null;
-
-        File dir = new File("./Plugins/");
-        URL url = dir.toURI().toURL();
-        urls = new URL[] { url };
-
-        ClassLoader cl = new URLClassLoader(urls);
-        //Class cls = cl.loadClass(filename.split("\\.")[0], false);
-        Class cls = Class.forName(filename.split("\\.")[0], true, cl);
-        //Class cls = Class.forName("LightSensorPluginNew", true, cl);
-
-        Class[] cArg = new Class[2];
-        cArg[0] = int.class;
-        cArg[1] = String.class;
-
-        for(int i = 0; i < machines.size(); i++){
-          VirtualMachine machine = machines.get(i);
-          //if(machine.getClassName().equals(filename.split("\\.")[0])){
-          if(true){
-            IoTDevice currentDevice = machine.getDevice();
-            IoTDevice newDevice = (IoTDevice) cls.getDeclaredConstructor(cArg).newInstance(currentDevice.getServerPort(), currentDevice.getServerIP());
-
-            System.out.println(newDevice.filterMessage("yeeeeee"));
-            machine.setDevice(newDevice);
+        try{
+          int count;
+          while ((count = in.read(bytes)) > 0) {
+            out.write(bytes, 0, count);
           }
+
+          //Rename to the file's original name
+          File file = new File("Plugins/" + filename);
+          filename = filename.replace("txt", "class");
+          File file2 = new File("Plugins/" + filename);
+
+          file.renameTo(file2);
+
+          URL[] urls = null;
+
+          File dir = new File("./Plugins/");
+          URL url = dir.toURI().toURL();
+          urls = new URL[] { url };
+
+          ClassLoader cl = new URLClassLoader(urls);
+          //Class cls = cl.loadClass(filename.split("\\.")[0], false);
+          Class cls = Class.forName(filename.split("\\.")[0], true, cl);
+          //Class cls = Class.forName("LightSensorPluginNew", true, cl);
+
+          Class[] cArg = new Class[2];
+          cArg[0] = int.class;
+          cArg[1] = String.class;
+
+          for(int i = 0; i < machines.size(); i++){
+            VirtualMachine machine = machines.get(i);
+            //if(machine.getClassName().equals(filename.split("\\.")[0])){
+            if(true){
+              IoTDevice currentDevice = machine.getDevice();
+              IoTDevice newDevice = (IoTDevice) cls.getDeclaredConstructor(cArg).newInstance(currentDevice.getServerPort(), currentDevice.getServerIP());
+
+              System.out.println(newDevice.filterMessage("yeeeeee"));
+              machine.setDevice(newDevice);
+            }
+          }
+
+          System.out.println("\033[1m\033[32mSuccessfuly loaded plugin\033[0m");
+        }
+        catch(Exception e){
+          e.printStackTrace();
         }
 
-        System.out.println("\033[1m\033[32mSuccessfuly loaded plugin\033[0m");
-      }
-      catch(Exception e){
-        e.printStackTrace();
-      }
+        try{
+          out.close();
+          in.close();
+          sslsocket.close();
+          Thread.sleep(10);
+        }
+        catch(Exception e){
+          e.printStackTrace();
+        }
 
-      try{
-        out.close();
-        in.close();
-        sslsocket.close();
-        Thread.sleep(10);
-      }
-      catch(Exception e){
-        e.printStackTrace();
+      }else{
+        System.out.println("The file received is not a class file and thus cannot be run."); 
       }
     }
   }
