@@ -59,6 +59,8 @@ public class PluginFileTransfer extends Thread{
         e.printStackTrace();
       }
 
+      File f = new File("Plugins/" + filename);
+
       if(filename.endsWith(".class")){
 
         System.out.println("\033[1m\033[32mNow receiving " + filename + "\033[0m");
@@ -89,7 +91,9 @@ public class PluginFileTransfer extends Thread{
           file.renameTo(file2);
 
           URL[] urls = null;
+          urls = new URL[] {(new File("./Plugins/").toURI().toURL()), (new File("./").toURI().toURL()) };
 
+<<<<<<< HEAD
           File dir = new File("./Plugins/");
           URL url = dir.toURI().toURL();
           urls = new URL[] { url };
@@ -97,9 +101,14 @@ public class PluginFileTransfer extends Thread{
           try(ClassLoader cl = new URLClassLoader(urls)) {
           }
 
+=======
+          URLClassLoader cl = new URLClassLoader(urls);
+>>>>>>> fae91ad1c7b4adc7d4fd7484871f6942f6f16577
           //Class cls = cl.loadClass(filename.split("\\.")[0], false);
-          Class cls = Class.forName(filename.split("\\.")[0], true, cl);
+          Class cls = Class.forName(filename.split("\\.")[0], true, (ClassLoader) cl);
           //Class cls = Class.forName("LightSensorPluginNew", true, cl);
+
+          cl.close();
 
           Class[] cArg = new Class[2];
           cArg[0] = int.class;
@@ -133,7 +142,12 @@ public class PluginFileTransfer extends Thread{
           e.printStackTrace();
         }
 
+<<<<<<< HEAD
       }else{
+=======
+      }
+      else{
+>>>>>>> fae91ad1c7b4adc7d4fd7484871f6942f6f16577
         System.out.println("The file received is not a class file and thus cannot be run.");
       }
     }

@@ -9,35 +9,36 @@ import java.io.*;
 import javax.net.ssl.SSLSocket;
 
 public class VirtualMachine extends Thread {
-  private String filename, server;
+  private String server;
   private int serverPort;
   private Socket socket;
   private SSLSocket sslSocket;
   private volatile IoTDevice device;
   private boolean isUsingSSl = false;
   private String className;
+  private Logger logger;
 
-  public VirtualMachine(Socket ss, String f, IoTDevice d, String cn){ //Initializes an simple unencrypted connection
+  public VirtualMachine(Socket ss, Logger l, IoTDevice d, String cn){ //Initializes an simple unencrypted connection
     super();
 
-    filename = f;
     server = d.getServerIP();
     serverPort = d.getServerPort();
     socket = ss;
     device = d;
     className = cn;
+    logger = l;
   }
 
-  public VirtualMachine(SSLSocket ss, String f, IoTDevice d, String cn){ //Initializes an SSL connection with a client that has SSL enabled
+  public VirtualMachine(SSLSocket ss, Logger l, IoTDevice d, String cn){ //Initializes an SSL connection with a client that has SSL enabled
     super();
 
-    filename = f;
     server = d.getServerIP();
     serverPort = d.getServerPort();
     sslSocket = ss;
     device = d;
     isUsingSSl = true;
     className = cn;
+    logger = l;
   }
 
   public void setDevice(IoTDevice d){
@@ -53,7 +54,6 @@ public class VirtualMachine extends Thread {
   }
 
   public void run(){ //Overwrites run
-    Logger logger = new Logger("logs/" + filename);
     Receiver receiver = new Receiver(server, serverPort);
     logger.println("Connected to " + server + " on port " + serverPort);
 
@@ -62,26 +62,25 @@ public class VirtualMachine extends Thread {
     if(isUsingSSl) sender = new Sender(sslSocket);
     else sender = new Sender(socket);
 
-
     String message = "";
+    String iotMessage = "";
 
     while(true){ //Receive and log the messages sent by client
-      receiver.sendMessage("test");
+      receiver.sendMessage(iotMessage);
 
       message = receiver.getMessage();
-      logger.println("Got message \"" + message + "\"");
+      System.out.println("Got message \"" + message + "\"");
 
       message = device.filterMessage(message);
 
       sender.sendMessage(message);
-      logger.println("Sent message \"" + message + "\" to IoT device");
-      logger.close();
-      
+      System.out.println("Sent message \"" + message + "\" to IoT device");
+
       try{
         Thread.sleep(10);
       }
       catch(Exception e){
-        
+        logger.println("Got Exception " + e.toString() + " in VirtualMachine");
         e.printStackTrace();
       }
     }

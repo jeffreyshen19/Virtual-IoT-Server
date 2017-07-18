@@ -1,6 +1,6 @@
 /*
-  Acceptor.java
-  Superclass for acceptors
+Acceptor.java
+Superclass for acceptors
 */
 
 import java.io.*;
@@ -15,12 +15,14 @@ public class Acceptor extends Thread {
   private ArrayList<VirtualMachine> machines;
   private int port;
   private boolean usesSSL;
+  private Logger logger;
 
-  public Acceptor(ArrayList<VirtualMachine> m, int p, boolean uS){
+  public Acceptor(ArrayList<VirtualMachine> m, int p, boolean uS, Logger l){
     super();
     machines = m;
     port = p;
     usesSSL = uS;
+    logger = l;
   }
 
   public void run(){ //Overwrites run
@@ -49,6 +51,8 @@ public class Acceptor extends Thread {
           out = new PrintWriter(clientSocket.getOutputStream(), true);
           in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         }
+
+        logger.println("Connected a new device on port " + port);
 
         line = in.readLine();
         System.out.println(line);
@@ -89,15 +93,28 @@ public class Acceptor extends Thread {
         }
 
         VirtualMachine virtualMachine;
-        if(usesSSL) virtualMachine = new VirtualMachine(sslSocket, "test.txt", device, className);
-        else virtualMachine = new VirtualMachine(clientSocket, "test.txt", device, className);
+        if(usesSSL) virtualMachine = new VirtualMachine(sslSocket,logger, device, className);
+        else virtualMachine = new VirtualMachine(clientSocket, logger, device, className);
 
         machines.add(virtualMachine);
         virtualMachine.start(); //sets up a new thread
       }
 
-      port++;
-      System.out.println("Now accepting new connections on port " + port);
+      boolean portAvailable = false;
+
+      while(!portAvailable){ //Make sure port actually works
+        port++;
+        portAvailable = true;
+
+        try{
+          new ServerSocket(port).close();
+        }
+        catch(IOException e){
+          portAvailable = false;
+        }
+      }
+
+      logger.println("Now accepting new connections on port " + port);
 
       try{
         Thread.sleep(10);

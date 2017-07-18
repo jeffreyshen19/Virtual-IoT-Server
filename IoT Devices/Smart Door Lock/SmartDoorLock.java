@@ -86,11 +86,11 @@ public class SmartDoorLock {
 
         //Send packets of locked/unlocked to server
 
-        pw.println(status);
+        /*pw.println(status);
         try {
           TimeUnit.SECONDS.sleep(1);
         } catch (Exception e) {}
-
+        */
         pw.flush();
 
         //Checks the password entered by button pattern
@@ -119,10 +119,15 @@ public class SmartDoorLock {
           pw.flush();
         }
         if(serverResponse.equals("CHANGE PASSWORD")) {
-          //System.out.println("got here !!!!! ");
-          password = changePassword(br,pw,password);
-          pw.println("Succesful password change. New password is " + password);
-          pw.flush();
+          int time =  System.currentTimeMillis();
+          while ((System.currentTimeMillis() - time) <  10000) {
+            serverResponse = br.readLine().trim();
+            if(!serverResponse.equals("CHANGE PASSWORD")) {
+              password = serverResponse;
+              System.out.println("Succesful password change. New password is " + password);
+              pw.flush();
+            }
+          }
         }
       }
     } catch(Exception e) {
