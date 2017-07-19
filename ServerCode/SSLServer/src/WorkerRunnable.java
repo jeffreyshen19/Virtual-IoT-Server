@@ -6,19 +6,21 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.net.ServerSocket;
-import java.net.Socket;
 import java.util.ArrayList;
 import javax.net.ServerSocketFactory;
 import javax.net.ssl.SSLServerSocketFactory;
+import java.net.SocketAddress;
+import java.nio.channels.*;
+import java.nio.*;
+import java.net.*;
 
 /*
  * WorkerRunnable.java
  * 7/11/17
  * Handles messaging between client and server (Iot Device and Virtual Service)
  * Ryan Goggins
+ * Adapted from: http://tutorials.jenkov.com/java-multithreaded-servers/thread-pooled-server.html
  */
-
 
 public class WorkerRunnable implements Runnable{
 
@@ -34,28 +36,29 @@ public class WorkerRunnable implements Runnable{
   }
 
   public void run() {
-    System.out.println("ENTERING FOR FIRST TIME");
-    boolean running = true, running1 = true;
+    boolean running = true, running1 = true, receiving = true;
     ArrayList<String> messages = new ArrayList<>();
     try {
       while (running) {
         if (running) {
-
           //Create a writer and a reader to pass messages from client to server
-          BufferedReader br = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+          BufferedReader msgReader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
           PrintWriter pw = new PrintWriter(clientSocket.getOutputStream());
 
-          //for reading message from user
+          //Nonblocking reading messages
+          long timeEnd = System.currentTimeMillis() + 1000;
           String data = "";
-          if (br.ready()) {
-            data = br.readLine();
-            messages.add(data);
-            System.out.println(data + " is echoed");
+          while (System.currentTimeMillis() < timeEnd) {
+            if (msgReader.ready()) {
+              data += msgReader.readLine();
+            }
           }
+          System.out.println("Data= " + data);
 
-          //for reading input text
+          //Nonbocking for sending messages
           BufferedReader msgTaker = new BufferedReader(new InputStreamReader(System.in));
-          long end=System.currentTimeMillis()+50;
+          System.out.println("");
+          long end=System.currentTimeMillis()+1500;
           //non-blocking text input such that the user is given some time to enter a message
           String message = "";
           while((System.currentTimeMillis()<end)) {
@@ -65,20 +68,26 @@ public class WorkerRunnable implements Runnable{
 
           //Message handling
           if (message.equals("")) {
-            System.out.println("No input");
+            System.out.println("No input on socket: " + clientSocket.getRemoteSocketAddress().toString());
           }
           else {
-            System.out.println("The message is " + message);
+            System.out.println("The message is " + message + " on socket " + clientSocket.getRemoteSocketAddress().toString());
           }
           pw.println(message);
           messages.add(message);
+
+          //Check if client has disconnected
+          if (pw.checkError()) {
+            running = false;
+            System.out.println("Client disconnected");
+          }
+
           pw.flush();
         }
       }
       clientSocket.close();
     } catch (IOException ioe) {
-      System.out.println("Client disconnected");
+      ioe.printStackTrace();
     }
-    System.out.println("got here");
   }
 }
