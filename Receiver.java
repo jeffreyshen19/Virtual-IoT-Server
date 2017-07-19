@@ -21,6 +21,7 @@ public class Receiver{
     else return;
 
     try{
+      sslSocket.setSoTimeout(1000);
       br = new BufferedReader(new InputStreamReader(sslSocket.getInputStream())); // initializations
       pw = new PrintWriter(sslSocket.getOutputStream());
     }
@@ -46,20 +47,12 @@ public class Receiver{
     String message = "";
 
     try{
-      while(true){
-        message = br.readLine();
-        if(message != null && message.length() > 0){
-          System.out.println(message);
-          break;
-        }
-        Thread.sleep(10);
-      }
+      message = br.readLine().trim();
+      return message;
     }
     catch(Exception e){
-      e.printStackTrace();
+      return "";
     }
-
-    return message.trim();
   }
 
 }
