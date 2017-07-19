@@ -55,7 +55,7 @@ public class SmartDoorLock {
       String userInput = "" , serverResponse = "";
       BufferedReader br = new BufferedReader(new InputStreamReader(sslSocket.getInputStream()));
       PrintWriter pw = new PrintWriter(sslSocket.getOutputStream());
-
+      BufferedReader pass = new BufferedReader(new InputStreamReader(System.in));
       //Sending Virtual Service messages
 
       pw.println(args[2] + ":" + args[3] + "|DoorSensorPlugin");
@@ -95,7 +95,8 @@ public class SmartDoorLock {
 
         //Checks the password entered by button pattern
 
-        if (button.read() == 1) {
+        if (pass.readLine().trim() == "#") {
+          System.out.println("Got Here!");
           if (inputPassword(button) == password) {
             unlock(servo);
             System.out.println("Succesfully unlocked.");
