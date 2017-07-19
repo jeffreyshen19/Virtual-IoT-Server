@@ -20,6 +20,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import javax.net.ssl.SSLSocket;
 import java.io.PrintWriter;
+import java.util.Scanner;
 
 public class SmartDoorLock {
   private static String status;
@@ -94,7 +95,7 @@ public class SmartDoorLock {
         pw.flush();
 
         //Checks the password entered by button pattern
-        System.out.println("Hello" + passEnter);
+        System.out.println(passEnter);
         Thread.sleep(100);
         if (passEnter.equals ("#")) {
           System.out.println("Got Here!");
