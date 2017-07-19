@@ -33,9 +33,9 @@ public class Receiver{
 
   public void sendMessage(String message){ //sends message to server
     try{
+      pw.flush();
       pw.println(message);
       System.out.println(message);
-      pw.flush();
     }
     catch(Exception e){
       e.printStackTrace();
@@ -44,13 +44,14 @@ public class Receiver{
 
   public String getMessage(){ //receives message from server
     String message = "";
-    
     try{
-      while(true){
-        message = br.readLine();
-        if(message != null && message.length() > 0){
-          System.out.println(message);
-          break;
+      for(int i = 0; i < 50; i++){
+        if(br.read() != -1) {
+          message = br.readLine().trim();
+          if(message.length() > 0) {
+            System.out.println(message);
+            return message;
+          }
         }
         Thread.sleep(10);
       }
@@ -58,8 +59,7 @@ public class Receiver{
     catch(Exception e){
       e.printStackTrace();
     }
-
-    return message.trim();
+    return "";
   }
 
 }
