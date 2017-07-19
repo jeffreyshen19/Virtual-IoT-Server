@@ -42,15 +42,18 @@ public class WorkerRunnable implements Runnable{
           BufferedReader msgReader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
           PrintWriter pw = new PrintWriter(clientSocket.getOutputStream());
 
-          //Nonblocking reading messages
-          long timeEnd = System.currentTimeMillis() + 1000;
-          String data = "";
-          while (System.currentTimeMillis() < timeEnd) {
-            if (msgReader.read() != -1) {
-              data += msgReader.readLine();
-            }
-          }
-          System.out.println("Data= " + data);
+          // //Nonblocking reading messages
+          // System.out.println("Starting that stupid loop");
+          // long timeEnd = System.currentTimeMillis() + 1000;
+          // String data = "";
+          // while (System.currentTimeMillis() < timeEnd) {
+          //   System.out.println("In the loop");
+          //   if (msgReader.read() != -1) {
+          //     System.out.println("Waiting for the fat read");
+          //     data += msgReader.readLine();
+          //   }
+          // }
+          // System.out.println("Data= " + data);
 
           //Nonbocking for sending messages
           BufferedReader msgTaker = new BufferedReader(new InputStreamReader(System.in));
