@@ -84,6 +84,7 @@ public class SmartDoorLock {
 
       while(true) {
         serverResponse = br.readLine().trim();
+        System.out.println("go");
         passEnter = sc.next();
         //Send packets of locked/unlocked to server
 
@@ -92,8 +93,6 @@ public class SmartDoorLock {
           TimeUnit.SECONDS.sleep(1);
         } catch (Exception e) {}
         */
-        pw.flush();
-
         //Checks the password entered by button pattern
         System.out.println("hello"+ passEnter);
         Thread.sleep(100);
