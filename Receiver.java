@@ -35,7 +35,7 @@ public class Receiver{
   public void sendMessage(String message){ //sends message to server
     try{
       pw.println(message);
-      System.out.println(message);
+      if(message.length() > 0) System.out.println(message);
       pw.flush();
     }
     catch(Exception e){
@@ -53,6 +53,10 @@ public class Receiver{
     catch(Exception e){
       return "";
     }
+  }
+
+  public boolean isSocketClosed(){
+    return pw.checkError();
   }
 
 }

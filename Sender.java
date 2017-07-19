@@ -43,7 +43,8 @@ public class Sender{
   public void sendMessage(String message){ //sends a message to the client
     try{
       out.println(message);
-      System.out.println(message);
+      if(message.length() > 0) System.out.println(message);
+      out.flush();
     }
     catch(Exception e){
       e.printStackTrace();
@@ -60,6 +61,10 @@ public class Sender{
     catch(Exception e){
       return "";
     }
+  }
+
+  public boolean isSocketClosed(){
+    return out.checkError();
   }
 
 }
