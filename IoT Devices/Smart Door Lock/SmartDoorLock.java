@@ -83,8 +83,6 @@ public class SmartDoorLock {
       double enteredPassword;
 
       while(true) {
-        serverResponse = br.readLine().trim();
-        System.out.println("go");
         passEnter = sc.next();
         //Send packets of locked/unlocked to server
 
@@ -95,7 +93,6 @@ public class SmartDoorLock {
         */
         //Checks the password entered by button pattern
         System.out.println("hello"+ passEnter);
-        Thread.sleep(100);
         if (passEnter.equals ("#")) {
           System.out.println("Got Here!");
           if (inputPassword(button) == password) {
@@ -108,6 +105,7 @@ public class SmartDoorLock {
           }
         }
 
+        serverResponse = br.readLine().trim();
         //Analyzes server's message
 
         if(serverResponse.equals("LOCK")) {
@@ -131,6 +129,7 @@ public class SmartDoorLock {
             }
           }
         }
+        wait1Msec(10);
       }
     } catch(Exception e) {
       e.printStackTrace();
