@@ -65,23 +65,21 @@ public class VirtualMachine extends Thread {
     String message = "";
     String iotMessage = "";
 
+    receiver.sendMessage("test");
+
     while(true){ //Receive and log the messages sent by client
       if(iotMessage.length() > 0) receiver.sendMessage(iotMessage);
 
-      receiver.sendMessage("did you get this??????");
       message = receiver.getMessage();
-
-      System.out.println(message);
 
       if(message.length() > 0){
         System.out.println("Got message \"" + message + "\"");
         message = device.filterMessage(message);
         sender.sendMessage(message);
         System.out.println("Sent message \"" + message + "\" to IoT device");
-
-        iotMessage = sender.getMessage();
-        System.out.println(iotMessage);
       }
+
+      iotMessage = sender.getMessage();
 
       try{
         Thread.sleep(10);

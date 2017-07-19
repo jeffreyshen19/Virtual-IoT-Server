@@ -52,13 +52,11 @@ public class Sender{
   public String getMessage(){ //takes input from client
     String message = "";
     try{
-      for(int i = 0; i < 50; i++){
-        if(in.read() != -1) {
-          message = in.readLine().trim();
-          if(message.length() > 0) {
-            System.out.println(message);
-            return message;
-          }
+      while(true){
+        message = in.readLine().trim();
+        if(message.length() > 0){
+          System.out.println(message);
+          break;
         }
         Thread.sleep(10);
       }
@@ -66,7 +64,7 @@ public class Sender{
     catch(Exception e){
       e.printStackTrace();
     }
-    return "";
+    return message;
   }
 
 }
