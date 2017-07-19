@@ -6,7 +6,7 @@
 
 /*
   Usage Notes
-  - Must hold button to trigger password input
+  - Must type # to trigger password input
   - Follow prompts when inputting password
 */
 
@@ -20,6 +20,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import javax.net.ssl.SSLSocket;
 import java.io.PrintWriter;
+import java.util.Scanner;
 
 public class SmartDoorLock {
   private static String status;
@@ -52,10 +53,10 @@ public class SmartDoorLock {
 
       //Setting up input
 
-      String userInput = "" , serverResponse = "";
+      String userInput = "" , serverResponse = "", passEnter = "";
       BufferedReader br = new BufferedReader(new InputStreamReader(sslSocket.getInputStream()));
       PrintWriter pw = new PrintWriter(sslSocket.getOutputStream());
-      BufferedReader pass = new BufferedReader(new InputStreamReader(System.in));
+      Scanner sc = new Scanner(System.in);
       //Sending Virtual Service messages
 
       pw.println(args[2] + ":" + args[3] + "|DoorSensorPlugin");
@@ -69,7 +70,7 @@ public class SmartDoorLock {
       }*/
 
       System.out.println("\033[1m\033[32mSuccessfully connected to secure server\033[0m");
-
+      System.out.println("Press # to enter password.");
       //Declare/instantiate the sensors/motor
 
       Gpio button = new Gpio(3);
@@ -83,7 +84,7 @@ public class SmartDoorLock {
 
       while(true) {
         serverResponse = br.readLine().trim();
-
+        passEnter = sc.next();
         //Send packets of locked/unlocked to server
 
         /*pw.println(status);
@@ -91,11 +92,9 @@ public class SmartDoorLock {
           TimeUnit.SECONDS.sleep(1);
         } catch (Exception e) {}
         */
-        pw.flush();
-
         //Checks the password entered by button pattern
-
-        if (pass.readLine().trim() == "#") {
+        System.out.println("hello"+ passEnter);
+        if (passEnter.equals ("#")) {
           System.out.println("Got Here!");
           if (inputPassword(button) == password) {
             unlock(servo);
@@ -106,6 +105,7 @@ public class SmartDoorLock {
             System.out.println("Unsuccesful unlock. Please try again.");
           }
         }
+
 
         //Analyzes server's message
 
@@ -130,6 +130,7 @@ public class SmartDoorLock {
             }
           }
         }
+        wait1Msec(10);
       }
     } catch(Exception e) {
       e.printStackTrace();
