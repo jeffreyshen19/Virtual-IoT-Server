@@ -15,11 +15,14 @@ import javax.net.ssl.SSLServerSocketFactory;
  * SSLSimpleServer class creates a non-blocking SSL server
  * 7/17/17
  * Ryan Goggins
+ * Adapted from: http://chanakasameera.blogspot.com/2015/04/ssl-server-socket-and-ssl-client-socket.html
+ * Run with: java -Djavax.net.ssl.keyStore=./../SSLServerKeyStore/ExampleServerCertificateKeyStore.jks -Djavax.net.ssl.keyStorePassword=abc12345 SSLSimpleServer [args]
+ *
  */
 
 public class SSLSimpleServer extends Thread implements Runnable {
 
-  protected Socket         sock;
+  protected ServerSocket ss;
   protected Thread       runningThread= null;
   protected boolean      isStopped    = false;
   protected ExecutorService threadPool = Executors.newFixedThreadPool(10);
@@ -29,9 +32,9 @@ public class SSLSimpleServer extends Thread implements Runnable {
     ServerSocket ss = ssf.createServerSocket(Integer.parseInt(args[0]));
 
     System.out.println("Ready...");
-    Socket ssSocket = ss.accept();
-    SSLSimpleServer server = new SSLSimpleServer(ssSocket);
-    System.out.println("Accepted connection : " + ssSocket.toString());
+
+
+    SSLSimpleServer server = new SSLSimpleServer(ss);
 
     new Thread(server).start();
     try {
@@ -47,9 +50,9 @@ public class SSLSimpleServer extends Thread implements Runnable {
     return this.isStopped;
   }
 
-  public SSLSimpleServer(Socket s) {
+  public SSLSimpleServer(ServerSocket s) {
     System.out.println("connecting the sockets");
-    sock = s;
+    this.ss = s;
   }
 
   public void run() {
@@ -59,7 +62,14 @@ public class SSLSimpleServer extends Thread implements Runnable {
     }
 
     while(! isStopped()){
-      this.threadPool.execute(new WorkerRunnable(sock, "Thread Pooled Server"));
+      try {
+        Socket sock = ss.accept();
+        this.threadPool.execute(new WorkerRunnable(sock, "Thread Pooled Server"));
+        System.out.println("STARTING WORKER RUNNABLE");
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+
       //do this such that WorkerRunnable's are connected via IP
     }
     this.threadPool.shutdown();

@@ -6,13 +6,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.ArrayList;
 import javax.net.ServerSocketFactory;
 import javax.net.ssl.SSLServerSocketFactory;
 import java.net.SocketAddress;
-import java.nio.channels.*;
-import java.nio.*;
-import java.net.*;
 
 /*
  * WorkerRunnable.java
@@ -25,41 +24,29 @@ import java.net.*;
 public class WorkerRunnable implements Runnable{
 
   protected Socket clientSocket;
+  protected String address;
 
   /*
    * Constructor takes in a socket and a message (unused)
    */
-  public WorkerRunnable(Socket clientSocket) {
+  public WorkerRunnable(Socket clientSocket, String address) {
     this.clientSocket = clientSocket;
+    this.address = address;
   }
 
   public void run() {
-    boolean running = true;
+    //TODO: organize organize the threads via their Ip's but not sure if that is possible because the to string call on the remote address is really tough to work with, I think it comes in the form of an int or something so formatting it into a
+    MessageAcceptor ma = new MessageAcceptor(clientSocket);
+    new Thread(ma).start();
+    boolean running = true, receiving = true;
     try {
       while (running) {
         if (running) {
           //Create a writer and a reader to pass messages from client to server
-          BufferedReader msgReader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+          BufferedReader br = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
           PrintWriter pw = new PrintWriter(clientSocket.getOutputStream());
 
-          //Nonblocking reading messages
-          System.out.println("Starting that stupid loop");
-          long timeEnd = System.currentTimeMillis() + 1000;
-          String data = "";
-          System.out.println("Buffered reader readline method:" + msgReader.readLine());
-          while (System.currentTimeMillis() < timeEnd) {
-            System.out.println("In the loop");
-            System.out.println("Buffereader reader ready::" + msgReader.ready());
-            System.out.println("readline:" + msgReader.readLine());
-            if ((msgReader.ready())) {
-              System.out.println("BufferedReader read method returns:" + msgReader.read());
-              System.out.println("in the if statement");
-              data += msgReader.readLine();
-            }
-          }
-          System.out.println("Data= " + data);
-
-          //Nonbocking for sending messages
+          //for reading input text
           BufferedReader msgTaker = new BufferedReader(new InputStreamReader(System.in));
           System.out.println("");
           long end=System.currentTimeMillis()+1500;
@@ -72,17 +59,17 @@ public class WorkerRunnable implements Runnable{
 
           //Message handling
           if (message.equals("")) {
-            System.out.println("No input on socket: " + clientSocket.getRemoteSocketAddress().toString());
+            System.out.println("No input on socket: " + clientSocket.getLocalAddress().toString());
           }
           else {
-            System.out.println("The message is " + message + " on socket " + clientSocket.getRemoteSocketAddress().toString());
+            System.out.println("The message is " + message + " on socket " + clientSocket.getLocalAddress().toString());
           }
           pw.println(message);
 
-          //Check if client has disconnected
+          //CHECK IF CLIENT disconnected:
           if (pw.checkError()) {
             running = false;
-            System.out.println("Client disconnected");
+            System.out.println("CLIENT DISCONNECTED!! FINALLY");
           }
 
           pw.flush();
@@ -90,7 +77,8 @@ public class WorkerRunnable implements Runnable{
       }
       clientSocket.close();
     } catch (IOException ioe) {
-      ioe.printStackTrace();
+      System.out.println("Client disconnected");
     }
+    System.out.println("got here");
   }
 }
