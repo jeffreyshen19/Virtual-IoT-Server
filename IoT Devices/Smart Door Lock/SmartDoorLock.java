@@ -69,7 +69,7 @@ public class SmartDoorLock {
       }*/
 
       System.out.println("\033[1m\033[32mSuccessfully connected to secure server\033[0m");
-
+      System.out.println("Press # to enter password.");
       //Declare/instantiate the sensors/motor
 
       Gpio button = new Gpio(3);
@@ -94,7 +94,7 @@ public class SmartDoorLock {
         pw.flush();
 
         //Checks the password entered by button pattern
-
+        System.out.println(passEnter);
         if (passEnter.equals ("#")) {
           System.out.println("Got Here!");
           if (inputPassword(button) == password) {
