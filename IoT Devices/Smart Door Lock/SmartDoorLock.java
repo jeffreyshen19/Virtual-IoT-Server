@@ -95,7 +95,7 @@ public class SmartDoorLock {
         pw.flush();
 
         //Checks the password entered by button pattern
-        System.out.println(passEnter);
+        System.out.println("hello"+ passEnter);
         Thread.sleep(100);
         if (passEnter.equals ("#")) {
           System.out.println("Got Here!");
