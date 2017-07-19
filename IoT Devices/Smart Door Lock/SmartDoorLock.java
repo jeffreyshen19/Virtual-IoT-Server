@@ -6,7 +6,7 @@
 
 /*
   Usage Notes
-  - Must hold button to trigger password input
+  - Must type # to trigger password input
   - Follow prompts when inputting password
 */
 
@@ -52,7 +52,7 @@ public class SmartDoorLock {
 
       //Setting up input
 
-      String userInput = "" , serverResponse = "";
+      String userInput = "" , serverResponse = "", passEnter = "";
       BufferedReader br = new BufferedReader(new InputStreamReader(sslSocket.getInputStream()));
       PrintWriter pw = new PrintWriter(sslSocket.getOutputStream());
       BufferedReader pass = new BufferedReader(new InputStreamReader(System.in));
@@ -83,7 +83,7 @@ public class SmartDoorLock {
 
       while(true) {
         serverResponse = br.readLine().trim();
-
+        passEnter = pass.readLine.trim();
         //Send packets of locked/unlocked to server
 
         /*pw.println(status);
@@ -95,7 +95,7 @@ public class SmartDoorLock {
 
         //Checks the password entered by button pattern
 
-        if (pass.readLine().trim() == "#") {
+        if (passEnter.equals ("#")) {
           System.out.println("Got Here!");
           if (inputPassword(button) == password) {
             unlock(servo);
