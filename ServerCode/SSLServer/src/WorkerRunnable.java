@@ -25,19 +25,16 @@ import java.net.*;
 public class WorkerRunnable implements Runnable{
 
   protected Socket clientSocket;
-  protected String address;
 
   /*
    * Constructor takes in a socket and a message (unused)
    */
-  public WorkerRunnable(Socket clientSocket, String address) {
+  public WorkerRunnable(Socket clientSocket) {
     this.clientSocket = clientSocket;
-    this.address = address;
   }
 
   public void run() {
-    boolean running = true, running1 = true, receiving = true;
-    ArrayList<String> messages = new ArrayList<>();
+    boolean running = true;
     try {
       while (running) {
         if (running) {
@@ -49,7 +46,7 @@ public class WorkerRunnable implements Runnable{
           long timeEnd = System.currentTimeMillis() + 1000;
           String data = "";
           while (System.currentTimeMillis() < timeEnd) {
-            if (msgReader.ready()) {
+            if (msgReader.read() != -1) {
               data += msgReader.readLine();
             }
           }
@@ -74,7 +71,6 @@ public class WorkerRunnable implements Runnable{
             System.out.println("The message is " + message + " on socket " + clientSocket.getRemoteSocketAddress().toString());
           }
           pw.println(message);
-          messages.add(message);
 
           //Check if client has disconnected
           if (pw.checkError()) {
