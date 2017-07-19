@@ -35,15 +35,17 @@ public class WorkerRunnable implements Runnable{
   }
 
   public void run() {
-    //TODO: organize organize the threads via their Ip's but not sure if that is possible because the to string call on the remote address is really tough to work with, I think it comes in the form of an int or something so formatting it into a
+
+    //Create message acceptor thread
     MessageAcceptor ma = new MessageAcceptor(clientSocket);
     new Thread(ma).start();
-    boolean running = true, receiving = true;
+
+    boolean running = true;
     try {
       while (running) {
         if (running) {
-          //Create a writer and a reader to pass messages from client to server
-          BufferedReader br = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+
+          //Create a writer to pass messages from client to server
           PrintWriter pw = new PrintWriter(clientSocket.getOutputStream());
 
           //for reading input text
@@ -57,7 +59,7 @@ public class WorkerRunnable implements Runnable{
             message += msgTaker.readLine();
           }
 
-          //Message handling
+          //Message handling - non blocking
           if (message.equals("")) {
             System.out.println("No input on socket: " + clientSocket.getLocalAddress().toString());
           }
@@ -66,10 +68,10 @@ public class WorkerRunnable implements Runnable{
           }
           pw.println(message);
 
-          //CHECK IF CLIENT disconnected:
+          //Check if client disconnected
           if (pw.checkError()) {
             running = false;
-            System.out.println("CLIENT DISCONNECTED!! FINALLY");
+            System.out.println("Cliented disconnected");
           }
 
           pw.flush();
@@ -77,8 +79,8 @@ public class WorkerRunnable implements Runnable{
       }
       clientSocket.close();
     } catch (IOException ioe) {
-      System.out.println("Client disconnected");
+      ioe.printStackTrace();
+      System.out.println("Error connecting");
     }
-    System.out.println("got here");
   }
 }
