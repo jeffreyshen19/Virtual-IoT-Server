@@ -83,6 +83,7 @@ public class SmartDoorLock {
       double enteredPassword;
 
       while(true) {
+        serverResponse = br.readLine().trim();
         passEnter = sc.next();
         //Send packets of locked/unlocked to server
 
@@ -105,7 +106,7 @@ public class SmartDoorLock {
           }
         }
 
-        serverResponse = br.readLine().trim();
+
         //Analyzes server's message
 
         if(serverResponse.equals("LOCK")) {
