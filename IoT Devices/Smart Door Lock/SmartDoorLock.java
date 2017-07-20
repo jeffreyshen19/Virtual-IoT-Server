@@ -63,6 +63,7 @@ public class SmartDoorLock {
       pw.flush();
 
       System.out.println("\033[1m\033[32mSuccessfully connected to secure server\033[0m");
+      System.out.println("Press # to begin inputting password.");
       //Declare/instantiate the sensors/motor
 
       Gpio button = new Gpio(3);
@@ -70,14 +71,18 @@ public class SmartDoorLock {
       Pwm servo = new Pwm(6);
 
       long endTime;
+
       //Setting default password
 
       double password = 1111;
       double enteredPassword;
 
+
+      staus = "LOCKED";
+      lock(servo);
+      
       while(true) {
         endTime = System.currentTimeMillis() + 1000;
-        System.out.println("Press # in the next second to start entering a password.");
         while (endTime > System.currentTimeMillis()) {
           try{
             serverResponse = br.readLine().trim();
