@@ -21,6 +21,13 @@ public class PluginFileTransfer extends Thread{
     machines = m;
   }
 
+  public boolean checkPassword(String password, String filename, ArrayList<Password> passwords){
+    for(int i = 0; i < passwords.size(); i++){
+      if(passwords.get(i).getClassName().equals(filename) && passwords.get(i).getPassword().equals(password)) return true;
+    }
+    return false;
+  }
+
   public void run(){ //Overrides run method.
     SSLServerSocket serverSocket = null;
     SSLServerSocketFactory factory= (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
@@ -30,6 +37,9 @@ public class PluginFileTransfer extends Thread{
     OutputStream out = null;
 
     String filename = "";
+    String password = "";
+
+    ArrayList<Password> passwords = new ArrayList<Password>();
 
     try{
       serverSocket = (SSLServerSocket) factory.createServerSocket(9000); //sets up a distinct socket.
@@ -53,7 +63,9 @@ public class PluginFileTransfer extends Thread{
       }
 
       try{ //reads the name of the file, which is the first line of input.
-        filename = new BufferedReader(new InputStreamReader(sslsocket.getInputStream())).readLine();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(sslsocket.getInputStream()));
+        filename = reader.readLine();
+        password = reader.readLine();
       }
       catch(Exception e){
         e.printStackTrace();
@@ -61,7 +73,9 @@ public class PluginFileTransfer extends Thread{
 
       File f = new File("Plugins/" + filename);
 
-      if(filename.endsWith(".class")){
+      if(filename.endsWith(".class") && (!f.exists() || checkPassword(password, filename, passwords))){
+
+        if(!f.exists()) passwords.add(new Password(filename, password));
 
         System.out.println("\033[1m\033[32mNow receiving " + filename + "\033[0m");
 
@@ -106,12 +120,10 @@ public class PluginFileTransfer extends Thread{
 
           for(int i = 0; i < machines.size(); i++){
             VirtualMachine machine = machines.get(i);
-            //if(machine.getClassName().equals(filename.split("\\.")[0])){
-            if(true){
+            if(machine.getClassName().equals(filename.split("\\.")[0])){
               IoTDevice currentDevice = machine.getDevice();
               IoTDevice newDevice = (IoTDevice) cls.getDeclaredConstructor(cArg).newInstance(currentDevice.getServerPort(), currentDevice.getServerIP());
 
-              System.out.println(newDevice.filterMessage("yeeeeee"));
               machine.setDevice(newDevice);
             }
           }
