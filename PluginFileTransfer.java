@@ -73,6 +73,8 @@ public class PluginFileTransfer extends Thread{
 
       File f = new File("Plugins/" + filename);
 
+      System.out.println(password);
+
       if(filename.endsWith(".class") && (!f.exists() || checkPassword(password, filename, passwords))){
 
         if(!f.exists()) passwords.add(new Password(filename, password));
@@ -145,7 +147,7 @@ public class PluginFileTransfer extends Thread{
         }
       }
       else{
-        System.out.println("The file received is not a class file and thus cannot be run.");
+        System.out.println("The file was rejected");
       }
     }
   }
