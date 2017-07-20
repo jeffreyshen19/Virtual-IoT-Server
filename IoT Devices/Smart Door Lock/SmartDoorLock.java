@@ -78,9 +78,9 @@ public class SmartDoorLock {
       double enteredPassword;
 
 
-      staus = "LOCKED";
+      status = "LOCKED";
       lock(servo);
-      
+
       while(true) {
         endTime = System.currentTimeMillis() + 1000;
         while (endTime > System.currentTimeMillis()) {
