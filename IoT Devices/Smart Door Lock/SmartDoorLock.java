@@ -133,8 +133,15 @@ public class SmartDoorLock {
           //Gives server 10 seconds to issue a new password. Otherwise it times out.
           while ((System.currentTimeMillis() - time) <  10000) {
             serverResponse = br.readLine().trim();
+            pw.println("The password may be anywhere from 1 to 8 digits long, consisting of 1's and 0's.");
+            pw.flush();
             if(!serverResponse.equals("CHANGE PASSWORD")) {
-              password = Integer.parseInt(serverResponse);
+              try {
+                password = Integer.parseInt(serverResponse);
+              }
+              catch (Exception e) {
+                System.out.println("Server inputted too long a password.");
+              }
               System.out.println("Succesful password change. New password is " + password);
               pw.flush();
             }
