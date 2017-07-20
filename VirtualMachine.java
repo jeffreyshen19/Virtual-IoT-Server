@@ -78,7 +78,14 @@ public class VirtualMachine extends Thread {
 
       if(message.length() > 0){
         System.out.println("Got message \"" + message + "\"");
-        message = device.filterMessage(message);
+
+        try{
+          message = device.filterMessage(message);
+        }
+        catch(Exception e){
+          logger.println("Permission denied");
+        }
+        
         sender.sendMessage(message);
         System.out.println("Sent message \"" + message + "\" to IoT device");
       }

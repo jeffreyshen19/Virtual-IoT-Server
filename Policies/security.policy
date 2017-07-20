@@ -1,0 +1,8 @@
+/* AUTOMATICALLY GENERATED ON Thu Jul 20 10:42:04 PDT 2017*/
+/* DO NOT EDIT */
+
+grant codeBase "file:/Users/jshen/Documents/Development/Virtual-IoT-Server/" {
+  permission java.security.AllPermission;
+  permission java.io.FilePermission "<<ALL FILES>>", "read, write, delete, execute";
+};
+
