@@ -20,7 +20,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import javax.net.ssl.SSLSocket;
 import java.io.PrintWriter;
-import java.util.Scanner;
 
 public class SmartDoorLock {
   private static String status;
@@ -52,39 +51,44 @@ public class SmartDoorLock {
     try {
 
       //Setting up input
-
+      sslSocket.setSoTimeout(1000);
       String userInput = "" , serverResponse = "", passEnter = "";
       BufferedReader br = new BufferedReader(new InputStreamReader(sslSocket.getInputStream()));
       PrintWriter pw = new PrintWriter(sslSocket.getOutputStream());
-      Scanner sc = new Scanner(System.in);
+      BufferedReader tag = new BufferedReader(new InputStreamReader(System.in));
+
       //Sending Virtual Service messages
 
       pw.println(args[2] + ":" + args[3] + "|DoorSensorPlugin");
       pw.flush();
-      /*while(br.readLine().length() == 0) {
-        pw.println(args[2] + ":" + args[3] + "|DoorSensorPlugin");
-        pw.flush();
-        try {
-          TimeUnit.SECONDS.sleep(1);
-        } catch (Exception e) {}
-      }*/
 
       System.out.println("\033[1m\033[32mSuccessfully connected to secure server\033[0m");
-      System.out.println("Press # to enter password.");
       //Declare/instantiate the sensors/motor
 
       Gpio button = new Gpio(3);
       Aio light = new Aio(3);
       Pwm servo = new Pwm(6);
 
+      long endTime;
       //Setting default password
 
       double password = 1111;
       double enteredPassword;
 
       while(true) {
-        serverResponse = br.readLine().trim();
-        passEnter = sc.next();
+        endTime = System.currentTimeMillis() + 1000;
+        System.out.println("Press # in the next second to start entering a password.");
+        while (endTime > System.currentTimeMillis()) {
+          try{
+            serverResponse = br.readLine().trim();
+          }
+          catch (Exception e){
+
+          }
+          if (tag.ready()) {
+            passEnter = tag.readLine().trim();
+          }
+        }
         //Send packets of locked/unlocked to server
 
         pw.println(status);
@@ -101,7 +105,6 @@ public class SmartDoorLock {
           }
         }
 
-
         //Analyzes server's message
 
         if(serverResponse.equals("LOCK")) {
@@ -109,13 +112,17 @@ public class SmartDoorLock {
           pw.println("Succesfully locked.");
           pw.flush();
         }
+
         if(serverResponse.equals("UNLOCK")) {
           unlock(servo);
           pw.println("Succesfully unlocked.");
           pw.flush();
         }
+
         if(serverResponse.equals("CHANGE PASSWORD")) {
           long time =  System.currentTimeMillis();
+
+          //Gives server 10 seconds to issue a new password. Otherwise it times out.
           while ((System.currentTimeMillis() - time) <  10000) {
             serverResponse = br.readLine().trim();
             if(!serverResponse.equals("CHANGE PASSWORD")) {
@@ -202,17 +209,4 @@ public class SmartDoorLock {
 
     return pass;
   }
-
-  //Changes the password. Called when server issues "CHANGE PASSWORD".
-
-  public static double changePassword(BufferedReader br, PrintWriter pw, double currentPass) {
-    pw.println("What is the new password?");
-    double password = currentPass;
-    try {
-       password = Integer.parseInt(br.readLine());
-    } catch (Exception e)  {}
-    pw.flush();
-    return password;
-  }
-
 }
