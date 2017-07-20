@@ -55,8 +55,7 @@ public class SmartDoorLock {
       String userInput = "" , serverResponse = "", passEnter = "";
       BufferedReader br = new BufferedReader(new InputStreamReader(sslSocket.getInputStream()));
       PrintWriter pw = new PrintWriter(sslSocket.getOutputStream());
-      InputStreamReader isr = new InputStreamReader(System.in);
-      BufferedReader tag = new BufferedReader(isr);
+      BufferedReader tag = new BufferedReader(new InputStreamReader(System.in));
 
       //Sending Virtual Service messages
 
@@ -86,7 +85,7 @@ public class SmartDoorLock {
           catch (Exception e){
 
           }
-          if (isr.available() > 0) {
+          if (tag.ready()) {
             passEnter = tag.readLine().trim();
           }
         }
