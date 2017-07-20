@@ -98,10 +98,12 @@ public class SmartDoorLock {
           if (inputPassword(button) == password) {
             unlock(servo);
             System.out.println("Succesfully unlocked.");
+            passEnter = "";
           }
           else {
             lock(servo);
             System.out.println("Unsuccesful unlock. Please try again.");
+            passEnter = "";
           }
         }
 
