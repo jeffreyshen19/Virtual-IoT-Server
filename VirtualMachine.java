@@ -85,15 +85,19 @@ public class VirtualMachine extends Thread {
         catch(Exception e){
           logger.println("Permission denied");
         }
-        
+
         sender.sendMessage(message);
         System.out.println("Sent message \"" + message + "\" to IoT device");
       }
 
       iotMessage = sender.getMessage();
 
-      if(sender.isSocketClosed() || receiver.isSocketClosed()){
-        logger.println("Connection closed. Closing thread");
+      if(sender.isSocketClosed()){
+        logger.println("Device connection closed. Closing thread");
+        return;
+      }
+      else if(receiver.isSocketClosed()){
+        logger.println("Server connection closed. Closing thread");
         return;
       }
       else{
