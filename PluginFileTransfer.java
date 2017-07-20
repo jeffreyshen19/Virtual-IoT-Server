@@ -21,9 +21,9 @@ public class PluginFileTransfer extends Thread{
     machines = m;
   }
 
-  public boolean checkPassword(String password, String filename, ArrayList<Password> passwords){
+  public boolean checkPassword(int password, String filename, ArrayList<Password> passwords){
     for(int i = 0; i < passwords.size(); i++){
-      if(passwords.get(i).getClassName().equals(filename) && passwords.get(i).getPassword().equals(password)) return true;
+      if(passwords.get(i).getClassName().equals(filename) && passwords.get(i).getPassword() == password) return true;
     }
     return false;
   }
@@ -73,11 +73,9 @@ public class PluginFileTransfer extends Thread{
 
       File f = new File("Plugins/" + filename);
 
-      System.out.println(password);
+      if(filename.endsWith(".class") && (!f.exists() || checkPassword(password.hashCode(), filename, passwords))){
 
-      if(filename.endsWith(".class") && (!f.exists() || checkPassword(password, filename, passwords))){
-
-        if(!f.exists()) passwords.add(new Password(filename, password));
+        if(!f.exists()) passwords.add(new Password(filename, password.hashCode()));
 
         System.out.println("\033[1m\033[32mNow receiving " + filename + "\033[0m");
 

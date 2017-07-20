@@ -1,8 +1,8 @@
 public class Password{
   private String className;
-  private String password;
+  private int password;
 
-  public Password(String c, String p){
+  public Password(String c, int p){
     className = c;
     password = p;
   }
@@ -11,7 +11,7 @@ public class Password{
     return className;
   }
 
-  public String getPassword(){
+  public int getPassword(){
     return password;
   }
 }
