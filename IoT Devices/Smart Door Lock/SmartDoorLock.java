@@ -96,9 +96,13 @@ public class SmartDoorLock {
         }
         //Send packets of locked/unlocked to server
 
-        pw.println(status);
+        pw.println("test");
         pw.flush();
-        
+        System.out.println("test");
+        pw.println(status);
+        System.out.println(status);
+        pw.flush();
+
         //Checks the password entered by button pattern
         if (passEnter.equals ("#")) {
           if (inputPassword(button) == password) {
