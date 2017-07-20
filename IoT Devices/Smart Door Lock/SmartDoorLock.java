@@ -77,7 +77,7 @@ public class SmartDoorLock {
 
       while(true) {
         endTime = System.currentTimeMillis() + 1000;
-        System.out.println("Press # in the next second to start entering a password.")
+        System.out.println("Press # in the next second to start entering a password.");
         while (endTime > System.currentTimeMillis()) {
           try{
             serverResponse = br.readLine().trim();
@@ -209,3 +209,4 @@ public class SmartDoorLock {
 
     return pass;
   }
+}
