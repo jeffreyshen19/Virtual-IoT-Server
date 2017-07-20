@@ -7,6 +7,7 @@
 /*
   Usage Notes
   - Must type # to trigger password input
+  - Must type CHANGE PASSWORD on user side to change the password
   - Follow prompts when inputting password
 */
 
@@ -52,7 +53,7 @@ public class SmartDoorLock {
 
       //Setting up input
       sslSocket.setSoTimeout(1000);
-      String userInput = "" , serverResponse = "", passEnter = "";
+      String serverResponse = "", userInput = "";
       BufferedReader br = new BufferedReader(new InputStreamReader(sslSocket.getInputStream()));
       PrintWriter pw = new PrintWriter(sslSocket.getOutputStream());
       BufferedReader tag = new BufferedReader(new InputStreamReader(System.in));
@@ -91,7 +92,7 @@ public class SmartDoorLock {
 
           }
           if (tag.ready()) {
-            passEnter = tag.readLine().trim();
+            userInput = tag.readLine().trim();
           }
         }
         //Send packets of locked/unlocked to server
@@ -100,19 +101,26 @@ public class SmartDoorLock {
         pw.flush();
 
         //Checks the password entered by button pattern
-        if (passEnter.equals ("#")) {
+        if (userInput.equals ("#")) {
           if (inputPassword(button) == password) {
             unlock(servo);
             System.out.println("Succesfully unlocked.");
-            passEnter = "";
+            userInput = "";
           }
           else {
             lock(servo);
             System.out.println("Unsuccesful unlock. Please try again.");
-            passEnter = "";
+            userInput = "";
           }
         }
 
+        if(userInput.equals ("CHANGE PASSWORD")) {
+          System.out.println("Verify current password by following the prompts.");
+          if (inputPassword(button) == password) {
+            System.out.println("Now change the password by follwing the prompts.");
+            password = inputPassword(button);
+          }
+        }
         //Analyzes server's message
 
         if(serverResponse.equals("LOCK")) {
@@ -133,8 +141,16 @@ public class SmartDoorLock {
           //Gives server 10 seconds to issue a new password. Otherwise it times out.
           while ((System.currentTimeMillis() - time) <  10000) {
             serverResponse = br.readLine().trim();
+            pw.println("The password may be anywhere from 1 to 8 digits long, consisting of 1's and 0's.");
+            pw.flush();
             if(!serverResponse.equals("CHANGE PASSWORD")) {
-              password = Integer.parseInt(serverResponse);
+              try {
+                password = Integer.parseInt(serverResponse);
+              }
+              catch (NumberFormatException nfe) {
+                System.out.println("Server inputted too long a password.");
+                nfe.printStackTrace();
+              }
               System.out.println("Succesful password change. New password is " + password);
               pw.flush();
             }
