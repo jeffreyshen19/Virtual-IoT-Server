@@ -63,6 +63,7 @@ public class SmartDoorLock {
       pw.flush();
 
       System.out.println("\033[1m\033[32mSuccessfully connected to secure server\033[0m");
+      System.out.println("Press # to begin inputting password.");
       //Declare/instantiate the sensors/motor
 
       Gpio button = new Gpio(3);
@@ -70,14 +71,18 @@ public class SmartDoorLock {
       Pwm servo = new Pwm(6);
 
       long endTime;
+
       //Setting default password
 
       double password = 1111;
       double enteredPassword;
 
+
+      status = "LOCKED";
+      lock(servo);
+
       while(true) {
         endTime = System.currentTimeMillis() + 1000;
-        System.out.println("Press # in the next second to start entering a password.");
         while (endTime > System.currentTimeMillis()) {
           try{
             serverResponse = br.readLine().trim();
@@ -92,16 +97,19 @@ public class SmartDoorLock {
         //Send packets of locked/unlocked to server
 
         pw.println(status);
+        pw.flush();
 
         //Checks the password entered by button pattern
         if (passEnter.equals ("#")) {
           if (inputPassword(button) == password) {
             unlock(servo);
             System.out.println("Succesfully unlocked.");
+            passEnter = "";
           }
           else {
             lock(servo);
             System.out.println("Unsuccesful unlock. Please try again.");
+            passEnter = "";
           }
         }
 
