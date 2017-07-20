@@ -17,6 +17,7 @@ public class Sender{
   public Sender(Socket ss){ //Port to create server on
     try{
       clientSocket = ss;
+      clientSocket.setSoTimeout(1000);
       out = new PrintWriter(clientSocket.getOutputStream(), true);
       in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
     }
@@ -42,7 +43,8 @@ public class Sender{
   public void sendMessage(String message){ //sends a message to the client
     try{
       out.println(message);
-      System.out.println(message);
+      if(message.length() > 0) System.out.println(message);
+      out.flush();
     }
     catch(Exception e){
       e.printStackTrace();
@@ -51,20 +53,18 @@ public class Sender{
 
   public String getMessage(){ //takes input from client
     String message = "";
+
     try{
-      while(true){
-        message = in.readLine().trim();
-        if(message.length() > 0){
-          System.out.println(message);
-          break;
-        }
-        Thread.sleep(10);
-      }
+      message = in.readLine().trim();
+      return message;
     }
     catch(Exception e){
-      e.printStackTrace();
+      return "";
     }
-    return message;
+  }
+
+  public boolean isSocketClosed(){
+    return out.checkError();
   }
 
 }

@@ -68,7 +68,11 @@ public class VirtualMachine extends Thread {
     receiver.sendMessage("test");
 
     while(true){ //Receive and log the messages sent by client
-      if(iotMessage.length() > 0) receiver.sendMessage(iotMessage);
+      if(iotMessage.length() > 0) {
+        System.out.println("Got message \"" + iotMessage + "\" from IoT device");
+        receiver.sendMessage(iotMessage);
+        System.out.println("Sent message \"" + iotMessage + "\" to server");
+      }
 
       message = receiver.getMessage();
 
@@ -80,6 +84,15 @@ public class VirtualMachine extends Thread {
       }
 
       iotMessage = sender.getMessage();
+
+      if(sender.isSocketClosed() || receiver.isSocketClosed()){
+        logger.println("Connection closed. Closing thread");
+        return;
+      }
+      else{
+        sender.sendMessage("");
+        receiver.sendMessage("");
+      }
 
       try{
         Thread.sleep(10);

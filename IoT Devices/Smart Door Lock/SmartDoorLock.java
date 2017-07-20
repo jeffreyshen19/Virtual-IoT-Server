@@ -20,7 +20,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import javax.net.ssl.SSLSocket;
 import java.io.PrintWriter;
-import java.util.Scanner;
 
 public class SmartDoorLock {
   private static String status;
@@ -52,11 +51,11 @@ public class SmartDoorLock {
     try {
 
       //Setting up input
-
+      sslSocket.setSoTimeout(1000);
       String userInput = "" , serverResponse = "", passEnter = "";
       BufferedReader br = new BufferedReader(new InputStreamReader(sslSocket.getInputStream()));
       PrintWriter pw = new PrintWriter(sslSocket.getOutputStream());
-      Scanner sc = new Scanner(System.in);
+      BufferedReader tag = new BufferedReader(new InputStreamReader(System.in));
 
       //Sending Virtual Service messages
 
@@ -78,15 +77,18 @@ public class SmartDoorLock {
 
       while(true) {
         endTime = System.currentTimeMillis() + 1000;
-        while (endTime > System.currentTimeMillis()) {
-          serverResponse = br.readLine().trim();
-        }
-        endTime = System.currentTimeMillis() + 1000;
         System.out.println("Press # in the next second to start entering a password.")
         while (endTime > System.currentTimeMillis()) {
-          passEnter = sc.next();
+          try{
+            serverResponse = br.readLine().trim();
+          }
+          catch (Exception e){
+
+          }
+          if (tag.available() > 0) {
+            passEnter = tag.next();
+          }
         }
-        System.out.println("Password input requests will not be handled for the next second.");
         //Send packets of locked/unlocked to server
 
         pw.println(status);

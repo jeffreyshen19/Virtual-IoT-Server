@@ -21,6 +21,7 @@ public class Receiver{
     else return;
 
     try{
+      sslSocket.setSoTimeout(1000);
       br = new BufferedReader(new InputStreamReader(sslSocket.getInputStream())); // initializations
       pw = new PrintWriter(sslSocket.getOutputStream());
     }
@@ -34,7 +35,7 @@ public class Receiver{
   public void sendMessage(String message){ //sends message to server
     try{
       pw.println(message);
-      System.out.println(message);
+      if(message.length() > 0) System.out.println(message);
       pw.flush();
     }
     catch(Exception e){
@@ -46,20 +47,16 @@ public class Receiver{
     String message = "";
 
     try{
-      while(true){
-        message = br.readLine();
-        if(message != null && message.length() > 0){
-          System.out.println(message);
-          break;
-        }
-        Thread.sleep(10);
-      }
+      message = br.readLine().trim();
+      return message;
     }
     catch(Exception e){
-      e.printStackTrace();
+      return "";
     }
+  }
 
-    return message.trim();
+  public boolean isSocketClosed(){
+    return pw.checkError();
   }
 
 }
