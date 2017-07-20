@@ -26,7 +26,7 @@ Once you have the code downloaded on your computer, compile it within terminal b
 
 Assuming that works properly, run this command:
 
-`java -Djavax.net.ssl.keyStore=./Certificates/Certificate.jks -Djavax.net.ssl.keyStorePassword=password123 -cp Plugins/:. VirtualService`
+`java -Djavax.net.ssl.keyStore=./Certificates/Certificate.jks -Djavax.net.ssl.keyStorePassword=password123 -cp Plugins/:. VirtualService [file-to-log-to.txt]`
 
 Your virtual service should be running. For IoT devices to connect to it, they must be on the same WiFi network. If you have any connectivity issues, consider switching WiFi networks as there may be issues regarding the firewall.
 
