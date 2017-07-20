@@ -55,7 +55,8 @@ public class SmartDoorLock {
       String userInput = "" , serverResponse = "", passEnter = "";
       BufferedReader br = new BufferedReader(new InputStreamReader(sslSocket.getInputStream()));
       PrintWriter pw = new PrintWriter(sslSocket.getOutputStream());
-      BufferedReader tag = new BufferedReader(new InputStreamReader(System.in));
+      InputStreamReader isr = new InputStreamReader(System.in);
+      BufferedReader tag = new BufferedReader(isr);
 
       //Sending Virtual Service messages
 
@@ -69,7 +70,7 @@ public class SmartDoorLock {
       Aio light = new Aio(3);
       Pwm servo = new Pwm(6);
 
-      int endTime;
+      long endTime;
       //Setting default password
 
       double password = 1111;
@@ -85,8 +86,8 @@ public class SmartDoorLock {
           catch (Exception e){
 
           }
-          if (tag.available() > 0) {
-            passEnter = tag.next();
+          if (isr.available() > 0) {
+            passEnter = tag.readLine().trim();
           }
         }
         //Send packets of locked/unlocked to server
