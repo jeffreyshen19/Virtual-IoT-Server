@@ -21,13 +21,6 @@ public class PluginFileTransfer extends Thread{
     machines = m;
   }
 
-  public boolean checkPassword(int password, String filename, ArrayList<Password> passwords){
-    for(int i = 0; i < passwords.size(); i++){
-      if(passwords.get(i).getClassName().equals(filename) && passwords.get(i).getPassword() == password) return true;
-    }
-    return false;
-  }
-
   public void run(){ //Overrides run method.
     SSLServerSocket serverSocket = null;
     SSLServerSocketFactory factory= (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
@@ -73,7 +66,8 @@ public class PluginFileTransfer extends Thread{
 
       File f = new File("Plugins/" + filename);
 
-      if(filename.endsWith(".class") && (!f.exists() || checkPassword(password.hashCode(), filename, passwords))){
+      //if(filename.endsWith(".class") && (!f.exists() || checkPassword(password.hashCode(), filename, passwords))){
+      if(filename.endsWith(".class")){
 
         if(!f.exists()) passwords.add(new Password(filename, password.hashCode()));
 
@@ -120,7 +114,9 @@ public class PluginFileTransfer extends Thread{
 
           for(int i = 0; i < machines.size(); i++){
             VirtualMachine machine = machines.get(i);
+            System.out.println("got here");
             if(machine.getClassName().equals(filename.split("\\.")[0])){
+              System.out.println("got to here");
               IoTDevice currentDevice = machine.getDevice();
               IoTDevice newDevice = (IoTDevice) cls.getDeclaredConstructor(cArg).newInstance(currentDevice.getServerPort(), currentDevice.getServerIP());
 

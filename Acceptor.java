@@ -67,14 +67,16 @@ public class Acceptor extends Thread {
         String className = "";
         if(line.indexOf("|") != -1){
           serverPort = Integer.parseInt(line.split(":")[1].split("\\|")[0]); //Port of Server
+          className = line.split("\\|")[1]; //name of the class
         }
         else{
           serverPort = Integer.parseInt(line.split(":")[1]);
-          className = line.split("\\|")[1]; //name of the class
         }
 
         Class clazz;
         IoTDevice device = null;
+
+        System.out.println(className);
 
         try{ //Calls the constructor of the class
           if(className.length() > 0) {
@@ -83,6 +85,8 @@ public class Acceptor extends Thread {
             Class[] cArg = new Class[2];
             cArg[0] = int.class;
             cArg[1] = String.class;
+
+
 
             device = (IoTDevice) clazz.getDeclaredConstructor(cArg).newInstance(serverPort, serverIP);
           }
