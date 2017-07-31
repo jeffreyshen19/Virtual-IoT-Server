@@ -9,7 +9,7 @@ import java.io.*;
 import javax.net.ssl.SSLSocket;
 
 public class Sender{
-  private ServerSocket serverSocket;
+  private ServerSocket serverSocket;//privately initializing the following variables
   private Socket clientSocket;
   private PrintWriter out;
   private BufferedReader in;
@@ -44,7 +44,7 @@ public class Sender{
     try{
       out.println(message);
       if(message.length() > 0) System.out.println(message);
-      out.flush();
+      out.flush();//if any bites have been buffered by the output stream, these bytes should be immediately written to their destination
     }
     catch(Exception e){
       e.printStackTrace();
@@ -55,7 +55,7 @@ public class Sender{
     String message = "";
 
     try{
-      message = in.readLine().trim();
+      message = in.readLine().trim();//will eliminate trailing spaces
       return message;
     }
     catch(Exception e){
