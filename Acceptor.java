@@ -11,17 +11,17 @@ import java.util.Arrays;
 import java.util.ArrayList;
 import Plugins.*;
 
-public class Acceptor extends Thread {
-  private ArrayList<VirtualMachine> machines;
+public class Acceptor extends Thread {//acceptor class extends the thread class
+  private ArrayList<VirtualMachine> machines;//intitalizing array list and variables
   private int port;
   private boolean usesSSL;
-  private Logger logger;
+  private Logger logger;//logger allows you to configure the messages that are written
 
   public Acceptor(ArrayList<VirtualMachine> m, int p, boolean uS, Logger l){
     super();
     machines = m;
     port = p;
-    usesSSL = uS;
+    usesSSL = uS;//more variable inititalizing 
     logger = l;
   }
 
