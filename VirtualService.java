@@ -12,11 +12,11 @@ public class VirtualService{
       System.out.println("\033[1mIP Address: " + InetAddress.getLocalHost().getHostAddress() + "\033[0m");
     }
     catch(Exception e){
-      e.printStackTrace();
+      e.printStackTrace();//printStackTrace error messge
     }
 
-    ArrayList<VirtualMachine> machines = new ArrayList<VirtualMachine>();
-    Logger logger = new Logger("logs/" + args[0]);
+    ArrayList<VirtualMachine> machines = new ArrayList<VirtualMachine>();//initializing array list
+    Logger logger = new Logger("logs/" + args[0]);//logger construction with 0 arguments so far
 
     Acceptor acceptorTLS = new Acceptor(machines, 2000, false, logger);//Acceptor constructor
     acceptorTLS.start();//start method is called
