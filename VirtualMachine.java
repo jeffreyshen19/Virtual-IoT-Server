@@ -8,12 +8,12 @@ import java.net.Socket;
 import java.io.*;
 import javax.net.ssl.SSLSocket;
 
-public class VirtualMachine extends Thread {
-  private String server;
+public class VirtualMachine extends Thread {//the VirtualMachine class will be another thread
+  private String server;//lot of variable initializing 
   private int serverPort;
   private Socket socket;
   private SSLSocket sslSocket;
-  private volatile IoTDevice device;
+  private volatile IoTDevice device;//value of variable will never be threaded locally
   private boolean isUsingSSl = false;
   private String className;
   private Logger logger;
