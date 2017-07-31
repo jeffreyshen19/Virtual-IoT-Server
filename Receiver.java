@@ -6,16 +6,16 @@
 
 import java.io.*;
 import javax.net.ssl.SSLSocket;
-import java.net.UnknownHostException;
+import java.net.UnknownHostException;//essential import statements
 
 public class Receiver{
-  private SSLSocket sslSocket = null;
-  private SSLClientSocket mSSLClientSocket;
-  private BufferedReader br;
-  private PrintWriter pw;
+  private SSLSocket sslSocket = null;//no value given to sslSocket yet
+  private SSLClientSocket mSSLClientSocket;//mSSLClientSocket is a type of SSLClientSocket
+  private BufferedReader br;//reads text from an input stream
+  private PrintWriter pw;//allows various variables to be written in string format
 
   public Receiver(String server, int port){ //Constructor. Opens up SSL socket
-    mSSLClientSocket = new SSLClientSocket(server, port);
+    mSSLClientSocket = new SSLClientSocket(server, port);//mSSLClientSocket has a server and a port
 
     if(mSSLClientSocket.checkAndAddCertificates()) sslSocket = mSSLClientSocket.getSSLSocket();
     else return;
