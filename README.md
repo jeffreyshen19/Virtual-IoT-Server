@@ -30,15 +30,25 @@ Assuming that works properly, run this command:
 
 Your virtual service should be running. For IoT devices to connect to it, they must be on the same WiFi network. If you have any connectivity issues, consider switching WiFi networks as there may be issues regarding the firewall.
 
+### Running the Server
+
+Once you have the code downloaded on your computer, compile it within terminal by running:
+
+`javac SSLSimpleServer.java`
+
+Assuming that works properly, run this command:
+
+`java -Djavax.net.ssl.keyStore=./../SSLServerKeyStore/ExampleServerCertificateKeyStore.jks -Djavax.net.ssl.keyStorePassword=abc12345 SSLSimpleServer [port-number]`
+
 ### Running the IoT Devices
 
-Once you have the code downloaded on your device, compile it within terminal by running:
+Once you have the code downloaded on your computer, compile it within terminal by running:
 
 `javac -cp /usr/lib/java/mraa.jar:. path/to/iot-name.java`
 
-If this works, run it by typing this in terminal:
+Assuming that works properly, run this command:
 
-`java -cp /usr/lib/java/mraa.jar:. path/to/iot-name [virtual service ip] [virtual service port] [server ip] [server port]`
+`java -cp /usr/lib/java/mraa.jar:. path/to/iot-name [virtual-service-ip] [virtual-service-port] [server-ip] [server-port]`
 
 ## Table of Contents
 
