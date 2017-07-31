@@ -42,7 +42,7 @@ public class SSLClientSocket {
         }
  }
 
- public SSLSocket getSSLSocket() {
+ public SSLSocket getSSLSocket() { 
   if(mSSLSocket == null) {
    KeyStore keyStore = getKeyStore();
    CertificateTrustManager certificateTrustManager = getCertificateTrustManager(keyStore);
