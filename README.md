@@ -68,5 +68,5 @@ Assuming that works properly, run this command:
 * **[Claudia Zimmerman](https://github.com/claudiarosalie)**
 
 ## License
-
+ 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
