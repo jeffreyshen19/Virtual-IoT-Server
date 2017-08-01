@@ -13,16 +13,16 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class PluginFileTransfer extends Thread{
-  private ArrayList<VirtualMachine> machines;
+public class PluginFileTransfer extends Thread{//PluginFileTransfer is extending the thread class
+  private ArrayList<VirtualMachine> machines;//machines is the array list
 
-  public PluginFileTransfer(ArrayList<VirtualMachine> m){
-    super();
-    machines = m;
+  public PluginFileTransfer(ArrayList<VirtualMachine> m){//this constructor ass the array list m as the parameter
+    super();//super method 
+    machines = m;//machines is m
   }
 
   public void run(){ //Overrides run method.
-    SSLServerSocket serverSocket = null;
+    SSLServerSocket serverSocket = null;//no value at this moment
     SSLServerSocketFactory factory= (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
     SSLSocket sslsocket = null;
 
