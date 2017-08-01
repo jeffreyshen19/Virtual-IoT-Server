@@ -143,6 +143,6 @@ public class PluginFileTransfer extends Thread{
       else{
         System.out.println("The file was rejected");
       }
-    }
+    } 
   }
 }
