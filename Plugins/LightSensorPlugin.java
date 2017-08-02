@@ -4,7 +4,7 @@
 */
 
 public class LightSensorPlugin extends IoTDevice{
-
+ 
   //Overwrites constructor
 
   public LightSensorPlugin(int sP, String ip){
