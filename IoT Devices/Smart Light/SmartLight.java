@@ -52,7 +52,10 @@ public class SmartLight{
       BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
       PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
 
-      out.println(args[2] + ":" + args[3] + "|LightSensorPlugin");
+      //out.println(args[2] + ":" + args[3] + "|LightSensorPlugin");
+      
+      //test bugged version
+      out.println(args[2] + ":" + args[3] + "|LightSensorPluginBug");
       System.out.println(args[2] + ":" + args[3] + "SmartLight");
 
 
