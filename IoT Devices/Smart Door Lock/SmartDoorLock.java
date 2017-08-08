@@ -60,7 +60,9 @@ public class SmartDoorLock {
 
       //Sending Virtual Service messages
 
-      pw.println(args[2] + ":" + args[3] + "|DoorSensorPlugin");
+      //IoT device supplies server ip and port and plugin name
+      
+      pw.println(args[2] + ":" + args[3] + "|" + args[4]);
       pw.flush();
 
       System.out.println("\033[1m\033[32mSuccessfully connected to secure server\033[0m");
