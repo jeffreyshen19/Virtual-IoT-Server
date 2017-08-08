@@ -15,10 +15,15 @@ public class LightSensorPluginBug extends IoTDevice{
 
       if (message.equals("Bug")) {
         message = null;
-        if (message.equals("Bug")) {
-
-        }
+        message.toString();
       }
+      if (message.equals("testOff")) {
+        message = "Off";
+      }
+      if (message.equals("testOn")) {
+        message = "On";
+      }
+
       return message;
     }
   }
