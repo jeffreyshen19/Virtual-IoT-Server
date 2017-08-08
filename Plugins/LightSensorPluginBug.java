@@ -5,7 +5,7 @@ public class LightSensorPluginBug extends IoTDevice{
 
     //Overwrites constructor
 
-    public LightSensorPlugin(int sP, String ip){
+    public LightSensorPluginBug(int sP, String ip){
       super(sP, ip);
     }
 
@@ -16,10 +16,9 @@ public class LightSensorPluginBug extends IoTDevice{
       if (message.equals("Bug")) {
         message = null;
         if (message.equals("Bug")) {
-  
+
         }
       }
       return message;
     }
   }
-}
