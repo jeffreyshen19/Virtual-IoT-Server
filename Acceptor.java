@@ -60,18 +60,22 @@ public class Acceptor extends Thread {//acceptor class extends the thread class
       catch(Exception e){
         e.printStackTrace();
       }
-
-      if(line.indexOf(":") != -1){ //parses the input from the client
-        String serverIP = line.split(":")[0]; //IP of server
-        int serverPort;
-        String className = "";
-        if(line.indexOf("|") != -1){
-          serverPort = Integer.parseInt(line.split(":")[1].split("\\|")[0]); //Port of Server
-          className = line.split("\\|")[1]; //name of the class
-        }
-        else{
-          serverPort = Integer.parseInt(line.split(":")[1]);
-        }
+      try {
+        if(line.indexOf(":") != -1){ //parses the input from the client
+          String serverIP = line.split(":")[0]; //IP of server
+          int serverPort;
+          String className = "";
+          if(line.indexOf("|") != -1){
+            serverPort = Integer.parseInt(line.split(":")[1].split("\\|")[0]); //Port of Server
+            className = line.split("\\|")[1]; //name of the class
+          }
+          else{
+            serverPort = Integer.parseInt(line.split(":")[1]);
+          }
+       }
+       catch (NullPointerException npe) {
+         System.out.println("No file recieved."); 
+       }
 
         Class clazz;
         IoTDevice device = null;
