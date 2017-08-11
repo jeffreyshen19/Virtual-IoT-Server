@@ -17,6 +17,7 @@ public class LightSensorPlugin extends IoTDevice{
     if (message.equals("test")) {
       message = "Off";
     }
+    //Tries to throw NullPointerException unsuccesfully
     if (message.equals("bug")) {
       message = null;
       message.toString();

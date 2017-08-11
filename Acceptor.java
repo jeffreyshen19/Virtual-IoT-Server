@@ -21,7 +21,7 @@ public class Acceptor extends Thread {//acceptor class extends the thread class
     super();
     machines = m;
     port = p;
-    usesSSL = uS;//more variable inititalizing 
+    usesSSL = uS;//more variable inititalizing
     logger = l;
   }
 
@@ -60,6 +60,7 @@ public class Acceptor extends Thread {//acceptor class extends the thread class
       catch(Exception e){
         e.printStackTrace();
       }
+
       try {
         if(line.indexOf(":") != -1){ //parses the input from the client
           String serverIP = line.split(":")[0]; //IP of server
@@ -72,40 +73,39 @@ public class Acceptor extends Thread {//acceptor class extends the thread class
           else{
             serverPort = Integer.parseInt(line.split(":")[1]);
           }
-       }
-       catch (NullPointerException npe) {
-         System.out.println("No file recieved."); 
-       }
 
-        Class clazz;
-        IoTDevice device = null;
+          Class clazz;
+          IoTDevice device = null;
 
-        System.out.println(className);
+          System.out.println(className);
 
-        try{ //Calls the constructor of the class
-          if(className.length() > 0) {
-            clazz = Class.forName(className);
+          try{ //Calls the constructor of the class
+            if(className.length() > 0) {
+              clazz = Class.forName(className);
 
-            Class[] cArg = new Class[2];
-            cArg[0] = int.class;
-            cArg[1] = String.class;
+              Class[] cArg = new Class[2];
+              cArg[0] = int.class;
+              cArg[1] = String.class;
 
 
 
-            device = (IoTDevice) clazz.getDeclaredConstructor(cArg).newInstance(serverPort, serverIP);
+              device = (IoTDevice) clazz.getDeclaredConstructor(cArg).newInstance(serverPort, serverIP);
+            }
+            else device = new IoTDevice(serverPort, serverIP);
           }
-          else device = new IoTDevice(serverPort, serverIP);
-        }
-        catch(Exception e){
-          e.printStackTrace();
-        }
+          catch(Exception e){
+            e.printStackTrace();
+          }
+          VirtualMachine virtualMachine;
+          if(usesSSL) virtualMachine = new VirtualMachine(sslSocket,logger, device, className);
+          else virtualMachine = new VirtualMachine(clientSocket, logger, device, className);
 
-        VirtualMachine virtualMachine;
-        if(usesSSL) virtualMachine = new VirtualMachine(sslSocket,logger, device, className);
-        else virtualMachine = new VirtualMachine(clientSocket, logger, device, className);
-
-        machines.add(virtualMachine);
-        virtualMachine.start(); //sets up a new thread
+          machines.add(virtualMachine);
+          virtualMachine.start(); //sets up a new thread
+        }
+      }
+      catch (NullPointerException npe) {
+        System.out.println("No file recieved");
       }
 
       boolean portAvailable = false;
@@ -131,6 +131,5 @@ public class Acceptor extends Thread {//acceptor class extends the thread class
         e.printStackTrace();
       }
     }
-
   }
 }

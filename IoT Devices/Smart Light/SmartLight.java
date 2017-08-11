@@ -53,9 +53,9 @@ public class SmartLight{
       PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
 
       //IoT Device supplies server ip and port and the name of the plugin
-      
-      out.println(args[2] + ":" + args[3] + "|" + args[4]);
-      
+
+      out.println(args[2] + ":" + args[3] + "|LightSensorPlugin");
+
       System.out.println(args[2] + ":" + args[3] + "SmartLight");
 
 
