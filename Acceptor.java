@@ -105,7 +105,7 @@ public class Acceptor extends Thread {//acceptor class extends the thread class
         }
       }
       catch (NullPointerException npe) {
-        System.out.println("No file recieved");
+        System.out.println("Communications were terminated");
       }
 
       boolean portAvailable = false;
