@@ -63,14 +63,10 @@ public class WorkerRunnable implements Runnable{//workerrunnable is an interface
           if (message.equals("")) {//if the message is still blank
             System.out.println("No input on socket: " + clientSocket.getLocalAddress().toString());
           }//the following will print out
-          else if (message.indexOf("|") != -1){
-            int clientPort = Integer.parseInt(message.split("|")[0]);
-            message = message.split("|")[1];
-            if (clientPort == clientSocket.getLocalPort()) {
-              System.out.println("The message is " + message + " on socket " + clientSocket.getLocalAddress().toString());
-              pw.println(message);
-            }
+          else {
+            System.out.println("The message is " + message + " on socket " + clientSocket.getLocalAddress().toString());
           }
+          pw.println(message);
 
           //Check if client disconnected
           if (pw.checkError()) {//if the pw calls on the error message

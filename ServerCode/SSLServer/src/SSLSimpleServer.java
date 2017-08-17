@@ -26,47 +26,24 @@ public class SSLSimpleServer extends Thread implements Runnable {
   protected Thread       runningThread= null;
   protected boolean      isStopped    = false;
   protected ExecutorService threadPool = Executors.newFixedThreadPool(10);
-  protected static boolean  portAvailable = true;
 
   public static void main(String[] args) throws Exception {
-    int port = Integer.parseInt(args[0]);
     ServerSocketFactory ssf = SSLServerSocketFactory.getDefault();
+    ServerSocket ss = ssf.createServerSocket(Integer.parseInt(args[0]));
 
     System.out.println("Ready...");
 
 
+    SSLSimpleServer server = new SSLSimpleServer(ss);
 
-
-    while (true) {
-      ServerSocket ss = ssf.createServerSocket(port);
-      SSLSimpleServer server = new SSLSimpleServer(ss);
-      new Thread(server).start();
-
-      while (portAvailable) {
-
-      }
-      while(!portAvailable){ //Make sure port actually works
-        port++;
-        portAvailable = true;
-
-        try{
-          new ServerSocket(port).close();
-        }
-        catch(IOException e){
-          portAvailable = false;
-        }
-      }
-
-    }
-
-
-    /*try {
+    new Thread(server).start();
+    try {
       Thread.sleep(200 * 1000);
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
     System.out.println("Stopping Server");
-    */
+
   }
 
   private synchronized boolean isStopped() {
@@ -74,7 +51,7 @@ public class SSLSimpleServer extends Thread implements Runnable {
   }
 
   public SSLSimpleServer(ServerSocket s) {
-    System.out.println("Now accepting communications on port " + s.getLocalPort());
+    System.out.println("connecting the sockets");
     this.ss = s;
   }
 
@@ -87,7 +64,6 @@ public class SSLSimpleServer extends Thread implements Runnable {
     while(! isStopped()){
       try {
         Socket sock = ss.accept();
-        portAvailable = false;
         this.threadPool.execute(new WorkerRunnable(sock, "Thread Pooled Server"));
         System.out.println("STARTING WORKER RUNNABLE");
       } catch (Exception e) {
